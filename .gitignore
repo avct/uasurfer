@@ -35,6 +35,10 @@ logs
 coverage.html
 coverage.out
 
+# Test Files #
+#######################
+*.test
+
 # OS generated files #
 ######################
 .DS_Store
