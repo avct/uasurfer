@@ -10,7 +10,7 @@ import (
 // To allow easy of use with math operators, the version numbers for Mac and Win may be slightly unexpected.
 // Here are some examples:
 //
-// 	For Windows XP (Windows NT 5.1), "windows" is the platform, "XP" is the name, and 5 the version.
+// 	For Windows XP (Windows NT 5.1), "windows" is the platform, "xp" is the name, and 5 the version.
 // 	For OS X 10.5.1, "mac" is the platform, "os x" the name, and 5 the version.
 // 	For Android 5.1, "linux" is the platform, "android" is the name, and 5 the version.
 //	For iOS 5.1, "iphone" or "ipad" is the platform, "ios" is the name, and 5 the version.
@@ -143,7 +143,15 @@ func (b *BrowserProfile) evalSystem(ua string) (string, string, int) {
 			v = "0" // Don't bother with OS version for Chrome OS
 			// TODO add kindle fire here -- https://developer.amazon.com/appsandservices/solutions/devices/kindle-fire/specifications/04-user-agent-strings
 		} else if strings.Contains(ua, "android") {
-			platform = "linux"
+			// first check if it's a Kindle -- TODO: test if this may be too expensive a method, but kindle != silk
+
+			kindleTest, _ := regexp.Compile("\\sKF[A-Z]{2,4}\\s")
+			if kindleTest.MatchString(pgroup_string) {
+				platform = "kindle"
+			} else {
+				platform = "linux"
+			}
+
 			os = "android"
 			aVersion, _ := regexp.Compile("android \\d+")
 			if aVersion.MatchString(pgroup_string) {

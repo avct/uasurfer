@@ -6,9 +6,9 @@ The reason for creating this library is other popular UA string parsers in 2015 
 
 Web browsers and operating systems that account for 98.5% of all worldwide use are identified.
 
-# Implementation Example
+# Example
 
-```golang
+```go
 package main
 
 import (
@@ -66,6 +66,7 @@ Browser.Version returns an integer of the correct top-level version attribute of
 * `iphone`
 * `blackberry`
 * `windows phone`
+* `kindle` - Fire models
 * `playstation`, `xbox`, `nintendo`
 
 #### OS.Name
@@ -105,7 +106,7 @@ DeviceType is typically quite accurate, though determining between phones and ta
 # To do
 
 * Add tests for UC Browser
-* Improve Kindle support
+* Improve Kindle eink support
 * Support NetFront
 * Support Nokia
 * Identify bots

@@ -14,7 +14,7 @@ func (b *BrowserProfile) evalDevice(ua string) string {
 		} else {
 			device = "computer"
 		}
-	} else if strings.Contains(ua, "tablet") || b.Platform == "ipad" || strings.Contains(ua, "kindle") || strings.Contains(ua, "playbook") {
+	} else if strings.Contains(ua, "tablet") || b.Platform == "ipad" || b.Platform == "kindle") || strings.Contains(ua, "playbook") {
 		device = "tablet"
 	} else if strings.Contains(ua, "phone") || b.Platform == "iphone" || b.Platform == "blackberry" {
 		device = "phone"
