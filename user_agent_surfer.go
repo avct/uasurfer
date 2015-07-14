@@ -43,8 +43,8 @@ func (b *BrowserProfile) Parse(ua string) {
 	b.initialize()
 	b.UA = ua
 
-	b.Browser.Name, b.Browser.Version = b.evalBrowser(ua)
 	b.Platform, b.OS.Name, b.OS.Version = b.evalSystem(ua)
+	b.Browser.Name, b.Browser.Version = b.evalBrowser(ua)
 	b.DeviceType = b.evalDevice(ua)
 
 }

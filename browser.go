@@ -32,8 +32,11 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 			b.Browser.Name = "silk"
 		} else if strings.Contains(ua, "edge/") || strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie ") {
 			b.Browser.Name = "ie"
-		} else if strings.Contains(ua, "chrome") || strings.Contains(ua, "crios") { //Edge, Silk and other chrome-identifying browsers must evaluate before chrome, unless we want to add more overhead
+		} else if strings.Contains(ua, "chrome/") || strings.Contains(ua, "crios/") || strings.Contains(ua, "chromium/") { //Edge, Silk and other chrome-identifying browsers must evaluate before chrome, unless we want to add more overhead
 			b.Browser.Name = "chrome"
+		} else if strings.Contains(ua, "android") && !strings.Contains(ua, "chrome/") && strings.Contains(ua, "version/") {
+			// Android WebView on Android >= 4.4 is purposefully being identified as Chrome above -- https://developer.chrome.com/multidevice/webview/overview
+			b.Browser.Name = "android"
 		} else if strings.Contains(ua, "fxios") {
 			b.Browser.Name = "firefox"
 		} else if strings.Contains(ua, "like gecko") {
@@ -56,9 +59,11 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 	} else if strings.Contains(ua, "nintendo") {
 		b.Browser.Name = "nintendo"
 	}
-
-	// Find major browser version number as int using regexp
-	var v string
+	// Find browser version using 3 methods in order:
+	// 1st: look for generic version/#
+	// 2nd: look for browser-specific instructions (e.g. chrome/34)
+	// 3rd: infer from OS
+	v := ""
 	bVersion, _ := regexp.Compile("version/\\d+")
 
 	// if there is a 'version/#' attribute with numeric version, use it

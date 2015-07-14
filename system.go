@@ -132,7 +132,7 @@ func (b *BrowserProfile) evalSystem(ua string) (string, string, int) {
 					v = "5"
 				}
 			}
-			//webos
+			//WebOS
 		} else if strings.Contains(ua, "webos") || strings.Contains(ua, "hpwos") {
 			os = "webos"
 			platform = "linux"
@@ -141,6 +141,7 @@ func (b *BrowserProfile) evalSystem(ua string) (string, string, int) {
 			os = "chromeos"
 			platform = "linux"
 			v = "0" // Don't bother with OS version for Chrome OS
+			// TODO add kindle fire here -- https://developer.amazon.com/appsandservices/solutions/devices/kindle-fire/specifications/04-user-agent-strings
 		} else if strings.Contains(ua, "android") {
 			platform = "linux"
 			os = "android"
@@ -165,17 +166,26 @@ func (b *BrowserProfile) evalSystem(ua string) (string, string, int) {
 				v = "0"
 			}
 		} else {
-			os = "unknown"
 			v = "0"
 		}
 	}
 
 	// remaining unidentified platforms
 	if platform == "" {
-		if strings.Contains(ua, "linux") || strings.Contains(ua, "x11") || strings.Contains(ua, "unix") || strings.Contains(ua, "bsd") || strings.Contains(ua, "symb") { // not all these are linux, but they are for our purposes
+		if strings.Contains(ua, "linux") || strings.Contains(ua, "unix") { // not all these are linux, but they are for our purposes
 			platform = "linux"
 		} else {
 			platform = "unknown"
+		}
+	}
+
+	// remaining unidentified OSes
+	if os == "" {
+		if strings.Contains(ua, "x11") || strings.Contains(ua, "bsd") || strings.Contains(ua, "suse") { // not all these are linux, but they are for our purposes
+			platform = "linux"
+			os = "linux"
+		} else {
+			os = "unknown"
 		}
 	}
 

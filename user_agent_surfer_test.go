@@ -63,9 +63,6 @@ var testUAStrings = []struct {
 	{"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36 OPR/18.0.1284.68",
 		"opera", 18, "windows", "7", 6, "computer"},
 
-	{"Opera/9.80 (S60; SymbOS; Opera Mobi/352; U; de) Presto/2.4.15 Version/10.00",
-		"opera", 10, "linux", "unknown", 0, "phone"},
-
 	// Internet Explorer -- https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
 	{"Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)",
 		"ie", 10, "windows", "8", 6, "computer"},
@@ -99,6 +96,14 @@ var testUAStrings = []struct {
 
 	{"Mozilla/5.0 (webOS/1.4.1.1; U; en-US) AppleWebKit/532.2 (KHTML, like Gecko) Version/1.0 Safari/532.2 Pre/1.0",
 		"unknown", 1, "linux", "webos", 0, "unknown"},
+
+	// Android WebView (Android <= 4.3)
+
+	{"Mozilla/5.0 (Linux; U; Android 2.2; en-us; DROID2 GLOBAL Build/S273) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",
+		"android", 4, "linux", "android", 2, "phone"},
+
+	{"Mozilla/5.0 (Linux; U; Android 4.0.3; de-ch; HTC Sensation Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
+		"android", 4, "linux", "android", 4, "phone"},
 
 	// BlackBerry
 
@@ -144,7 +149,7 @@ var testUAStrings = []struct {
 		"unknown", 0, "linux", "unknown", 0, "tv"},
 
 	{"Mozilla/5.0 (X11; FreeBSD; U; Viera; de-DE) AppleWebKit/537.11 (KHTML, like Gecko) Viera/3.10.0 Chrome/23.0.1271.97 Safari/537.11", // Panasonic Viera
-		"chrome", 23, "linux", "unknown", 0, "tv"},
+		"chrome", 23, "linux", "linux", 0, "tv"},
 
 	{"Mozilla/5.0 (DTV) AppleWebKit/531.2+ (KHTML, like Gecko) Espial/6.1.5 AQUOSBrowser/2.0 (US01DTV;V;0001;0001)", // Sharp Aquos
 		"unknown", 0, "unknown", "unknown", 0, "tv"},
@@ -162,6 +167,12 @@ var testUAStrings = []struct {
 
 	{"Mozilla/5.0 (Mobile; rv:26.0) Gecko/26.0 Firefox/26.0", //firefox OS
 		"firefox", 26, "unknown", "unknown", 0, "phone"},
+
+	{"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.45 Safari/535.19", //chrome for android having requested desktop site
+		"chrome", 18, "linux", "linux", 0, "computer"},
+
+	{"Opera/9.80 (S60; SymbOS; Opera Mobi/352; U; de) Presto/2.4.15 Version/10.00",
+		"opera", 10, "unknown", "unknown", 0, "phone"},
 }
 
 func TestAgentSurfer(t *testing.T) {
