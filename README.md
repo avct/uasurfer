@@ -1,8 +1,10 @@
 # User Agent Surfer
 
-User Agent Surfer is a Go package that parses and abstracts HTTP User-Agent strings with particular attention to speed, resource efficiency, and accuracy. Layout engine, browser language, and esoteric attributes are not parsed but are available in the BrowserProfile.UA string.
+User Agent Surfer is a Go package that will parse and abstract HTTP User-Agent strings with particular attention to speed, resource efficiency, and accuracy. Layout engine, browser language, and esoteric attributes are not parsed but are available in the BrowserProfile.UA string.
 
-Approximately 98.5% of all web browsers used worldwide are identified.
+The reason for creating this library is other popular UA string parsers in 2015 are about 8-12x slower, use 20x more memory, and are not nearly as accurate on versioning nor identifying the form factor (device type).
+
+Web browsers and operating systems that account for 98.5% of all worldwide use are identified.
 
 # Implementation Example
 
@@ -40,44 +42,53 @@ func main() {
 
 # Browser Profile
 
-The BrowserProfile supplies very specific enum string data along with integers for versions.
+The BrowserProfile supplies specific enum strings along with integers for versions. The following strings should be supported, with the exception of linux OS being a mostly-hit but sometimes miss attribute.
 
-### Browser.Name
+#### Browser.Name
 * `chrome`
 * `safari`
 * `ie`
 * `firefox` (includes icecat, iceweasel, seamonkey)
-* `android` - only Android 4.3 and earlier, 4.4 and later is `chrome`
+* `android` - only Android ~4.3 and earlier use this name for the native WebView browser, 4.4 and later is `chrome`
 * `opera`
 * `silk`
 
-### Browser.Version
+#### Browser.Version
 
-tbw
+Browser.Version returns an integer of the correct top-level version attribute of the User-Agent String. The intention is to support math operators when evaluating versions. For example Chrome 45.0.23423 would return `45`.
 
-### Platform
+#### Platform
 * `windows`
 * `mac`
-* `linux`
+* `linux` - Android OS uses Linux platform
 * `ipad`
 * `iphone`
 * `blackberry`
 * `windows phone`
 * `playstation`, `xbox`, `nintendo`
 
-### OS.Name
+#### OS.Name
 * `2000`, `xp`, `vista`, `7`, `8`, `10`
 * `os x`
 * `ios`
-* `playstation`, `xbox`, `nintendo`
+* `android`
 * `chromeos`
 * `webos`
+* `linux`
+* `playstation`, `xbox`, `nintendo`
 
-### OS.Version
+#### OS.Version
 
-tbw
+OS.Version returns an integer for the OS version, which is the NT major version for Windows (e.g. NT 6.2 is `6`) and minor version for OS X (e.g. OS X 10.11.6 is `11`). This is to allow ease of use around math operators the version numbers. Here are some examples across the platform, os.name, and os.version:
 
-### DeviceType
+* For Windows XP (Windows NT 5.1), "`windows`" is the platform, "`xp`" is the name, and `5` the version.
+* For OS X 10.5.1, "`mac`" is the platform, "`os x`" the name, and `5` the version.
+* For Android 5.1, "`linux`" is the platform, "`android`" is the name, and `5` the version.
+* For iOS 5.1, "`iphone`" or "`ipad`" is the platform, "`ios`" is the name, and `5` the version.
+
+#### DeviceType
+DeviceType is typically quite accurate, though determining between phones and tablets on Android is not always possible due to how some vendors design their UA strings. A mobile Android device without tablet indication is classified a phone.
+
 * `computer`
 * `phone`
 * `tablet`
@@ -85,10 +96,10 @@ tbw
 * `console`
 * `wearable`
 
-### Combination examples
-Surface RT -> `windows`, `tablet`, OS.Version >= `6`
-Android Tablet -> `android`, `tablet`
-Microsoft Edge -> `ie`, Browser.Version == `12`
+#### Combination examples
+* Surface RT -> `windows`, `tablet`, OS.Version >= `6`
+* Android Tablet -> `android`, `tablet`
+* Microsoft Edge -> `ie`, Browser.Version == `12`
 
 # To do
 
@@ -96,3 +107,4 @@ Microsoft Edge -> `ie`, Browser.Version == `12`
 * Support NetFront
 * Support Nokia
 * Identify bots
+* Add OS->Browser identification logic
