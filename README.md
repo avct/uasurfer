@@ -51,6 +51,7 @@ The BrowserProfile supplies specific enum strings along with integers for versio
 * `firefox` (includes icecat, iceweasel, seamonkey)
 * `android` - only Android ~4.3 and earlier use this name for the native WebView browser, 4.4 and later is `chrome`
 * `opera`
+* `ucbrowser`
 * `silk`
 
 #### Browser.Version
@@ -103,7 +104,8 @@ DeviceType is typically quite accurate, though determining between phones and ta
 
 # To do
 
-* Support [UC Browser](https://en.wikipedia.org/wiki/UC_Browser)
+* Add tests for UC Browser
+* Improve Kindle support
 * Support NetFront
 * Support Nokia
 * Identify bots

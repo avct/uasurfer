@@ -32,6 +32,8 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 			b.Browser.Name = "silk"
 		} else if strings.Contains(ua, "edge/") || strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie ") {
 			b.Browser.Name = "ie"
+		} else if strings.Contains(ua, "ucbrowser/") || strings.Contains(ua, "ucweb/") {
+			b.Browser.Name = "ucbrowser"
 		} else if strings.Contains(ua, "chrome/") || strings.Contains(ua, "crios/") || strings.Contains(ua, "chromium/") { //Edge, Silk and other chrome-identifying browsers must evaluate before chrome, unless we want to add more overhead
 			b.Browser.Name = "chrome"
 		} else if strings.Contains(ua, "android") && !strings.Contains(ua, "chrome/") && strings.Contains(ua, "version/") {
@@ -101,6 +103,8 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 			}
 		case "firefox":
 			v = getMajorVersion(ua, "(firefox|fxios)/\\d+")
+		case "ucbrowser":
+			v = getMajorVersion(ua, "ucbrowser/\\d+")
 		case "opera":
 			if strings.Contains(ua, "opr/") {
 				v = getMajorVersion(ua, "opr/\\d+")
