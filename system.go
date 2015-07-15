@@ -137,6 +137,10 @@ func (b *BrowserProfile) evalSystem(ua string) (string, string, int) {
 			os = "webos"
 			platform = "linux"
 			v = "0" // Don't bother with OS version for WebOS
+		} else if strings.Contains(ua, "kindle/") {
+			os = "kindle"
+			platform = "kindle"
+			v = "0" // Don't bother with OS version for kindle
 		} else if strings.Contains(ua, "cros") {
 			os = "chromeos"
 			platform = "linux"

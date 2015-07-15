@@ -2,8 +2,6 @@
 
 User Agent Surfer is a Go package that will parse and abstract HTTP User-Agent strings with particular attention to speed, resource efficiency, and accuracy. Layout engine, browser language, and esoteric attributes are not parsed but are available in the BrowserProfile.UA string.
 
-The reason for creating this library is other popular UA string parsers in 2015 are about 8-12x slower, use 20x more memory, and are not nearly as accurate on versioning nor identifying the form factor (device type).
-
 Web browsers and operating systems that account for 98.5% of all worldwide use are identified.
 
 # Example
@@ -106,8 +104,7 @@ DeviceType is typically quite accurate, though determining between phones and ta
 # To do
 
 * Add tests for UC Browser
-* Improve Kindle eink support
 * Support NetFront
-* Support Nokia
+* Support [Nokia Browser](https://en.wikipedia.org/wiki/Nokia_Browser_for_Symbian)
 * Identify bots
 * Add OS->Browser identification logic

@@ -34,9 +34,17 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 			b.Browser.Name = "ie"
 		} else if strings.Contains(ua, "ucbrowser/") || strings.Contains(ua, "ucweb/") {
 			b.Browser.Name = "ucbrowser"
+			// UC Browser abbreviates OS names, so we need these custom ones:
+			/*			if strings.Contains(ua, "adr ") {
+							os = "android"
+						} else if {
+
+							} else if {
+
+							}*/
 		} else if strings.Contains(ua, "chrome/") || strings.Contains(ua, "crios/") || strings.Contains(ua, "chromium/") { //Edge, Silk and other chrome-identifying browsers must evaluate before chrome, unless we want to add more overhead
 			b.Browser.Name = "chrome"
-		} else if strings.Contains(ua, "android") && !strings.Contains(ua, "chrome/") && strings.Contains(ua, "version/") {
+		} else if strings.Contains(ua, "android") && !strings.Contains(ua, "chrome/") && strings.Contains(ua, "version/") && !strings.Contains(ua, "like android") {
 			// Android WebView on Android >= 4.4 is purposefully being identified as Chrome above -- https://developer.chrome.com/multidevice/webview/overview
 			b.Browser.Name = "android"
 		} else if strings.Contains(ua, "fxios") {
@@ -46,7 +54,7 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 			safariId, _ := regexp.Compile("\\w{3}\\/\\d")
 			safariFingerprint := len(safariId.FindAllString(ua, -1))
 
-			if (safariFingerprint == 4 || safariFingerprint == 5) && strings.Contains(ua, "version/") && strings.Contains(ua, "safari/") && strings.Contains(ua, "mozilla/") {
+			if (safariFingerprint == 4 || safariFingerprint == 5) && strings.Contains(ua, "version/") && strings.Contains(ua, "safari/") && strings.Contains(ua, "mozilla/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") {
 				b.Browser.Name = "safari"
 			}
 		}
@@ -61,6 +69,7 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 	} else if strings.Contains(ua, "nintendo") {
 		b.Browser.Name = "nintendo"
 	}
+
 	// Find browser version using 3 methods in order:
 	// 1st: look for generic version/#
 	// 2nd: look for browser-specific instructions (e.g. chrome/34)

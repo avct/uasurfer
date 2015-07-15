@@ -116,6 +116,14 @@ var testUAStrings = []struct {
 	{"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) BlackBerry8703e/4.1.0 Profile/MIDP-2.0 Configuration/CLDC-1.1 VendorID/104",
 		"blackberry", 0, "blackberry", "blackberry", 0, "phone"},
 
+	// Kindle
+
+	{"Mozilla/5.0 (Linux; U; en-US) AppleWebKit/528.5+ (KHTML, like Gecko, Safari/528.5+) Version/4.0 Kindle/3.0 (screen 600×800; rotate)",
+		"unknown", 4, "kindle", "kindle", 0, "tablet"},
+
+	{"Mozilla/5.0 (X11; U; Linux armv7l like Android; en-us) AppleWebKit/531.2+ (KHTML, like Gecko) Version/5.0 Safari/533.2+ Kindle/3.0+",
+		"unknown", 5, "kindle", "kindle", 0, "tablet"},
+
 	// Nintendo
 	{"Opera/9.30 (Nintendo Wii; U; ; 2047-7; fr)",
 		"opera", 9, "nintendo", "nintendo", 0, "console"},
