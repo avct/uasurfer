@@ -103,7 +103,6 @@ DeviceType is typically quite accurate, though determining between phones and ta
 
 # To do
 
-* Add tests for UC Browser
 * Support NetFront
 * Support [Nokia Browser](https://en.wikipedia.org/wiki/Nokia_Browser_for_Symbian)
 * Identify bots
