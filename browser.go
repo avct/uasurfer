@@ -66,6 +66,8 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 		}
 	} else if strings.Contains(ua, "presto") || strings.Contains(ua, "opera") {
 		b.Browser.Name = "opera"
+	} else if strings.Contains(ua, "ucbrowser") {
+		b.Browser.Name = "ucbrowser"
 	} else if strings.Contains(ua, "nintendo") {
 		b.Browser.Name = "nintendo"
 	}
