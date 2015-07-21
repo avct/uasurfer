@@ -22,7 +22,7 @@ type Browser struct {
 // version (int) is returned.
 func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 
-	// Narrow browser by engine, then inference from other key words
+	// find the fastest path of string inference to identify browser
 	if strings.Contains(ua, "blackberry") || strings.Contains(ua, "playbook") || strings.Contains(ua, "bb10") { //blackberry goes first because it reads as MSIE & Safari really well
 		b.Browser.Name = "blackberry"
 	} else if strings.Contains(ua, "applewebkit") {
@@ -49,6 +49,8 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 			b.Browser.Name = "android"
 		} else if strings.Contains(ua, "fxios") {
 			b.Browser.Name = "firefox"
+		} else if strings.Contains(ua, "symbian") || strings.Contains(ua, "browserng") || strings.Contains(ua, "nokia") {
+			b.Browser.Name = "nokia"
 		} else if strings.Contains(ua, "like gecko") {
 			// Safari is the most generic, archtypical User-Agent on the market -- it's identified by making sure effectively by checking for attribute purity. It's fingerprint should have 4 or 5 total x/y attributes, 'mobile/version' being optional
 			safariId, _ := regexp.Compile("\\w{3}\\/\\d")
@@ -60,12 +62,14 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 		}
 	} else if strings.Contains(ua, "msie") || strings.Contains(ua, "trident") {
 		b.Browser.Name = "ie"
-	} else if strings.Contains(ua, "gecko") {
-		if strings.Contains(ua, "firefox") || strings.Contains(ua, "iceweasel") || strings.Contains(ua, "seamonkey") || strings.Contains(ua, "icecat") {
+	} else if strings.Contains(ua, "firefox") || strings.Contains(ua, "iceweasel") || strings.Contains(ua, "seamonkey") || strings.Contains(ua, "icecat") {
+		if strings.Contains(ua, "gecko") {
 			b.Browser.Name = "firefox"
 		}
 	} else if strings.Contains(ua, "presto") || strings.Contains(ua, "opera") {
 		b.Browser.Name = "opera"
+	} else if strings.Contains(ua, "symbian") || strings.Contains(ua, "browserng") || strings.Contains(ua, "nokia") {
+		b.Browser.Name = "nokia"
 	} else if strings.Contains(ua, "ucbrowser") {
 		b.Browser.Name = "ucbrowser"
 	} else if strings.Contains(ua, "nintendo") {
@@ -124,6 +128,8 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 			}
 		case "silk":
 			v = getMajorVersion(ua, "silk/\\d+")
+		case "nokia":
+			v = getMajorVersion(ua, "(browser|ng)\\/\\d+")
 		case "nintendo":
 			v = "0" //getMajorVersion(ua, "nintendobrowser/\\d+")
 		//case "opera":

@@ -51,6 +51,7 @@ The BrowserProfile supplies specific enum strings along with integers for versio
 * `opera`
 * `ucbrowser`
 * `silk`
+* `nokia`
 
 #### Browser.Version
 
@@ -104,6 +105,5 @@ DeviceType is typically quite accurate, though determining between phones and ta
 # To do
 
 * Support NetFront
-* Support [Nokia Browser](https://en.wikipedia.org/wiki/Nokia_Browser_for_Symbian)
 * Identify bots
 * Add OS->Browser identification logic

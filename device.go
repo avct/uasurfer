@@ -37,7 +37,7 @@ func (b *BrowserProfile) evalDevice(ua string) string {
 			device = "wearable"
 		} else if b.Browser.Name == "silk" {
 			device = "tablet"
-		} else if strings.Contains(ua, "mobile") || strings.Contains(ua, "touch") || strings.Contains(ua, " mobi") { //anything "mobile"/"touch" that didn't get captured as tablet, console or wearable is presumed a phone
+		} else if strings.Contains(ua, "mobile") || strings.Contains(ua, "touch") || strings.Contains(ua, " mobi") || b.Browser.Name == "nokia" { //anything "mobile"/"touch" that didn't get captured as tablet, console or wearable is presumed a phone
 			device = "phone"
 		} else if b.OS.Name == "linux" { // linux goes last since it's in so many other device types (tvs, wearables)
 			device = "computer"
