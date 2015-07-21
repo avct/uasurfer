@@ -231,13 +231,16 @@ func TestAgentSurfer(t *testing.T) {
 
 func BenchmarkAgentSurfer(b *testing.B) {
 	num := len(testUAStrings)
+	bp := new(BrowserProfile)
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		New(testUAStrings[i%num].UA)
+		bp.Parse(testUAStrings[i%num].UA)
 	}
 }
 
 func BenchmarkFullParse(b *testing.B) {
 	bp := new(BrowserProfile)
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		bp.Parse("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36")
 	}
