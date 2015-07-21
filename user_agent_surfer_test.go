@@ -237,7 +237,8 @@ func BenchmarkAgentSurfer(b *testing.B) {
 }
 
 func BenchmarkFullParse(b *testing.B) {
+	bp := new(BrowserProfile)
 	for i := 0; i < b.N; i++ {
-		New("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36")
+		bp.Parse("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36")
 	}
 }

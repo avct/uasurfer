@@ -6,6 +6,19 @@ import (
 	"strings"
 )
 
+var (
+	safariId       = regexp.MustCompile("\\w{3}\\/\\d")
+	bVersion       = regexp.MustCompile("version/\\d+")
+	chromeVersion  = regexp.MustCompile("(chrome|crios)/\\d+")
+	ieVersion      = regexp.MustCompile("(msie\\s|edge/)\\d+")
+	tridentVersion = regexp.MustCompile("trident/\\d+")
+	firefoxVersion = regexp.MustCompile("(firefox|fxios)/\\d+")
+	ucVersion      = regexp.MustCompile("ucbrowser/\\d+")
+	oprVersion     = regexp.MustCompile("opr/\\d+")
+	operaVersion   = regexp.MustCompile("opera/\\d+")
+	silkVersion    = regexp.MustCompile("silk/\\d+")
+)
+
 // Browser struct contains the lowercase name of the browser, along
 // with its major browser version number. Browser are grouped together without
 // consideration for device. For example, Chrome (Chrome/43.0) and Chrome for iOS
@@ -21,7 +34,6 @@ type Browser struct {
 // is obtainable. A lowercase browser name (string) and its
 // version (int) is returned.
 func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
-
 	// Narrow browser by engine, then inference from other key words
 	if strings.Contains(ua, "blackberry") || strings.Contains(ua, "playbook") || strings.Contains(ua, "bb10") { //blackberry goes first because it reads as MSIE & Safari really well
 		b.Browser.Name = "blackberry"
@@ -51,7 +63,6 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 			b.Browser.Name = "firefox"
 		} else if strings.Contains(ua, "like gecko") {
 			// Safari is the most generic, archtypical User-Agent on the market -- it's identified by making sure effectively by checking for attribute purity. It's fingerprint should have 4 or 5 total x/y attributes, 'mobile/version' being optional
-			safariId, _ := regexp.Compile("\\w{3}\\/\\d")
 			safariFingerprint := len(safariId.FindAllString(ua, -1))
 
 			if (safariFingerprint == 4 || safariFingerprint == 5) && strings.Contains(ua, "version/") && strings.Contains(ua, "safari/") && strings.Contains(ua, "mozilla/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") {
@@ -77,7 +88,6 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 	// 2nd: look for browser-specific instructions (e.g. chrome/34)
 	// 3rd: infer from OS
 	v := ""
-	bVersion, _ := regexp.Compile("version/\\d+")
 
 	// if there is a 'version/#' attribute with numeric version, use it
 	if bVersion.MatchString(ua) {
@@ -87,14 +97,14 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 		switch b.Browser.Name {
 		case "chrome":
 			// match both chrome and crios
-			v = getMajorVersion(ua, "(chrome|crios)/\\d+")
+			v = getMajorVersion(ua, chromeVersion)
 		case "ie":
 			if strings.Contains(ua, "msie") || strings.Contains(ua, "edge") {
-				v = getMajorVersion(ua, "(msie\\s|edge/)\\d+")
+				v = getMajorVersion(ua, ieVersion)
 			} else {
 				// switch based on trident version indicator https://en.wikipedia.org/wiki/Trident_(layout_engine)
 				if strings.Contains(ua, "trident") {
-					v = getMajorVersion(ua, "trident/\\d+")
+					v = getMajorVersion(ua, tridentVersion)
 					switch v {
 					case "3":
 						v = "7"
@@ -113,17 +123,17 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 				v = "0"
 			}
 		case "firefox":
-			v = getMajorVersion(ua, "(firefox|fxios)/\\d+")
+			v = getMajorVersion(ua, firefoxVersion)
 		case "ucbrowser":
-			v = getMajorVersion(ua, "ucbrowser/\\d+")
+			v = getMajorVersion(ua, ucVersion)
 		case "opera":
 			if strings.Contains(ua, "opr/") {
-				v = getMajorVersion(ua, "opr/\\d+")
+				v = getMajorVersion(ua, oprVersion)
 			} else {
-				v = getMajorVersion(ua, "opera/\\d+")
+				v = getMajorVersion(ua, operaVersion)
 			}
 		case "silk":
-			v = getMajorVersion(ua, "silk/\\d+")
+			v = getMajorVersion(ua, silkVersion)
 		case "nintendo":
 			v = "0" //getMajorVersion(ua, "nintendobrowser/\\d+")
 		//case "opera":
@@ -190,8 +200,7 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 
 // Subfunction of evalBrowser() that takes two parameters: regex (string) and
 // user agent (string) and returns the number as a string. "0" denotes no version.
-func getMajorVersion(ua string, match string) string {
-	bVersion, _ := regexp.Compile(match)
+func getMajorVersion(ua string, bVersion *regexp.Regexp) string {
 	ver := bVersion.FindString(ua)
 
 	if ver != "" {
