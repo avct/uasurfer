@@ -194,36 +194,37 @@ var testUAStrings = []struct {
 }
 
 func TestAgentSurfer(t *testing.T) {
+	bp := new(BrowserProfile)
 	for i, determined := range testUAStrings {
-		parsed := New(determined.UA)
+		bp.Parse(determined.UA)
 
-		if parsed.Browser.Name != determined.browserName {
-			t.Errorf("%d browserName: got %s, wanted %s", i, parsed.Browser.Name, determined.browserName)
+		if bp.Browser.Name != determined.browserName {
+			t.Errorf("%d browserName: got %s, wanted %s", i, bp.Browser.Name, determined.browserName)
 			t.Logf("%d agent: %s", i, determined.UA)
 		}
 
-		if parsed.Browser.Version != determined.browserVersion {
-			t.Errorf("%d browser version: got %d, wanted %d", i, parsed.Browser.Version, determined.browserVersion)
+		if bp.Browser.Version != determined.browserVersion {
+			t.Errorf("%d browser version: got %d, wanted %d", i, bp.Browser.Version, determined.browserVersion)
 			t.Logf("%d agent: %s", i, determined.UA)
 		}
 
-		if parsed.Platform != determined.Platform {
-			t.Errorf("%d platform: got %s, wanted %s", i, parsed.Platform, determined.Platform)
+		if bp.Platform != determined.Platform {
+			t.Errorf("%d platform: got %s, wanted %s", i, bp.Platform, determined.Platform)
 			t.Logf("%d agent: %s", i, determined.UA)
 		}
 
-		if parsed.OS.Name != determined.osName {
-			t.Errorf("%d os: got %s, wanted %s", i, parsed.OS.Name, determined.osName)
+		if bp.OS.Name != determined.osName {
+			t.Errorf("%d os: got %s, wanted %s", i, bp.OS.Name, determined.osName)
 			t.Logf("%d agent: %s", i, determined.UA)
 		}
 
-		if parsed.OS.Version != determined.osVersion {
-			t.Errorf("%d os version: got %d, wanted %d", i, parsed.OS.Version, determined.osVersion)
+		if bp.OS.Version != determined.osVersion {
+			t.Errorf("%d os version: got %d, wanted %d", i, bp.OS.Version, determined.osVersion)
 			t.Logf("%d agent: %s", i, determined.UA)
 		}
 
-		if parsed.DeviceType != determined.deviceType {
-			t.Errorf("%d device type: got %v, wanted %v", i, parsed.DeviceType, determined.deviceType)
+		if bp.DeviceType != determined.deviceType {
+			t.Errorf("%d device type: got %v, wanted %v", i, bp.DeviceType, determined.deviceType)
 			t.Logf("%d agent: %s", i, determined.UA)
 		}
 	}

@@ -48,23 +48,11 @@ func (b *BrowserProfile) initialize() {
 	b.DeviceType = DeviceUnknown
 }
 
-// New is the core interface, so to speak. Supplying a user-agent string (string) returns a
-// completed BrowserProfile type. If there is no match, "unknown" is returned for strings and
-// 0 for ints.
-// TODO: I would remove the New method. Move the lowercase code into Parse
-//       and then only the Parse method is needed.
-func New(ua string) *BrowserProfile {
-	ua = strings.ToLower(ua)
-	obj := &BrowserProfile{}
-	obj.Parse(ua)
-	return obj
-}
-
 func (b *BrowserProfile) Parse(ua string) {
 	b.initialize()
 	ua = strings.ToLower(ua)
-	b.UA = ua
 
+	b.UA = ua
 	b.Platform, b.OS.Name, b.OS.Version = b.evalSystem(ua)
 	b.Browser.Name, b.Browser.Version = b.evalBrowser(ua)
 	b.DeviceType = b.evalDevice(ua)
