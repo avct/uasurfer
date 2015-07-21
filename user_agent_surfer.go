@@ -34,17 +34,18 @@ func (b *BrowserProfile) initialize() {
 // 0 for ints.
 func New(ua string) *BrowserProfile {
 	ua = strings.ToLower(ua)
-	obj := &BrowserProfile{}
-	obj.Parse(ua)
-	return obj
+	bp := &BrowserProfile{}
+	bp.Parse(ua)
+	return bp
 }
 
 func (b *BrowserProfile) Parse(ua string) {
 	b.initialize()
 	b.UA = ua
 
-	b.Platform, b.OS.Name, b.OS.Version = b.evalSystem(ua)
-	b.Browser.Name, b.Browser.Version = b.evalBrowser(ua)
-	b.DeviceType = b.evalDevice(ua)
-
+	b.evalBrowser(ua)
+	if b.Browser.Name != "bot" {
+		b.Platform, b.OS.Name, b.OS.Version = b.evalSystem(ua)
+		b.DeviceType = b.evalDevice(ua)
+	}
 }

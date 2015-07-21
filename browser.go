@@ -20,10 +20,18 @@ type Browser struct {
 // the "Version/#" UA attribute over others. Set to 0 if no version
 // is obtainable. A lowercase browser name (string) and its
 // version (int) is returned.
-func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
+func (b *BrowserProfile) evalBrowser(ua string) {
 
 	// find the fastest path of string inference to identify browser
-	if strings.Contains(ua, "blackberry") || strings.Contains(ua, "playbook") || strings.Contains(ua, "bb10") { //blackberry goes first because it reads as MSIE & Safari really well
+	if strings.Contains(ua, "http") || strings.Contains(ua, "bot") || strings.Contains(ua, "spider") || strings.Contains(ua, "crawler") || strings.Contains(ua, " dot ") || strings.Contains(ua, "scrape") {
+		b.Browser.Name = "bot"
+		b.Browser.Version = 0
+		b.Platform = "bot"
+		b.OS.Name = "bot"
+		b.OS.Version = 0
+		b.DeviceType = "bot"
+		return // it's a bot, let's cease evaluating
+	} else if strings.Contains(ua, "blackberry") || strings.Contains(ua, "playbook") || strings.Contains(ua, "bb10") { //blackberry at the top because it reads as MSIE & Safari really well
 		b.Browser.Name = "blackberry"
 	} else if strings.Contains(ua, "applewebkit") {
 		if strings.Contains(ua, "opr/") {
@@ -34,14 +42,6 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 			b.Browser.Name = "ie"
 		} else if strings.Contains(ua, "ucbrowser/") || strings.Contains(ua, "ucweb/") {
 			b.Browser.Name = "ucbrowser"
-			// UC Browser abbreviates OS names, so we need these custom ones:
-			/*			if strings.Contains(ua, "adr ") {
-							os = "android"
-						} else if {
-
-							} else if {
-
-							}*/
 		} else if strings.Contains(ua, "chrome/") || strings.Contains(ua, "crios/") || strings.Contains(ua, "chromium/") { //Edge, Silk and other chrome-identifying browsers must evaluate before chrome, unless we want to add more overhead
 			b.Browser.Name = "chrome"
 		} else if strings.Contains(ua, "android") && !strings.Contains(ua, "chrome/") && strings.Contains(ua, "version/") && !strings.Contains(ua, "like android") {
@@ -132,8 +132,6 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 			v = getMajorVersion(ua, "(browser|ng)\\/\\d+")
 		case "nintendo":
 			v = "0" //getMajorVersion(ua, "nintendobrowser/\\d+")
-		//case "opera":
-		// could be either version/x or opr/x
 		default:
 			v = "0"
 		}
@@ -191,7 +189,7 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 
 	b.Browser.Version, _ = strconv.Atoi(v)
 
-	return b.Browser.Name, b.Browser.Version
+	return
 }
 
 // Subfunction of evalBrowser() that takes two parameters: regex (string) and

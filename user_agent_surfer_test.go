@@ -88,7 +88,7 @@ var testUAStrings = []struct {
 	{"Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; ARM; Trident/6.0; Touch)", //Windows Surface RT tablet
 		"ie", 10, "windows", "8", 6, "tablet"},
 
-	//UC Browser
+	// UC Browser
 	{"Mozilla/5.0 (Linux; U; Android 2.3.4; en-US; MT11i Build/4.0.2.A.0.62) AppleWebKit/534.31 (KHTML, like Gecko) UCBrowser/9.0.1.275 U3/0.8.0 Mobile Safari/534.31",
 		"ucbrowser", 9, "linux", "android", 2, "phone"},
 
@@ -113,7 +113,6 @@ var testUAStrings = []struct {
 		"chrome", 4, "linux", "chromeos", 0, "computer"},
 
 	// WebOS
-
 	{"Mozilla/5.0 (hp-tablet; Linux; hpwOS/3.0.0; U; de-DE) AppleWebKit/534.6 (KHTML, like Gecko) wOSBrowser/233.70 Safari/534.6 TouchPad/1.0",
 		"unknown", 0, "linux", "webos", 0, "tablet"},
 
@@ -121,7 +120,6 @@ var testUAStrings = []struct {
 		"unknown", 1, "linux", "webos", 0, "unknown"},
 
 	// Android WebView (Android <= 4.3)
-
 	{"Mozilla/5.0 (Linux; U; Android 2.2; en-us; DROID2 GLOBAL Build/S273) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",
 		"android", 4, "linux", "android", 2, "phone"},
 
@@ -129,7 +127,6 @@ var testUAStrings = []struct {
 		"android", 4, "linux", "android", 4, "phone"},
 
 	// BlackBerry
-
 	{"Mozilla/5.0 (PlayBook; U; RIM Tablet OS 2.1.0; en-US) AppleWebKit/536.2+ (KHTML, like Gecko) Version/7.2.1.0 Safari/536.2+",
 		"blackberry", 7, "blackberry", "blackberry", 0, "tablet"},
 
@@ -139,8 +136,14 @@ var testUAStrings = []struct {
 	{"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) BlackBerry8703e/4.1.0 Profile/MIDP-2.0 Configuration/CLDC-1.1 VendorID/104",
 		"blackberry", 0, "blackberry", "blackberry", 0, "phone"},
 
-	// Kindle
+	// Windows Phone
+	{"Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; NOKIA; Lumia 625; ANZ941)",
+		"ie", 10, "windows phone", "8", 8, "phone"},
 
+	{"Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; NOKIA; Lumia 900)",
+		"ie", 9, "windows phone", "7", 7, "phone"},
+
+	// Kindle
 	{"Mozilla/5.0 (Linux; U; en-US) AppleWebKit/528.5+ (KHTML, like Gecko, Safari/528.5+) Version/4.0 Kindle/3.0 (screen 600×800; rotate)",
 		"unknown", 4, "kindle", "kindle", 0, "tablet"},
 
@@ -188,8 +191,14 @@ var testUAStrings = []struct {
 	{"Roku/DVP-5.2 (025.02E03197A)", // Roku
 		"unknown", 0, "unknown", "unknown", 0, "tv"},
 
-	// Unknown or partially handled
+	// Bots
+	{"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+		"bot", 0, "bot", "bot", 0, "bot"},
 
+	{"Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+		"bot", 0, "bot", "bot", 0, "bot"},
+
+	// Unknown or partially handled
 	{"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.1b3pre) Gecko/20090223 SeaMonkey/2.0a3", //Seamonkey (~FF)
 		"firefox", 0, "mac", "os x", 4, "computer"},
 

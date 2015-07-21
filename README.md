@@ -67,6 +67,7 @@ Browser.Version returns an integer of the correct top-level version attribute of
 * `windows phone`
 * `kindle` - Fire models
 * `playstation`, `xbox`, `nintendo`
+* `bot`
 
 #### OS.Name
 * `2000`, `xp`, `vista`, `7`, `8`, `10`
@@ -77,6 +78,7 @@ Browser.Version returns an integer of the correct top-level version attribute of
 * `webos`
 * `linux`
 * `playstation`, `xbox`, `nintendo`
+* `bot`
 
 #### OS.Version
 
@@ -96,6 +98,7 @@ DeviceType is typically quite accurate, though determining between phones and ta
 * `tv`
 * `console`
 * `wearable`
+* `bot`
 
 #### Combination examples
 * Surface RT -> `windows`, `tablet`, OS.Version >= `6`
@@ -105,5 +108,4 @@ DeviceType is typically quite accurate, though determining between phones and ta
 # To do
 
 * Support NetFront
-* Identify bots
 * Add OS->Browser identification logic
