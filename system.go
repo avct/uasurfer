@@ -111,7 +111,7 @@ func (b *BrowserProfile) evalSystem(ua string) (string, string, int) {
 			}
 			//windows
 		} else if strings.Contains(ua, "windows ") {
-			//account for xbox looking just like windows, and also xbox strings can also show up on Windows Phone
+			//account for xbox looking just like windows, and xbox strings can also show up on Windows Phone
 			if strings.Contains(ua, "xbox") {
 				platform = "xbox"
 				os = "xbox"
