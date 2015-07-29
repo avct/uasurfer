@@ -6,6 +6,15 @@ import (
 	"strings"
 )
 
+var (
+	iosVersion           = regexp.MustCompile("(cpu|iphone) os \\d+")
+	osxVersionUnderscore = regexp.MustCompile("os x 10_\\d+")
+	osxVersionDot        = regexp.MustCompile("os x 10\\.\\d+")
+	wpVer                = regexp.MustCompile("windows\\sphone\\s\\d+")
+	kindleTest           = regexp.MustCompile("\\sKF[A-Z]{2,4}\\s")
+	androidVersion       = regexp.MustCompile("android \\d+")
+)
+
 // OS type returns a lowercase name (string) of the operating system, along with its major version (int).
 // To allow easy of use with math operators, the version numbers for Mac and Win may be slightly unexpected.
 // Here are some examples:
@@ -66,7 +75,6 @@ func (b *BrowserProfile) evalSystem(ua string) (string, string, int) {
 			platform = "ipad"
 		}
 
-		iosVersion, _ := regexp.Compile("(cpu|iphone) os \\d+")
 		if iosVersion.MatchString(pgroup_string) {
 			os = "ios"
 			v = strings.Split(iosVersion.FindString(pgroup_string), " ")[2]
@@ -76,16 +84,14 @@ func (b *BrowserProfile) evalSystem(ua string) (string, string, int) {
 		platform = "mac"
 
 		if strings.Contains(pgroup_string, "os x 10_") {
-			osxVersion, _ := regexp.Compile("os x 10_\\d+")
-			if osxVersion.MatchString(pgroup_string) {
+			if osxVersionUnderscore.MatchString(pgroup_string) {
 				os = "os x"
-				v = strings.TrimPrefix(osxVersion.FindString(pgroup_string), "os x 10_")
+				v = strings.TrimPrefix(osxVersionUnderscore.FindString(pgroup_string), "os x 10_")
 			}
 		} else if strings.Contains(pgroup_string, "os x 10.") {
-			osxVersion, _ := regexp.Compile("os x 10\\.\\d+")
-			if osxVersion.MatchString(pgroup_string) {
+			if osxVersionDot.MatchString(pgroup_string) {
 				os = "os x"
-				v = strings.TrimPrefix(osxVersion.FindString(pgroup_string), "os x 10.")
+				v = strings.TrimPrefix(osxVersionDot.FindString(pgroup_string), "os x 10.")
 			}
 		}
 	}
@@ -111,7 +117,7 @@ func (b *BrowserProfile) evalSystem(ua string) (string, string, int) {
 			}
 			//windows
 		} else if strings.Contains(ua, "windows ") {
-			//account for xbox looking just like windows, and xbox strings can also show up on Windows Phone
+			//account for xbox looking just like windows, and also xbox strings can also show up on Windows Phone
 			if strings.Contains(ua, "xbox") {
 				platform = "xbox"
 				os = "xbox"
@@ -155,7 +161,6 @@ func (b *BrowserProfile) evalSystem(ua string) (string, string, int) {
 		} else if strings.Contains(ua, "android") {
 			// first check if it's a Kindle -- TODO: test if this may be too expensive a method, but kindle != silk
 
-			kindleTest, _ := regexp.Compile("\\sKF[A-Z]{2,4}\\s")
 			if kindleTest.MatchString(pgroup_string) {
 				platform = "kindle"
 			} else {
@@ -163,9 +168,8 @@ func (b *BrowserProfile) evalSystem(ua string) (string, string, int) {
 			}
 
 			os = "android"
-			aVersion, _ := regexp.Compile("android \\d+")
-			if aVersion.MatchString(pgroup_string) {
-				v = strings.TrimPrefix(aVersion.FindString(pgroup_string), "android ")
+			if androidVersion.MatchString(pgroup_string) {
+				v = strings.TrimPrefix(androidVersion.FindString(pgroup_string), "android ")
 			}
 		} else if strings.Contains(ua, "nintendo") {
 			platform = "nintendo"
