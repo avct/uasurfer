@@ -106,8 +106,15 @@ func (b *BrowserProfile) evalSystem(ua string) (string, string, int) {
 			//windows phone
 		} else if strings.Contains(pgroup_string, "windows phone ") {
 			platform = "windows phone"
-			os = strings.TrimPrefix(wpVer.FindString(pgroup_string), "windows phone ")
-			v = os
+			if strings.Contains(pgroup_string, "windows phone os ") {
+				wpVer, _ := regexp.Compile("windows\\sphone\\sos\\s\\d+")
+				os = strings.TrimPrefix(wpVer.FindString(pgroup_string), "windows phone os ")
+				v = os
+			} else {
+				wpVer, _ := regexp.Compile("windows\\sphone\\s\\d+")
+				os = strings.TrimPrefix(wpVer.FindString(pgroup_string), "windows phone ")
+				v = os
+			}
 			//windows
 		} else if strings.Contains(ua, "windows ") {
 			//account for xbox looking just like windows, and also xbox strings can also show up on Windows Phone

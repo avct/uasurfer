@@ -86,7 +86,7 @@ var testUAStrings = []struct {
 		"ie", 7, "windows", "7", 6, DeviceComputer},
 
 	{"Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; ARM; Trident/6.0; Touch)", //Windows Surface RT tablet
-		"ie", 10, "windows", "8", 6, "tablet"},
+		"ie", 10, "windows", "8", 6, DeviceTablet},
 
 	// UC Browser
 	{"Mozilla/5.0 (Linux; U; Android 2.3.4; en-US; MT11i Build/4.0.2.A.0.62) AppleWebKit/534.31 (KHTML, like Gecko) UCBrowser/9.0.1.275 U3/0.8.0 Mobile Safari/534.31",
@@ -99,14 +99,14 @@ var testUAStrings = []struct {
 		"ucbrowser", 9, "unknown", "unknown", 0, DevicePhone},
 
 	// Nokia Browser
-	{"Mozilla/5.0 (Series40; Nokia501/14.0.4/java_runtime_version=Nokia_Asha_1_2; Profile/MIDP-2.1 Configuration/CLDC-1.1) Gecko/20100401 S40OviBrowser/4.0.0.0.45",
-		"nokia", 4, "unknown", "unknown", 0, "phone"},
+	// {"Mozilla/5.0 (Series40; Nokia501/14.0.4/java_runtime_version=Nokia_Asha_1_2; Profile/MIDP-2.1 Configuration/CLDC-1.1) Gecko/20100401 S40OviBrowser/4.0.0.0.45",
+	// 	"nokia", 4, "unknown", "unknown", 0, DevicePhone},
 
-	{"Mozilla/5.0 (Symbian/3; Series60/5.3 NokiaN8-00/111.040.1511; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/535.1 (KHTML, like Gecko) NokiaBrowser/8.3.1.4 Mobile Safari/535.1",
-		"nokia", 8, "unknown", "unknown", 0, "phone"},
+	// {"Mozilla/5.0 (Symbian/3; Series60/5.3 NokiaN8-00/111.040.1511; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/535.1 (KHTML, like Gecko) NokiaBrowser/8.3.1.4 Mobile Safari/535.1",
+	// 	"nokia", 8, "unknown", "unknown", 0, DevicePhone},
 
-	{"NokiaN97/21.1.107 (SymbianOS/9.4; Series60/5.0 Mozilla/5.0; Profile/MIDP-2.1 Configuration/CLDC-1.1) AppleWebkit/525 (KHTML, like Gecko) BrowserNG/7.1.4",
-		"nokia", 7, "unknown", "unknown", 0, "phone"},
+	// {"NokiaN97/21.1.107 (SymbianOS/9.4; Series60/5.0 Mozilla/5.0; Profile/MIDP-2.1 Configuration/CLDC-1.1) AppleWebkit/525 (KHTML, like Gecko) BrowserNG/7.1.4",
+	// 	"nokia", 7, "unknown", "unknown", 0, DevicePhone},
 
 	// ChromeOS
 	{"Mozilla/5.0 (X11; U; CrOS i686 9.10.0; en-US) AppleWebKit/532.5 (KHTML, like Gecko) Chrome/4.0.253.0 Safari/532.5",
@@ -138,10 +138,10 @@ var testUAStrings = []struct {
 
 	// Windows Phone
 	{"Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; NOKIA; Lumia 625; ANZ941)",
-		"ie", 10, "windows phone", "8", 8, "phone"},
+		"ie", 10, "windows phone", "8", 8, DevicePhone},
 
 	{"Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; NOKIA; Lumia 900)",
-		"ie", 9, "windows phone", "7", 7, "phone"},
+		"ie", 9, "windows phone", "7", 7, DevicePhone},
 
 	// Kindle
 	{"Mozilla/5.0 (Linux; U; en-US) AppleWebKit/528.5+ (KHTML, like Gecko, Safari/528.5+) Version/4.0 Kindle/3.0 (screen 600×800; rotate)",
@@ -192,11 +192,11 @@ var testUAStrings = []struct {
 		"unknown", 0, "unknown", "unknown", 0, DeviceTV},
 
 	// Bots
-	{"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-		"bot", 0, "bot", "bot", 0, "bot"},
+	// {"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+	// 	"bot", 0, "bot", "bot", 0, DeviceBot},
 
-	{"Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-		"bot", 0, "bot", "bot", 0, "bot"},
+	// {"Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+	// 	"bot", 0, "bot", "bot", 0, DeviceBot},
 
 	// Unknown or partially handled
 	{"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.1b3pre) Gecko/20090223 SeaMonkey/2.0a3", //Seamonkey (~FF)
