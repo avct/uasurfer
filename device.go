@@ -1,38 +1,26 @@
-package user_agent_surfer
+package uasurfer
 
 import (
 	"strings"
 )
 
 // Retrieve and/or deduce the espoused device type running the browser. Returns string enum: Computer, Phone, Tablet, Wearable, TV, Console
-func (b *BrowserProfile) evalDevice(ua string) DeviceType {
+func evalDevice(ua string, os OSName, platform Platform, browser BrowserName) DeviceType {
 	// NOTE: In Go, else clauses are not common. It is more idiomatic to
 	//       return early or use a switch statement
-	if b.OS.Name == "os x" || b.Platform == "windows" || b.OS.Name == "chromeos" {
+	if os == OSMacOSX || platform == PlatformWindows || os == OSChromeOS {
 		if strings.Contains(ua, "mobile") || strings.Contains(ua, "touch") {
 			return DeviceTablet // windows rt, linux haxor tablets
 		}
 		return DeviceComputer
 	}
 
-	if strings.Contains(ua, "tablet") || b.Platform == "ipad" || b.Platform == "kindle" || strings.Contains(ua, "kindle/") || strings.Contains(ua, "playbook") {
+	if strings.Contains(ua, "tablet") || platform == PlatformiPad || platform == PlatformKindle || strings.Contains(ua, "kindle/") || strings.Contains(ua, "playbook") {
 		return DeviceTablet
 	}
 
-	if strings.Contains(ua, "phone") || b.Platform == "iphone" || b.Platform == "blackberry" {
+	if strings.Contains(ua, "phone") || platform == PlatformiPhone || platform == PlatformBlackberry {
 		return DevicePhone
-	}
-
-	if b.Platform == "android" {
-		// android phones report as "mobile", android tablets should not but often do -- http://android-developers.blogspot.com/2010/12/android-browser-user-agent-issues.html
-		if strings.Contains(ua, "mobile") && (!strings.Contains(ua, "nexus 7") || !strings.Contains(ua, "nexus 9") || !strings.Contains(ua, "xoom")) {
-			return DevicePhone
-		}
-		return DeviceTablet
-	}
-
-	if b.Platform == "playstation" || b.Platform == "xbox" || b.Platform == "nintendo" {
-		return DeviceConsole
 	}
 
 	// long list of smarttv and tv dongle identifiers
@@ -40,11 +28,23 @@ func (b *BrowserProfile) evalDevice(ua string) DeviceType {
 		return DeviceTV
 	}
 
+	if os == OSAndroid {
+		// android phones report as "mobile", android tablets should not but often do -- http://android-developers.blogspot.com/2010/12/android-browser-user-agent-issues.html
+		if strings.Contains(ua, "mobile") && (!strings.Contains(ua, "nexus 7") || !strings.Contains(ua, "nexus 9") || !strings.Contains(ua, "xoom")) {
+			return DevicePhone
+		}
+		return DeviceTablet
+	}
+
+	if platform == PlatformPlaystation || platform == PlatformXbox || platform == PlatformNintendo {
+		return DeviceConsole
+	}
+
 	if strings.Contains(ua, "glass") || strings.Contains(ua, "watch") || strings.Contains(ua, "sm-v") {
 		return DeviceWearable
 	}
 
-	if b.Browser.Name == "silk" {
+	if browser == BrowserSilk {
 		return DeviceTablet
 	}
 
@@ -52,7 +52,7 @@ func (b *BrowserProfile) evalDevice(ua string) DeviceType {
 		return DevicePhone
 	}
 
-	if b.OS.Name == "linux" { // linux goes last since it's in so many other device types (tvs, wearables)
+	if os == OSLinux { // linux goes last since it's in so many other device types (tvs, wearables)
 		return DeviceComputer
 	}
 

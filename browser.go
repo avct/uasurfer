@@ -1,22 +1,22 @@
-package user_agent_surfer
+package uasurfer
 
 import (
 	"regexp"
-	"strconv"
+	//"strconv"
 	"strings"
 )
 
 var (
-	safariId       = regexp.MustCompile("\\w{3}\\/\\d")
-	bVersion       = regexp.MustCompile("version/\\d+")
-	chromeVersion  = regexp.MustCompile("(chrome|crios)/\\d+")
-	ieVersion      = regexp.MustCompile("(msie\\s|edge/)\\d+")
-	tridentVersion = regexp.MustCompile("trident/\\d+")
-	firefoxVersion = regexp.MustCompile("(firefox|fxios)/\\d+")
-	ucVersion      = regexp.MustCompile("ucbrowser/\\d+")
-	oprVersion     = regexp.MustCompile("opr/\\d+")
-	operaVersion   = regexp.MustCompile("opera/\\d+")
-	silkVersion    = regexp.MustCompile("silk/\\d+")
+	safariFingerprints = regexp.MustCompile("\\w{3}\\/\\d")
+	bVersion           = regexp.MustCompile("version/\\d+")
+	chromeVersion      = regexp.MustCompile("(chrome|crios)/\\d+")
+	ieVersion          = regexp.MustCompile("(msie\\s|edge/)\\d+")
+	tridentVersion     = regexp.MustCompile("trident/\\d+")
+	firefoxVersion     = regexp.MustCompile("(firefox|fxios)/\\d+")
+	ucVersion          = regexp.MustCompile("ucbrowser/\\d+")
+	oprVersion         = regexp.MustCompile("opr/\\d+")
+	operaVersion       = regexp.MustCompile("opera/\\d+")
+	silkVersion        = regexp.MustCompile("silk/\\d+")
 )
 
 // Browser struct contains the lowercase name of the browser, along
@@ -25,7 +25,7 @@ var (
 // (CriOS/43.0) would both return as "chrome" (name) and 43 (version). Similarly
 // Internet Explorer 11 and Edge 12 would return as "ie" and "11" or "12", respectively.
 type Browser struct {
-	Name    string
+	Name    BrowserName
 	Version int
 }
 
@@ -33,56 +33,79 @@ type Browser struct {
 // the "Version/#" UA attribute over others. Set to 0 if no version
 // is obtainable. A lowercase browser name (string) and its
 // version (int) is returned.
-func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
-	// Narrow browser by engine, then inference from other key words
-	if strings.Contains(ua, "blackberry") || strings.Contains(ua, "playbook") || strings.Contains(ua, "bb10") { //blackberry goes first because it reads as MSIE & Safari really well
-		b.Browser.Name = "blackberry"
-	} else if strings.Contains(ua, "applewebkit") {
-		if strings.Contains(ua, "opr/") {
-			b.Browser.Name = "opera"
-		} else if strings.Contains(ua, "silk/") {
-			b.Browser.Name = "silk"
-		} else if strings.Contains(ua, "edge/") || strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie ") {
-			b.Browser.Name = "ie"
-		} else if strings.Contains(ua, "ucbrowser/") || strings.Contains(ua, "ucweb/") {
-			b.Browser.Name = "ucbrowser"
-			// UC Browser abbreviates OS names, so we need these custom ones:
-			/*			if strings.Contains(ua, "adr ") {
-							os = "android"
-						} else if {
+func (b *BrowserProfile) evalBrowserName(ua string) BrowserName {
 
-							} else if {
-
-							}*/
-		} else if strings.Contains(ua, "chrome/") || strings.Contains(ua, "crios/") || strings.Contains(ua, "chromium/") { //Edge, Silk and other chrome-identifying browsers must evaluate before chrome, unless we want to add more overhead
-			b.Browser.Name = "chrome"
-		} else if strings.Contains(ua, "android") && !strings.Contains(ua, "chrome/") && strings.Contains(ua, "version/") && !strings.Contains(ua, "like android") {
-			// Android WebView on Android >= 4.4 is purposefully being identified as Chrome above -- https://developer.chrome.com/multidevice/webview/overview
-			b.Browser.Name = "android"
-		} else if strings.Contains(ua, "fxios") {
-			b.Browser.Name = "firefox"
-		} else if strings.Contains(ua, "like gecko") {
-			// Safari is the most generic, archtypical User-Agent on the market -- it's identified by making sure effectively by checking for attribute purity. It's fingerprint should have 4 or 5 total x/y attributes, 'mobile/version' being optional
-			safariFingerprint := len(safariId.FindAllString(ua, -1))
-
-			if (safariFingerprint == 4 || safariFingerprint == 5) && strings.Contains(ua, "version/") && strings.Contains(ua, "safari/") && strings.Contains(ua, "mozilla/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") {
-				b.Browser.Name = "safari"
-			}
-		}
-	} else if strings.Contains(ua, "msie") || strings.Contains(ua, "trident") {
-		b.Browser.Name = "ie"
-	} else if strings.Contains(ua, "gecko") {
-		if strings.Contains(ua, "firefox") || strings.Contains(ua, "iceweasel") || strings.Contains(ua, "seamonkey") || strings.Contains(ua, "icecat") {
-			b.Browser.Name = "firefox"
-		}
-	} else if strings.Contains(ua, "presto") || strings.Contains(ua, "opera") {
-		b.Browser.Name = "opera"
-	} else if strings.Contains(ua, "ucbrowser") {
-		b.Browser.Name = "ucbrowser"
-	} else if strings.Contains(ua, "nintendo") {
-		b.Browser.Name = "nintendo"
+	if strings.Contains(ua, "blackberry") || strings.Contains(ua, "playbook") || strings.Contains(ua, "bb10") { //blackberry goes first because it reads as MSIE & Safari
+		return BrowserBlackberry
 	}
 
+	if strings.Contains(ua, "applewebkit") {
+
+		if strings.Contains(ua, "opr/") {
+			return BrowserOpera
+		}
+
+		if strings.Contains(ua, "silk/") {
+			return BrowserSilk
+		}
+
+		if strings.Contains(ua, "edge/") || strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie ") {
+			return BrowserIE
+		}
+
+		if strings.Contains(ua, "ucbrowser/") || strings.Contains(ua, "ucweb/") {
+			return BrowserUCBrowser
+		}
+
+		if strings.Contains(ua, "chrome/") || strings.Contains(ua, "crios/") || strings.Contains(ua, "chromium/") { //Edge, Silk and other chrome-identifying browsers must evaluate before chrome, unless we want to add more overhead
+			return BrowserChrome
+		}
+
+		if strings.Contains(ua, "android") && !strings.Contains(ua, "chrome/") && strings.Contains(ua, "version/") && !strings.Contains(ua, "like android") {
+			// Android WebView on Android >= 4.4 is purposefully being identified as Chrome above -- https://developer.chrome.com/multidevice/webview/overview
+			return BrowserAndroid
+		}
+
+		if strings.Contains(ua, "fxios") {
+			return BrowserFirefox
+		}
+
+		if strings.Contains(ua, "like gecko") {
+			// Safari is the most generic, archtypical User-Agent on the market -- it's identified by making sure effectively by checking for attribute purity. It's fingerprint should have 4 or 5 total x/y attributes, 'mobile/version' being optional
+			safariFingerprints := len(safariFingerprints.FindAllString(ua, -1))
+
+			if (safariFingerprints == 4 || safariFingerprints == 5) && strings.Contains(ua, "version/") && strings.Contains(ua, "safari/") && strings.Contains(ua, "mozilla/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") {
+				return BrowserSafari
+			}
+		}
+	}
+
+	if strings.Contains(ua, "msie") || strings.Contains(ua, "trident") {
+		return BrowserIE
+	}
+
+	if strings.Contains(ua, "gecko") {
+		if strings.Contains(ua, "firefox") || strings.Contains(ua, "iceweasel") || strings.Contains(ua, "seamonkey") || strings.Contains(ua, "icecat") {
+			return BrowserFirefox
+		}
+	}
+
+	if strings.Contains(ua, "presto") || strings.Contains(ua, "opera") {
+		return BrowserOpera
+	}
+
+	if strings.Contains(ua, "ucbrowser") {
+		return BrowserUCBrowser
+	}
+
+	// if strings.Contains(ua, "nintendo") {
+	// 	return BrowserNintendo
+	// }
+
+	return BrowserUnknown
+}
+
+func (b *BrowserProfile) evalBrowserVersion(ua string) string {
 	// Find browser version using 3 methods in order:
 	// 1st: look for generic version/#
 	// 2nd: look for browser-specific instructions (e.g. chrome/34)
@@ -92,56 +115,53 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 	// if there is a 'version/#' attribute with numeric version, use it
 	if bVersion.MatchString(ua) {
 		v = bVersion.FindString(ua)
-		v = strings.Split(v, "/")[1]
-	} else {
-		switch b.Browser.Name {
-		case "chrome":
-			// match both chrome and crios
-			v = getMajorVersion(ua, chromeVersion)
-		case "ie":
-			if strings.Contains(ua, "msie") || strings.Contains(ua, "edge") {
-				v = getMajorVersion(ua, ieVersion)
-			} else {
-				// switch based on trident version indicator https://en.wikipedia.org/wiki/Trident_(layout_engine)
-				if strings.Contains(ua, "trident") {
-					v = getMajorVersion(ua, tridentVersion)
-					switch v {
-					case "3":
-						v = "7"
-					case "4":
-						v = "8"
-					case "5":
-						v = "9"
-					case "6":
-						v = "10"
-					case "7":
-						v = "11"
-					}
-				}
-			}
-			if v == "" {
-				v = "0"
-			}
-		case "firefox":
-			v = getMajorVersion(ua, firefoxVersion)
-		case "ucbrowser":
-			v = getMajorVersion(ua, ucVersion)
-		case "opera":
-			if strings.Contains(ua, "opr/") {
-				v = getMajorVersion(ua, oprVersion)
-			} else {
-				v = getMajorVersion(ua, operaVersion)
-			}
-		case "silk":
-			v = getMajorVersion(ua, silkVersion)
-		case "nintendo":
-			v = "0" //getMajorVersion(ua, "nintendobrowser/\\d+")
-		//case "opera":
-		// could be either version/x or opr/x
-		default:
-			v = "0"
-		}
+		return strings.Split(v, "/")[1]
 	}
+
+	switch b.Browser.Name {
+	case BrowserChrome:
+		// match both chrome and crios
+		return getMajorVersion(ua, chromeVersion)
+	case BrowserIE:
+		if strings.Contains(ua, "msie") || strings.Contains(ua, "edge") {
+			return getMajorVersion(ua, ieVersion)
+		}
+
+		// switch based on trident version indicator https://en.wikipedia.org/wiki/Trident_(layout_engine)
+		if strings.Contains(ua, "trident") {
+			v = getMajorVersion(ua, tridentVersion)
+			switch v {
+			case "3":
+				return "7"
+			case "4":
+				return "8"
+			case "5":
+				return "9"
+			case "6":
+				return "10"
+			case "7":
+				return "11"
+			}
+		}
+
+		return "0"
+
+	case BrowserFirefox:
+		return getMajorVersion(ua, firefoxVersion)
+	case BrowserUCBrowser:
+		return getMajorVersion(ua, ucVersion)
+	case BrowserOpera:
+		if strings.Contains(ua, "opr/") {
+			return getMajorVersion(ua, oprVersion)
+		}
+
+		return getMajorVersion(ua, operaVersion)
+	case BrowserSilk:
+		return getMajorVersion(ua, silkVersion)
+	default:
+		return "0"
+	}
+
 	// backup plans if we still don't know the version: guestimate based on highest available to the device
 	// if v == "0" {
 	// 	switch b.OS.Name {
@@ -186,16 +206,7 @@ func (b *BrowserProfile) evalBrowser(ua string) (string, int) {
 	// }
 
 	// Handle no match
-	if v == "" {
-		v = "0"
-	}
-	if b.Browser.Name == "" {
-		b.Browser.Name = "unknown"
-	}
-
-	b.Browser.Version, _ = strconv.Atoi(v)
-
-	return b.Browser.Name, b.Browser.Version
+	return "0"
 }
 
 // Subfunction of evalBrowser() that takes two parameters: regex (string) and

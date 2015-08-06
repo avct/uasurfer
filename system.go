@@ -1,4 +1,4 @@
-package user_agent_surfer
+package uasurfer
 
 import (
 	"regexp"
@@ -10,9 +10,10 @@ var (
 	iosVersion           = regexp.MustCompile("(cpu|iphone) os \\d+")
 	osxVersionUnderscore = regexp.MustCompile("os x 10_\\d+")
 	osxVersionDot        = regexp.MustCompile("os x 10\\.\\d+")
-	wpVer                = regexp.MustCompile("windows\\sphone\\s\\d+")
-	kindleTest           = regexp.MustCompile("\\sKF[A-Z]{2,4}\\s")
-	androidVersion       = regexp.MustCompile("android \\d+")
+	wpVerLong            = regexp.MustCompile("windows\\sphone\\sos\\s\\d+")
+	wpVerShort           = regexp.MustCompile("windows\\sphone\\s\\d+")
+	//kindleTest           = regexp.MustCompile("\\sKF[A-Z]{2,4}\\s")
+	androidVersion = regexp.MustCompile("android \\d+")
 )
 
 // OS type returns a lowercase name (string) of the operating system, along with its major version (int).
@@ -24,19 +25,16 @@ var (
 // 	For Android 5.1, "linux" is the platform, "android" is the name, and 5 the version.
 //	For iOS 5.1, "iphone" or "ipad" is the platform, "ios" is the name, and 5 the version.
 type OS struct {
-	Name    string
+	Name    OSName
 	Version int
 }
 
 // Retrieve the espoused platform and OS from the User-Agent string
-func (b *BrowserProfile) evalSystem(ua string) (string, string, int) {
+func (b *BrowserProfile) evalSystem(ua string) (Platform, OSName, int) {
 	var (
-		platform = ""
-		os       = ""
-		v        = ""
-		depth    = 0
-		i        = 0
-		pgroup   []byte //represents portion of ua string that contains platform information
+		depth             int
+		i                 int
+		platformUASection []byte //represents portion of ua string that contains platform information
 	)
 
 	// more efficient method of getting the spec string than using native regexp package (TODO: need stronger profiling verification)
@@ -52,167 +50,232 @@ func (b *BrowserProfile) evalSystem(ua string) (string, string, int) {
 		}
 
 		if depth >= 1 {
-			pgroup = append(pgroup, ua[i])
+			platformUASection = append(platformUASection, ua[i])
 		}
 	}
 
-	pgroup_string := string(pgroup)
-	specs := strings.Split(pgroup_string, ";")
+	agentPlatform := string(platformUASection)
+	specs := strings.Split(agentPlatform, ";")
 	specs[0] = strings.TrimPrefix(specs[0], "(")
 
 	//strict OS & version identification
 	switch specs[0] {
+	case "android":
+		return evalLinux(ua, agentPlatform)
 	case "bb10", "playbook":
-		platform = "blackberry"
-		os = "blackberry"
+		return PlatformBlackberry, OSBlackberry, 0
 	case "x11", "linux":
-		platform = "linux"
+		return evalLinux(ua, agentPlatform)
 	case "ipad", "iphone":
-
-		if specs[0] == "iphone" {
-			platform = "iphone"
-		} else {
-			platform = "ipad"
-		}
-
-		if iosVersion.MatchString(pgroup_string) {
-			os = "ios"
-			v = strings.Split(iosVersion.FindString(pgroup_string), " ")[2]
-		}
-
+		return evaliOS(specs[0], agentPlatform)
 	case "macintosh":
-		platform = "mac"
+		return evalMacintosh(ua)
+	}
 
-		if strings.Contains(pgroup_string, "os x 10_") {
-			if osxVersionUnderscore.MatchString(pgroup_string) {
-				os = "os x"
-				v = strings.TrimPrefix(osxVersionUnderscore.FindString(pgroup_string), "os x 10_")
-			}
-		} else if strings.Contains(pgroup_string, "os x 10.") {
-			if osxVersionDot.MatchString(pgroup_string) {
-				os = "os x"
-				v = strings.TrimPrefix(osxVersionDot.FindString(pgroup_string), "os x 10.")
-			}
+	// Blackberry
+	if strings.Contains(ua, "blackberry") || strings.Contains(ua, "playbook") {
+		return PlatformBlackberry, OSBlackberry, 0
+	}
+
+	// Windows Phone
+	if strings.Contains(agentPlatform, "windows phone ") {
+		return evalWindowsPhone(agentPlatform)
+	}
+
+	// Windows, Xbox
+	if strings.Contains(ua, "windows ") {
+		return evalWindows(ua)
+	}
+
+	// Kindle
+	if strings.Contains(ua, "kindle/") {
+		return PlatformKindle, OSKindle, 0
+	}
+
+	// Linux (broader attempt)
+	if strings.Contains(ua, "linux") {
+		return evalLinux(ua, agentPlatform)
+	}
+
+	// WebOS (non-linux flagged)
+	if strings.Contains(ua, "webos") || strings.Contains(ua, "hpwos") {
+		return PlatformLinux, OSWebOS, 0
+	}
+
+	// Nintendo
+	if strings.Contains(ua, "nintendo") {
+		return PlatformNintendo, OSNintendo, 0
+	}
+
+	// Playstation
+	if strings.Contains(ua, "playstation") || strings.Contains(ua, "vita") || strings.Contains(ua, "psp") {
+		return PlatformPlaystation, OSPlaystation, 0
+	}
+
+	return PlatformUnknown, OSUnknown, 0 //default
+
+}
+
+// evalLinux returns the `Platform`, `OSName` and `int` of UAs with
+// 'linux' listed as their platform. The Platform returned is not
+// necessarily PlatformLinux as it may be PlatformKindle, for example.
+func evalLinux(ua string, agentPlatform string) (Platform, OSName, int) {
+
+	// Kindle Fire
+	if strings.Contains(ua, "kindle") {
+		return PlatformKindle, OSKindle, 0
+	}
+
+	// Android, Kindle Fire
+	if strings.Contains(ua, "android") {
+
+		// Android
+		if androidVersion.MatchString(agentPlatform) {
+			v := strings.TrimPrefix(androidVersion.FindString(agentPlatform), "android ")
+			i := strToInt(v)
+
+			return PlatformLinux, OSAndroid, i
+		}
+
+		return PlatformLinux, OSAndroid, 0 //default
+	}
+
+	// ChromeOS
+	if strings.Contains(ua, "cros") {
+		return PlatformLinux, OSChromeOS, 0
+	}
+
+	// WebOS
+	if strings.Contains(ua, "webos") || strings.Contains(ua, "hpwos") {
+		return PlatformLinux, OSWebOS, 0
+	}
+
+	// Linux, "Linux-like"
+	if strings.Contains(ua, "x11") || strings.Contains(ua, "bsd") || strings.Contains(ua, "suse") {
+		return PlatformLinux, OSLinux, 0
+	}
+
+	return PlatformLinux, OSUnknown, 0 //default
+
+}
+
+// evaliOS returns the `Platform`, `OSName` and `int` of UAs with
+// 'ipad' or 'iphone' listed as their platform.
+func evaliOS(uaPlatform string, agentPlatform string) (Platform, OSName, int) {
+
+	// iPhone
+	if uaPlatform == "iphone" {
+		return PlatformiPhone, OSiOS, getiOSVersion(agentPlatform)
+	}
+
+	// iPad
+	if uaPlatform == "ipad" {
+		return PlatformiPad, OSiOS, getiOSVersion(agentPlatform)
+	}
+
+	return PlatformiPad, OSUnknown, 0 //default
+}
+
+func evalWindowsPhone(agentPlatform string) (Platform, OSName, int) {
+
+	if strings.Contains(agentPlatform, "windows phone os ") {
+		v := strings.TrimPrefix(wpVerLong.FindString(agentPlatform), "windows phone os ")
+		i := strToInt(v)
+
+		return PlatformWindowsPhone, OSWindowsPhone, i
+	}
+
+	if strings.Contains(agentPlatform, "windows phone ") {
+		v := strings.TrimPrefix(wpVerShort.FindString(agentPlatform), "windows phone ")
+		i := strToInt(v)
+
+		return PlatformWindowsPhone, OSWindowsPhone, i
+	}
+
+	return PlatformWindowsPhone, OSUnknown, 0 //default
+}
+
+func evalWindows(ua string) (Platform, OSName, int) {
+
+	//Xbox -- it reads just like Windows
+	if strings.Contains(ua, "xbox") {
+		return PlatformXbox, OSXbox, 6
+	}
+
+	// Windows 10
+	if strings.Contains(ua, "windows nt 10") {
+		return PlatformWindows, OSWindows10, 10
+	}
+
+	// Windows 8
+	if strings.Contains(ua, "windows nt 6.2") || strings.Contains(ua, "windows nt 6.3") {
+		return PlatformWindows, OSWindows8, 6
+	}
+
+	// Windows 7
+	if strings.Contains(ua, "windows nt 6.1") {
+		return PlatformWindows, OSWindows7, 6
+	}
+
+	// Windows Vista
+	if strings.Contains(ua, "windows nt 6.0") {
+		return PlatformWindows, OSWindowsVista, 6
+	}
+	// Windows XP
+	if strings.Contains(ua, "windows nt 5.1") || strings.Contains(ua, "windows nt 5.2") || strings.Contains(ua, "windows xp") {
+		return PlatformWindows, OSWindowsXP, 5
+	}
+
+	// Windows 2000
+	if strings.Contains(ua, "windows nt 5.0") {
+		return PlatformWindows, OSWindows2000, 5
+	}
+
+	return PlatformWindows, OSUnknown, 0 //default
+
+}
+
+func evalMacintosh(uaPlatformGroup string) (Platform, OSName, int) {
+
+	if strings.Contains(uaPlatformGroup, "os x 10_") {
+		if osxVersionUnderscore.MatchString(uaPlatformGroup) {
+			v := strings.TrimPrefix(osxVersionUnderscore.FindString(uaPlatformGroup), "os x 10_")
+			i := strToInt(v)
+
+			return PlatformMac, OSMacOSX, i
 		}
 	}
 
-	//fuzzier OS & version identification
-	if os == "" {
-		//blackberry
-		if strings.Contains(ua, "blackberry") || strings.Contains(ua, "playbook") {
-			platform = "blackberry"
-			os = "blackberry"
-			v = "0" // no version number for blackberry
-			//windows phone
-		} else if strings.Contains(pgroup_string, "windows phone ") {
-			platform = "windows phone"
-			if strings.Contains(pgroup_string, "windows phone os ") {
-				wpVer, _ := regexp.Compile("windows\\sphone\\sos\\s\\d+")
-				os = strings.TrimPrefix(wpVer.FindString(pgroup_string), "windows phone os ")
-				v = os
-			} else {
-				wpVer, _ := regexp.Compile("windows\\sphone\\s\\d+")
-				os = strings.TrimPrefix(wpVer.FindString(pgroup_string), "windows phone ")
-				v = os
-			}
-			//windows
-		} else if strings.Contains(ua, "windows ") {
-			//account for xbox looking just like windows, and also xbox strings can also show up on Windows Phone
-			if strings.Contains(ua, "xbox") {
-				platform = "xbox"
-				os = "xbox"
-				v = "6"
-			} else {
-				platform = "windows"
-				if strings.Contains(ua, "windows nt 10") {
-					os = "10"
-					v = "10"
-				} else if strings.Contains(ua, "windows nt 6.2") || strings.Contains(ua, "windows nt 6.3") {
-					os = "8"
-					v = "6"
-				} else if strings.Contains(ua, "windows nt 6.1") {
-					os = "7"
-					v = "6"
-				} else if strings.Contains(ua, "windows nt 6.0") {
-					os = "vista"
-					v = "6"
-				} else if strings.Contains(ua, "windows nt 5.1") || strings.Contains(ua, "windows nt 5.2") || strings.Contains(ua, "windows xp") {
-					os = "xp"
-					v = "5"
-				} else if strings.Contains(ua, "windows nt 5.0") {
-					os = "2000"
-					v = "5"
-				}
-			}
-			//WebOS
-		} else if strings.Contains(ua, "webos") || strings.Contains(ua, "hpwos") {
-			os = "webos"
-			platform = "linux"
-			v = "0" // Don't bother with OS version for WebOS
-		} else if strings.Contains(ua, "kindle/") {
-			os = "kindle"
-			platform = "kindle"
-			v = "0" // Don't bother with OS version for kindle
-		} else if strings.Contains(ua, "cros") {
-			os = "chromeos"
-			platform = "linux"
-			v = "0" // Don't bother with OS version for Chrome OS
-			// TODO add kindle fire here -- https://developer.amazon.com/appsandservices/solutions/devices/kindle-fire/specifications/04-user-agent-strings
-		} else if strings.Contains(ua, "android") {
-			// first check if it's a Kindle -- TODO: test if this may be too expensive a method, but kindle != silk
+	if strings.Contains(uaPlatformGroup, "os x 10.") {
+		if osxVersionDot.MatchString(uaPlatformGroup) {
+			v := strings.TrimPrefix(osxVersionDot.FindString(uaPlatformGroup), "os x 10.")
+			i := strToInt(v)
 
-			if kindleTest.MatchString(pgroup_string) {
-				platform = "kindle"
-			} else {
-				platform = "linux"
-			}
-
-			os = "android"
-			if androidVersion.MatchString(pgroup_string) {
-				v = strings.TrimPrefix(androidVersion.FindString(pgroup_string), "android ")
-			}
-		} else if strings.Contains(ua, "nintendo") {
-			platform = "nintendo"
-			os = "nintendo"
-			v = "0"
-		} else if strings.Contains(ua, "playstation") || strings.Contains(ua, "vita") || strings.Contains(ua, "psp") {
-			platform = "playstation"
-			os = "playstation"
-			if strings.Contains(ua, "playstation 4") {
-				v = "4"
-			} else if strings.Contains(ua, "playstation 3") {
-				v = "3"
-			} else if strings.Contains(ua, "playstation 2") {
-				v = "2"
-			} else {
-				v = "0"
-			}
-		} else {
-			v = "0"
+			return PlatformMac, OSMacOSX, i
 		}
 	}
 
-	// remaining unidentified platforms
-	if platform == "" {
-		if strings.Contains(ua, "linux") || strings.Contains(ua, "unix") { // not all these are linux, but they are for our purposes
-			platform = "linux"
-		} else {
-			platform = "unknown"
-		}
-	}
+	return PlatformMac, OSUnknown, 0 //default
 
-	// remaining unidentified OSes
-	if os == "" {
-		if strings.Contains(ua, "x11") || strings.Contains(ua, "bsd") || strings.Contains(ua, "suse") { // not all these are linux, but they are for our purposes
-			platform = "linux"
-			os = "linux"
-		} else {
-			os = "unknown"
-		}
-	}
+}
 
-	version, _ := strconv.Atoi(v)
+// getiOSVersion accepts the platform portion of a UA string and returns
+// an `int` of the major version of iOS, or `0` (unknown) on error.
+func getiOSVersion(uaPlatformGroup string) int {
+	v := strings.Split(iosVersion.FindString(uaPlatformGroup), " ")[2]
+	i := strToInt(v)
 
-	return platform, os, version
+	return i
+}
 
+// strToInt simply accepts a string and returns an `int`,
+// with '0' being default.
+func strToInt(str string) int {
+	i, _ := strconv.Atoi(str)
+
+	// if !i {
+	// 	i = 0
+	// }
+
+	return i
 }
