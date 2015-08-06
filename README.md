@@ -1,6 +1,6 @@
 # User Agent Surfer
 
-User Agent Surfer is a Go package that will parse and abstract HTTP User-Agent strings with particular attention to speed, resource efficiency, and accuracy. Layout engine, browser language, and esoteric attributes are not parsed but are available in the BrowserProfile.UA string.
+User Agent Surfer (uasurfer) is a Go package that will parse and abstract HTTP User-Agent strings with particular attention to speed, resource efficiency, and accuracy. Layout engine, browser language, and esoteric attributes are not parsed but are available in the BrowserProfile.UA string.
 
 Web browsers and operating systems that account for 98.5% of all worldwide use are identified.
 
@@ -19,8 +19,8 @@ func main() {
 	// Define a user agent string
 	myUA := "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36"
 
-	// Instantiate new user_agent_surfer
-	myBrowser := user_agent_surfer.New(myUA)
+	// Instantiate new uasurfer
+	myBrowser := uasurfer.New(myUA)
 
 	// Print out some basic information
 	fmt.Println("ua: ", myBrowser.UA)
@@ -109,3 +109,4 @@ DeviceType is typically quite accurate, though determining between phones and ta
 
 * Support NetFront
 * Add OS->Browser identification logic
+* Evaluate adding Spotify, Google Search App
