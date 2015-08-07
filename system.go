@@ -24,13 +24,13 @@ var (
 // 	For OS X 10.5.1, "mac" is the platform, "os x" the name, and 5 the version.
 // 	For Android 5.1, "linux" is the platform, "android" is the name, and 5 the version.
 //	For iOS 5.1, "iphone" or "ipad" is the platform, "ios" is the name, and 5 the version.
-type OS struct {
-	Name    OSName
-	Version int
-}
+// type OS struct {
+// 	Name    OSName
+// 	Version int
+// }
 
 // Retrieve the espoused platform and OS from the User-Agent string
-func (b *BrowserProfile) evalSystem(ua string) (Platform, OSName, int) {
+func evalSystem(ua string) (Platform, OSName, int) {
 	var (
 		depth             int
 		i                 int
