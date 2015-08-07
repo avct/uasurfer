@@ -1,57 +1,34 @@
 # User Agent Surfer
 
-User Agent Surfer (uasurfer) is a Go package that will parse and abstract HTTP User-Agent strings with particular attention to speed, resource efficiency, and accuracy. Layout engine, browser language, and esoteric attributes are not parsed but are available in the BrowserProfile.UA string.
+User Agent Surfer (uasurfer) is a Go package that will parse and abstract HTTP User-Agent strings with particular attention to accuracy, speed, and resource efficiency. The following information is returned by uasurfer after supplying it a raw UA string:
+
+* **Browser name** (e.g. Chrome)
+* **Browser major version** (e.g. Chrome 45)
+* **Platform** (e.g. iPad)
+* **OS name** (e.g. iOS)
+* **OS major version** (e.g. iOS 9)
+* **Device type** (e.g. tablet)
+
+Layout engine, browser language, and other esoteric attributes are not parsed.
 
 Web browsers and operating systems that account for 98.5% of all worldwide use are identified.
 
-# Example
-
-```go
-package main
-
-import (
-	"fmt"
-	"github.com/avct/user-agent-surfer"
-)
-
-func main() {
-
-	// Define a user agent string
-	myUA := "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36"
-
-	// Instantiate new uasurfer
-	myBrowser := uasurfer.New(myUA)
-
-	// Print out some basic information
-	fmt.Println("ua: ", myBrowser.UA)
-	fmt.Println("browser: ", myBrowser.Browser.Name, " ", myBrowser.Browser.Version)
-	fmt.Println("platform: ", myBrowser.Platform)
-	fmt.Println("os: ", myBrowser.OS.Name, " ", myBrowser.OS.Version)
-	fmt.Println("device type: ", myBrowser.DeviceType)
-
-	// Simple logic example to determine Microsoft Surface RT (Tablet + Windows + modern-ish version of Windows)
-	if myBrowser.DeviceType == "tablet" && myBrowser.Platform == "windows" && myBrowser.OS.Version > 6 {
-		fmt.Println("The User-Agent string is probably Microsoft Surface RT.")
-	} else {
-		fmt.Println("The User-Agent string is definitely not Microsoft Surface RT.")
-	}
-}
-```
-
 # Browser Profile
 
-The BrowserProfile supplies specific enum strings along with integers for versions. The following strings should be supported, with the exception of linux OS being a mostly-hit but sometimes miss attribute.
+The BrowserProfile supplies specific const (int)  along with integers for versions. The following strings should be supported, with the exception of linux OS being a mostly-hit but sometimes miss attribute.
 
 #### Browser.Name
 * `chrome`
 * `safari`
 * `ie`
 * `firefox` (includes icecat, iceweasel, seamonkey)
-* `android` - only Android ~4.3 and earlier use this name for the native WebView browser, 4.4 and later is `chrome`
+* `android` - only Android ~4.3 and earlier can use this name for the native WebView browser, 4.4 and later is always `chrome`
 * `opera`
 * `ucbrowser`
 * `silk`
 * `nokia`
+* `gsa` - Google search app on iOS
+* `spotify` - applicable for advertising applications
 
 #### Browser.Version
 
@@ -107,6 +84,8 @@ DeviceType is typically quite accurate, though determining between phones and ta
 
 # To do
 
+* Support bots
 * Support NetFront
+* Support Nokia browser
+* Support Kindle Fire
 * Add OS->Browser identification logic
-* Evaluate adding Spotify, Google Search App
