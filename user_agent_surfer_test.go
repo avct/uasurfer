@@ -1,11 +1,14 @@
 package uasurfer
 
 import (
+	// "bufio"
+	// "fmt"
+	// "os"
 	"testing"
 )
 
 // Test values are ordered: BrowserName, BrowserVersion, OSName, OSVersion, DeviceType
-var testUAStrings = []struct {
+var testUAVars = []struct {
 	UA             string
 	browserName    BrowserName
 	browserVersion int
@@ -36,6 +39,10 @@ var testUAStrings = []struct {
 	{"Mozilla/5.0 (iPhone; U; CPU iPhone OS 5_1_1 like Mac OS X; en) AppleWebKit/534.46.0 (KHTML, like Gecko) CriOS/19.0.1084.60 Mobile/9B206 Safari/534.48.3",
 		BrowserChrome, 19, PlatformiPhone, OSiOS, 5, DevicePhone},
 
+	//TODO: refactor "getMajorVersion()" to handle this device/chrome version douchebaggery
+	// {"Mozilla/5.0 (Linux; Android 4.4.2; en-gb; SAMSUNG SM-G800F Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Version/1.6 Chrome/28.0.1500.94 Mobile Safari/537.36",
+	// 	BrowserChrome, 28, PlatformLinux, OSAndroid, 4, DevicePhone},
+
 	// Safari
 	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12",
 		BrowserSafari, 8, PlatformMac, OSMacOSX, 10, DeviceComputer},
@@ -52,6 +59,9 @@ var testUAStrings = []struct {
 
 	{"Mozilla/5.0 (Android; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0",
 		BrowserFirefox, 40, PlatformLinux, OSAndroid, 0, DevicePhone},
+
+	{"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0",
+		BrowserFirefox, 38, PlatformLinux, OSLinux, 0, DeviceComputer},
 
 	// Silk
 	{"Mozilla/5.0 (Linux; U; Android 4.4.3; de-de; KFTHWI Build/KTU84M) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.47 like Chrome/37.0.2026.117 Safari/537.36",
@@ -144,12 +154,14 @@ var testUAStrings = []struct {
 	{"Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; NOKIA; Lumia 900)",
 		BrowserIE, 9, PlatformWindowsPhone, OSWindowsPhone, 7, DevicePhone},
 
-	// Kindle
+	// Kindle eReader
 	{"Mozilla/5.0 (Linux; U; en-US) AppleWebKit/528.5+ (KHTML, like Gecko, Safari/528.5+) Version/4.0 Kindle/3.0 (screen 600×800; rotate)",
 		BrowserUnknown, 4, PlatformKindle, OSKindle, 0, DeviceTablet},
 
 	{"Mozilla/5.0 (X11; U; Linux armv7l like Android; en-us) AppleWebKit/531.2+ (KHTML, like Gecko) Version/5.0 Safari/533.2+ Kindle/3.0+",
 		BrowserUnknown, 5, PlatformKindle, OSKindle, 0, DeviceTablet},
+
+	// Kindle Fire
 
 	// Nintendo
 	{"Opera/9.30 (Nintendo Wii; U; ; 2047-7; fr)",
@@ -192,6 +204,17 @@ var testUAStrings = []struct {
 	{"Roku/DVP-5.2 (025.02E03197A)", // Roku
 		BrowserUnknown, 0, PlatformUnknown, OSUnknown, 0, DeviceTV},
 
+	// Google search app (GSA) for iOS
+	{"Mozilla/5.0 (iPad; CPU OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) GSA/6.0.51363 Mobile/12F69 Safari/600.1.4",
+		BrowserGSA, 6, PlatformiPad, OSiOS, 8, DeviceTablet},
+
+	// Spotify (applicable for advertising applications)
+	{"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Spotify/1.0.9.133 Safari/537.36",
+		BrowserSpotify, 1, PlatformWindows, OSWindowsXP, 5, DeviceComputer},
+
+	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Spotify/1.0.9.133 Safari/537.36",
+		BrowserSpotify, 1, PlatformMac, OSMacOSX, 10, DeviceComputer},
+
 	// Bots
 	// {"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
 	// 	"bot", 0, "bot", "bot", 0, DeviceBot},
@@ -217,63 +240,114 @@ var testUAStrings = []struct {
 }
 
 func TestAgentSurfer(t *testing.T) {
-	bp := new(BrowserProfile)
-	for i, determined := range testUAStrings {
-		bp.Parse(determined.UA)
+	//bp := new(BrowserProfile)
+	for i, determined := range testUAVars {
+		//bp.Parse(determined.UA)
+		browserName, browserVersion, platform, osName, osVersion, deviceType, _ := Parse(determined.UA)
 
-		if bp.Browser.Name != determined.browserName {
-			t.Errorf("%d browserName: got %v, wanted %v", i, bp.Browser.Name, determined.browserName)
+		if browserName != determined.browserName {
+			t.Errorf("%d browserName: got %v, wanted %v", i, browserName, determined.browserName)
 			t.Logf("%d agent: %s", i, determined.UA)
 		}
 
-		if bp.Browser.Version != determined.browserVersion {
-			t.Errorf("%d browser version: got %d, wanted %d", i, bp.Browser.Version, determined.browserVersion)
+		if browserVersion != determined.browserVersion {
+			t.Errorf("%d browser version: got %d, wanted %d", i, browserVersion, determined.browserVersion)
 			t.Logf("%d agent: %s", i, determined.UA)
 		}
 
-		if bp.Platform != determined.Platform {
-			t.Errorf("%d platform: got %v, wanted %v", i, bp.Platform, determined.Platform)
+		if platform != determined.Platform {
+			t.Errorf("%d platform: got %v, wanted %v", i, platform, determined.Platform)
 			t.Logf("%d agent: %s", i, determined.UA)
 		}
 
-		if bp.OS.Name != determined.osName {
-			t.Errorf("%d os: got %s, wanted %s", i, bp.OS.Name, determined.osName)
+		if osName != determined.osName {
+			t.Errorf("%d os: got %s, wanted %s", i, osName, determined.osName)
 			t.Logf("%d agent: %s", i, determined.UA)
 		}
 
-		if bp.OS.Version != determined.osVersion {
-			t.Errorf("%d os version: got %d, wanted %d", i, bp.OS.Version, determined.osVersion)
+		if osVersion != determined.osVersion {
+			t.Errorf("%d os version: got %d, wanted %d", i, osVersion, determined.osVersion)
 			t.Logf("%d agent: %s", i, determined.UA)
 		}
 
-		if bp.DeviceType != determined.deviceType {
-			t.Errorf("%d device type: got %v, wanted %v", i, bp.DeviceType, determined.deviceType)
+		if deviceType != determined.deviceType {
+			t.Errorf("%d device type: got %v, wanted %v", i, deviceType, determined.deviceType)
 			t.Logf("%d agent: %s", i, determined.UA)
 		}
 	}
 }
+
+// func TestExternalFile(t *testing.T) {
+// 	// open list of UA strings
+// 	inputFile, err := os.Open("./ua_test_set_bs.txt")
+
+// 	if err != nil {
+// 		panic(err)
+// 		os.Exit(1)
+// 	}
+// 	defer inputFile.Close()
+
+// 	// prepare yourself
+// 	reader := bufio.NewReader(inputFile)
+// 	scanner := bufio.NewScanner(reader)
+
+// 	// goodbye console
+// 	i := 1
+// 	for scanner.Scan() {
+// 		fmt.Println("-  ", i, "  -")
+// 		fmt.Println(scanner.Text())
+// 		browserName, browserVersion, platform, osName, osVersion, deviceType, _ := Parse(scanner.Text())
+// 		fmt.Println(browserName, browserVersion, platform, osName, osVersion, deviceType)
+// 		i++
+// 	}
+// }
 
 func BenchmarkAgentSurfer(b *testing.B) {
-	num := len(testUAStrings)
-	bp := new(BrowserProfile)
+	num := len(testUAVars)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		bp.Parse(testUAStrings[i%num].UA)
+		browserName, _, _, _, _, _, _ := Parse(testUAVars[i%num].UA)
+
+		_ = browserName
 	}
 }
 
-func BenchmarkParseChrome(b *testing.B) {
-	bp := new(BrowserProfile)
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		bp.Parse("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36")
-	}
-}
+// // Chrome for Mac
+// func BenchmarkParseChromeMac(b *testing.B) {
+// 	b.ResetTimer()
+// 	for i := 0; i < b.N; i++ {
+// 		browserName, browserVersion, platform, osName, osVersion, deviceType, _ := Parse("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36")
+// 	}
+// }
 
-func BenchmarkParseSafari(b *testing.B) {
-	bp := new(BrowserProfile)
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		bp.Parse("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12")
-	}
-}
+// // Chrome for Windows
+// func BenchmarkParseChromeWin(b *testing.B) {
+// 	b.ResetTimer()
+// 	for i := 0; i < b.N; i++ {
+// 		browserName, browserVersion, platform, osName, osVersion, deviceType, _ := Parse("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36")
+// 	}
+// }
+
+// // Chrome for Android
+// func BenchmarkParseChromeAndroid(b *testing.B) {
+// 	b.ResetTimer()
+// 	for i := 0; i < b.N; i++ {
+// 		browserName, browserVersion, platform, osName, osVersion, deviceType, _ := Parse("Mozilla/5.0 (Linux; Android 4.4.2; GT-P5210 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.93 Safari/537.36")
+// 	}
+// }
+
+// // Safari for Mac
+// func BenchmarkParseSafariMac(b *testing.B) {
+// 	b.ResetTimer()
+// 	for i := 0; i < b.N; i++ {
+// 		browserName, browserVersion, platform, osName, osVersion, deviceType, _ := Parse("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12")
+// 	}
+// }
+
+// // Safari for iPad
+// func BenchmarkParseSafariiPad(b *testing.B) {
+// 	b.ResetTimer()
+// 	for i := 0; i < b.N; i++ {
+// 		browserName, browserVersion, platform, osName, osVersion, deviceType, _ := Parse("Mozilla/5.0 (iPad; CPU OS 8_1_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B440 Safari/600.1.4")
+// 	}
+// }

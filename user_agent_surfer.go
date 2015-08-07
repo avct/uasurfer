@@ -10,22 +10,19 @@ package uasurfer
 //go:generate stringer -type=DeviceType,BrowserName,OSName,Platform -output=const_string.go
 
 import (
-	"strconv"
 	"strings"
 )
 
 // The BrowserProfile type contains all the attributes parsed and inferred from the User-Agent string.
-type BrowserProfile struct {
-	UA         string
-	Browser    Browser //TODO flatten
-	Platform   Platform
-	OS         OS //TODO flatten
-	DeviceType DeviceType
-}
-
-// TODO: Browser, DeviceType etc will be set to one of a predefined set of values.
-//		 Instead of setting them to string values, define constants for each value and set them the constant values.
-//       See DeviceType example below and changes to device.go
+// type BrowserProfile struct {
+// 	UA             string
+// 	Browser        BrowserName
+// 	BrowserVersion int
+// 	Platform       Platform
+// 	OS             OSName
+// 	OSVersion      int
+// 	DeviceType     DeviceType
+// }
 
 // DeviceType (int) returns a constant.
 type DeviceType int
@@ -40,6 +37,7 @@ const (
 	DeviceTV
 )
 
+// BrowserName (int) returns a constant.
 type BrowserName int
 
 const (
@@ -54,9 +52,12 @@ const (
 	BrowserUCBrowser
 	BrowserSilk
 	BrowserNokia
+	BrowserGSA
+	BrowserSpotify
 	BrowserBot
 )
 
+// OSName (int) returns a constant.
 type OSName int
 
 const (
@@ -82,6 +83,7 @@ const (
 	OSBot
 )
 
+// Platform (int) returns a constant.
 type Platform int
 
 const (
@@ -100,23 +102,27 @@ const (
 	PlatformBot
 )
 
-func (b *BrowserProfile) initialize() {
-	b.UA = ""
-	b.Browser.Name = BrowserUnknown
-	b.Browser.Version = 0
-	b.Platform = PlatformUnknown
-	b.OS.Name = OSUnknown
-	b.OS.Version = 0
-	b.DeviceType = DeviceUnknown
-}
+// func (b *BrowserProfile) initialize() {
+// 	b.UA = ""
+// 	b.Browser.Name = BrowserUnknown
+// 	b.Browser.Version = 0
+// 	b.Platform = PlatformUnknown
+// 	b.OS.Name = OSUnknown
+// 	b.OS.Version = 0
+// 	b.DeviceType = DeviceUnknown
+// }
 
-func (b *BrowserProfile) Parse(ua string) {
-	b.initialize()
+// Parse accepts a raw user agent (string) and returns the
+// browser name (int), browser version
+// (int), platform (int), OS name (int), OS version (int),
+// device type (int), and raw user agent (string).
+func Parse(ua string) (BrowserName, int, Platform, OSName, int, DeviceType, string) {
 	ua = strings.ToLower(ua)
 
-	b.UA = ua
-	b.Platform, b.OS.Name, b.OS.Version = b.evalSystem(ua)
-	b.Browser.Name = b.evalBrowserName(ua)
-	b.Browser.Version, _ = strconv.Atoi(b.evalBrowserVersion(ua))
-	b.DeviceType = evalDevice(ua, b.OS.Name, b.Platform, b.Browser.Name)
+	platform, osName, osVersion := evalSystem(ua)
+	browserName := evalBrowserName(ua)
+	browserVersion := evalBrowserVersion(ua, browserName)
+	deviceType := evalDevice(ua, osName, platform, browserName)
+
+	return browserName, browserVersion, platform, osName, osVersion, deviceType, ua
 }

@@ -17,6 +17,8 @@ var (
 	oprVersion         = regexp.MustCompile("opr/\\d+")
 	operaVersion       = regexp.MustCompile("opera/\\d+")
 	silkVersion        = regexp.MustCompile("silk/\\d+")
+	gsaVersion         = regexp.MustCompile("gsa/\\d+")
+	spotifyVersion     = regexp.MustCompile("spotify/\\d+")
 )
 
 // Browser struct contains the lowercase name of the browser, along
@@ -24,16 +26,16 @@ var (
 // consideration for device. For example, Chrome (Chrome/43.0) and Chrome for iOS
 // (CriOS/43.0) would both return as "chrome" (name) and 43 (version). Similarly
 // Internet Explorer 11 and Edge 12 would return as "ie" and "11" or "12", respectively.
-type Browser struct {
-	Name    BrowserName
-	Version int
-}
+// type Browser struct {
+// 	Name    BrowserName
+// 	Version int
+// }
 
 // Retrieve the espoused major version of the browser if possible, prioritizing
 // the "Version/#" UA attribute over others. Set to 0 if no version
 // is obtainable. A lowercase browser name (string) and its
 // version (int) is returned.
-func (b *BrowserProfile) evalBrowserName(ua string) BrowserName {
+func evalBrowserName(ua string) BrowserName {
 
 	if strings.Contains(ua, "blackberry") || strings.Contains(ua, "playbook") || strings.Contains(ua, "bb10") { //blackberry goes first because it reads as MSIE & Safari
 		return BrowserBlackberry
@@ -68,6 +70,14 @@ func (b *BrowserProfile) evalBrowserName(ua string) BrowserName {
 
 		if strings.Contains(ua, "fxios") {
 			return BrowserFirefox
+		}
+
+		if strings.Contains(ua, " gsa/") {
+			return BrowserGSA
+		}
+
+		if strings.Contains(ua, " spotify/") {
+			return BrowserSpotify
 		}
 
 		if strings.Contains(ua, "like gecko") {
@@ -105,61 +115,81 @@ func (b *BrowserProfile) evalBrowserName(ua string) BrowserName {
 	return BrowserUnknown
 }
 
-func (b *BrowserProfile) evalBrowserVersion(ua string) string {
+func evalBrowserVersion(ua string, browserName BrowserName) int {
 	// Find browser version using 3 methods in order:
 	// 1st: look for generic version/#
 	// 2nd: look for browser-specific instructions (e.g. chrome/34)
 	// 3rd: infer from OS
-	v := ""
 
 	// if there is a 'version/#' attribute with numeric version, use it
 	if bVersion.MatchString(ua) {
-		v = bVersion.FindString(ua)
-		return strings.Split(v, "/")[1]
+		v := bVersion.FindString(ua)
+		v = strings.Split(v, "/")[1]
+		i := strToInt(v)
+		return i
 	}
 
-	switch b.Browser.Name {
+	switch browserName {
 	case BrowserChrome:
 		// match both chrome and crios
 		return getMajorVersion(ua, chromeVersion)
 	case BrowserIE:
 		if strings.Contains(ua, "msie") || strings.Contains(ua, "edge") {
-			return getMajorVersion(ua, ieVersion)
+			i := getMajorVersion(ua, ieVersion)
+
+			return i
 		}
 
 		// switch based on trident version indicator https://en.wikipedia.org/wiki/Trident_(layout_engine)
 		if strings.Contains(ua, "trident") {
-			v = getMajorVersion(ua, tridentVersion)
-			switch v {
-			case "3":
-				return "7"
-			case "4":
-				return "8"
-			case "5":
-				return "9"
-			case "6":
-				return "10"
-			case "7":
-				return "11"
+			i := getMajorVersion(ua, tridentVersion)
+			switch i {
+			case 3:
+				return 7
+			case 4:
+				return 8
+			case 5:
+				return 9
+			case 6:
+				return 10
+			case 7:
+				return 11
 			}
 		}
 
-		return "0"
+		return 0
 
 	case BrowserFirefox:
-		return getMajorVersion(ua, firefoxVersion)
+		i := getMajorVersion(ua, firefoxVersion)
+
+		return i
+
 	case BrowserUCBrowser:
-		return getMajorVersion(ua, ucVersion)
+		i := getMajorVersion(ua, ucVersion)
+
+		return i
 	case BrowserOpera:
 		if strings.Contains(ua, "opr/") {
-			return getMajorVersion(ua, oprVersion)
+			i := getMajorVersion(ua, oprVersion)
+			return i
 		}
 
-		return getMajorVersion(ua, operaVersion)
+		i := getMajorVersion(ua, operaVersion)
+		return i
 	case BrowserSilk:
-		return getMajorVersion(ua, silkVersion)
+		i := getMajorVersion(ua, silkVersion)
+		return i
+
+	case BrowserGSA:
+		i := getMajorVersion(ua, gsaVersion)
+		return i
+
+	case BrowserSpotify:
+		i := getMajorVersion(ua, spotifyVersion)
+		return i
+
 	default:
-		return "0"
+		return 0
 	}
 
 	// backup plans if we still don't know the version: guestimate based on highest available to the device
@@ -206,23 +236,31 @@ func (b *BrowserProfile) evalBrowserVersion(ua string) string {
 	// }
 
 	// Handle no match
-	return "0"
+	return 0
 }
 
 // Subfunction of evalBrowser() that takes two parameters: regex (string) and
-// user agent (string) and returns the number as a string. "0" denotes no version.
-func getMajorVersion(ua string, bVersion *regexp.Regexp) string {
-	ver := bVersion.FindString(ua)
+// user agent (string) and returns the number as a string. '0' denotes no version.
+func getMajorVersion(ua string, browserVersion *regexp.Regexp) int {
+
+	ver := browserVersion.FindString(ua)
 
 	if ver != "" {
 		if strings.Contains(ver, "/") {
 			ver = strings.Split(ver, "/")[1] //e.g. "version/10.0.2"
-		} else if strings.Contains(ver, " ") {
-			ver = strings.Split(ver, " ")[1] //e.g. "msie 10.0"
-		} else {
-			ver = "0"
+			i := strToInt(ver)
+			return i
 		}
+
+		if strings.Contains(ver, " ") {
+			ver = strings.Split(ver, " ")[1] //e.g. "msie 10.0"
+			i := strToInt(ver)
+			return i
+		}
+		return 0
 	}
 
-	return ver
+	i := strToInt(ver)
+
+	return i
 }
