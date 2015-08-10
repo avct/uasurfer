@@ -6,16 +6,15 @@ import (
 
 // Retrieve and/or deduce the espoused device type running the browser. Returns string enum: Computer, Phone, Tablet, Wearable, TV, Console
 func evalDevice(ua string, os OSName, platform Platform, browser BrowserName) DeviceType {
-	// NOTE: In Go, else clauses are not common. It is more idiomatic to
-	//       return early or use a switch statement
-	if os == OSMacOSX || platform == PlatformWindows || os == OSChromeOS {
+
+	if platform == PlatformWindows || platform == PlatformMac || os == OSChromeOS {
 		if strings.Contains(ua, "mobile") || strings.Contains(ua, "touch") {
 			return DeviceTablet // windows rt, linux haxor tablets
 		}
 		return DeviceComputer
 	}
 
-	if strings.Contains(ua, "tablet") || platform == PlatformiPad || platform == PlatformKindle || strings.Contains(ua, "kindle/") || strings.Contains(ua, "playbook") {
+	if strings.Contains(ua, "tablet") || platform == PlatformiPad || strings.Contains(ua, "kindle/") || strings.Contains(ua, "playbook") {
 		return DeviceTablet
 	}
 
@@ -52,7 +51,7 @@ func evalDevice(ua string, os OSName, platform Platform, browser BrowserName) De
 		return DevicePhone
 	}
 
-	if os == OSLinux { // linux goes last since it's in so many other device types (tvs, wearables)
+	if os == OSLinux { // linux goes last since it's in so many other device types (tvs, wearables, android-based stuff)
 		return DeviceComputer
 	}
 

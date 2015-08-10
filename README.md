@@ -27,8 +27,8 @@ The BrowserProfile supplies specific const (int)  along with integers for versio
 * `ucbrowser`
 * `silk`
 * `nokia`
-* `gsa` - Google search app on iOS
-* `spotify` - applicable for advertising applications
+* `spotify` - not applicable for most uses
+* `unknown`
 
 #### Browser.Version
 
@@ -44,7 +44,7 @@ Browser.Version returns an integer of the correct top-level version attribute of
 * `windows phone`
 * `kindle` - Fire models
 * `playstation`, `xbox`, `nintendo`
-* `bot`
+* `unknown`
 
 #### OS.Name
 * `2000`, `xp`, `vista`, `7`, `8`, `10`
@@ -55,11 +55,11 @@ Browser.Version returns an integer of the correct top-level version attribute of
 * `webos`
 * `linux`
 * `playstation`, `xbox`, `nintendo`
-* `bot`
+* `unknown`
 
 #### OS.Version
 
-OS.Version returns an integer for the OS version, which is the NT major version for Windows (e.g. NT 6.2 is `6`) and minor version for OS X (e.g. OS X 10.11.6 is `11`). This is to allow ease of use around math operators the version numbers. Here are some examples across the platform, os.name, and os.version:
+OS.Version returns an integer for the OS version, which is the NT major version for Windows (e.g. NT 6.2 is `6`) and minor version for OS X (e.g. OS X 10.11.6 is `11`). `0` indicates the OS verison is unknown, or not evaluated. This is to allow ease of use around math operators the version numbers. Here are some examples across the platform, os.name, and os.version:
 
 * For Windows XP (Windows NT 5.1), "`windows`" is the platform, "`xp`" is the name, and `5` the version.
 * For OS X 10.5.1, "`mac`" is the platform, "`os x`" the name, and `5` the version.
@@ -75,7 +75,6 @@ DeviceType is typically quite accurate, though determining between phones and ta
 * `tv`
 * `console`
 * `wearable`
-* `bot`
 
 #### Combination examples
 * Surface RT -> `windows`, `tablet`, OS.Version >= `6`
@@ -87,5 +86,4 @@ DeviceType is typically quite accurate, though determining between phones and ta
 * Support bots
 * Support NetFront
 * Support Nokia browser
-* Support Kindle Fire
-* Add OS->Browser identification logic
+* Add android to browser identification

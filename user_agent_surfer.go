@@ -52,7 +52,6 @@ const (
 	BrowserUCBrowser
 	BrowserSilk
 	BrowserNokia
-	BrowserGSA
 	BrowserSpotify
 	BrowserBot
 )
@@ -95,7 +94,6 @@ const (
 	PlatformiPhone
 	PlatformBlackberry
 	PlatformWindowsPhone
-	PlatformKindle
 	PlatformPlaystation
 	PlatformXbox
 	PlatformNintendo

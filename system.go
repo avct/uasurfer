@@ -13,7 +13,8 @@ var (
 	wpVerLong            = regexp.MustCompile("windows\\sphone\\sos\\s\\d+")
 	wpVerShort           = regexp.MustCompile("windows\\sphone\\s\\d+")
 	//kindleTest           = regexp.MustCompile("\\sKF[A-Z]{2,4}\\s")
-	androidVersion = regexp.MustCompile("android \\d+")
+	androidVersion        = regexp.MustCompile("android \\d+")
+	amazonFireFingerprint = regexp.MustCompile("\\s(k[a-z]{3,5}|sd\\d{4}ur)\\s") //tablet or phone
 )
 
 // OS type returns a lowercase name (string) of the operating system, along with its major version (int).
@@ -88,8 +89,8 @@ func evalSystem(ua string) (Platform, OSName, int) {
 	}
 
 	// Kindle
-	if strings.Contains(ua, "kindle/") {
-		return PlatformKindle, OSKindle, 0
+	if strings.Contains(ua, "kindle/") || amazonFireFingerprint.MatchString(agentPlatform) {
+		return PlatformLinux, OSKindle, 0
 	}
 
 	// Linux (broader attempt)
@@ -112,18 +113,26 @@ func evalSystem(ua string) (Platform, OSName, int) {
 		return PlatformPlaystation, OSPlaystation, 0
 	}
 
+	// Android
+	if strings.Contains(ua, "android") {
+		return evalLinux(ua, agentPlatform)
+	}
+
 	return PlatformUnknown, OSUnknown, 0 //default
 
 }
 
 // evalLinux returns the `Platform`, `OSName` and `int` of UAs with
-// 'linux' listed as their platform. The Platform returned is not
-// necessarily PlatformLinux as it may be PlatformKindle, for example.
+// 'linux' listed as their platform.
 func evalLinux(ua string, agentPlatform string) (Platform, OSName, int) {
 
 	// Kindle Fire
-	if strings.Contains(ua, "kindle") {
-		return PlatformKindle, OSKindle, 0
+	if strings.Contains(ua, "kindle") || amazonFireFingerprint.MatchString(agentPlatform) {
+		// get the version of Android if available, though we don't call this OSAndroid
+		v := strings.TrimPrefix(androidVersion.FindString(agentPlatform), "android ")
+		i := strToInt(v)
+
+		return PlatformLinux, OSKindle, i
 	}
 
 	// Android, Kindle Fire

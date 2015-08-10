@@ -54,8 +54,8 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) FxiOS/1.0 Mobile/12F69 Safari/600.1.4",
 		BrowserFirefox, 1, PlatformiPhone, OSiOS, 8, DevicePhone},
 
-	//{"Mozilla/5.0 (Android 4.4; Tablet; rv:41.0) Gecko/41.0 Firefox/41.0",
-	//	BrowserFirefox, 41, PlatformLinux, OSAndroid, 4, DeviceTablet},
+	{"Mozilla/5.0 (Android 4.4; Tablet; rv:41.0) Gecko/41.0 Firefox/41.0",
+		BrowserFirefox, 41, PlatformLinux, OSAndroid, 4, DeviceTablet},
 
 	{"Mozilla/5.0 (Android; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0",
 		BrowserFirefox, 40, PlatformLinux, OSAndroid, 0, DevicePhone},
@@ -65,14 +65,17 @@ var testUAVars = []struct {
 
 	// Silk
 	{"Mozilla/5.0 (Linux; U; Android 4.4.3; de-de; KFTHWI Build/KTU84M) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.47 like Chrome/37.0.2026.117 Safari/537.36",
-		BrowserSilk, 3, PlatformLinux, OSAndroid, 4, DeviceTablet},
+		BrowserSilk, 3, PlatformLinux, OSKindle, 4, DeviceTablet},
 
 	{"Mozilla/5.0 (Linux; U; en-us; KFJWI Build/IMM76D) AppleWebKit/535.19 (KHTML like Gecko) Silk/2.4 Safari/535.19 Silk-Acceleratedtrue",
-		BrowserSilk, 2, PlatformLinux, OSUnknown, 0, DeviceTablet},
+		BrowserSilk, 2, PlatformLinux, OSKindle, 0, DeviceTablet},
 
 	// Opera
 	{"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36 OPR/18.0.1284.68",
 		BrowserOpera, 18, PlatformWindows, OSWindows7, 6, DeviceComputer},
+
+	{"Mozilla/5.0 (iPhone; CPU iPhone OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) OPiOS/10.2.0.93022 Mobile/12H143 Safari/9537.53",
+		BrowserOpera, 10, PlatformiPhone, OSiOS, 8, DevicePhone},
 
 	// Internet Explorer -- https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
 	{"Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)",
@@ -156,12 +159,24 @@ var testUAVars = []struct {
 
 	// Kindle eReader
 	{"Mozilla/5.0 (Linux; U; en-US) AppleWebKit/528.5+ (KHTML, like Gecko, Safari/528.5+) Version/4.0 Kindle/3.0 (screen 600×800; rotate)",
-		BrowserUnknown, 4, PlatformKindle, OSKindle, 0, DeviceTablet},
+		BrowserUnknown, 4, PlatformLinux, OSKindle, 0, DeviceTablet},
 
 	{"Mozilla/5.0 (X11; U; Linux armv7l like Android; en-us) AppleWebKit/531.2+ (KHTML, like Gecko) Version/5.0 Safari/533.2+ Kindle/3.0+",
-		BrowserUnknown, 5, PlatformKindle, OSKindle, 0, DeviceTablet},
+		BrowserUnknown, 5, PlatformLinux, OSKindle, 0, DeviceTablet},
 
-	// Kindle Fire
+	// Amazon Fire
+	{"Mozilla/5.0 (Linux; U; Android 4.4.3; de-de; KFTHWI Build/KTU84M) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.67 like Chrome/39.0.2171.93 Safari/537.36",
+		BrowserSilk, 3, PlatformLinux, OSKindle, 4, DeviceTablet}, // Fire tablet
+
+	{"Mozilla/5.0 (Linux; U; Android 4.2.2; en­us; KFTHWI Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.22 like Chrome/34.0.1847.137 Mobile Safari/537.36",
+		BrowserSilk, 3, PlatformLinux, OSKindle, 4, DeviceTablet}, // Fire tablet, but with "Mobile"
+
+	{"Mozilla/5.0 (Linux; Android 4.4.4; SD4930UR Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/34.0.0.0 Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/35.0.0.48.273;]",
+		BrowserChrome, 34, PlatformLinux, OSKindle, 4, DevicePhone}, // Facebook app on Fire Phone
+
+	// extra logic to identify phone when using silk has not been added
+	// {"Mozilla/5.0 (Linux; Android 4.4.4; SD4930UR Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.67 like Chrome/39.0.2171.93 Mobile Safari/537.36",
+	// 	BrowserSilk, 3, PlatformLinux, OSKindle, 4, DevicePhone}, // Silk on Fire Phone
 
 	// Nintendo
 	{"Opera/9.30 (Nintendo Wii; U; ; 2047-7; fr)",
@@ -204,9 +219,9 @@ var testUAVars = []struct {
 	{"Roku/DVP-5.2 (025.02E03197A)", // Roku
 		BrowserUnknown, 0, PlatformUnknown, OSUnknown, 0, DeviceTV},
 
-	// Google search app (GSA) for iOS
+	// Google search app (GSA) for iOS -- it's Safari in disguise as of v6
 	{"Mozilla/5.0 (iPad; CPU OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) GSA/6.0.51363 Mobile/12F69 Safari/600.1.4",
-		BrowserGSA, 6, PlatformiPad, OSiOS, 8, DeviceTablet},
+		BrowserSafari, 8, PlatformiPad, OSiOS, 8, DeviceTablet},
 
 	// Spotify (applicable for advertising applications)
 	{"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Spotify/1.0.9.133 Safari/537.36",

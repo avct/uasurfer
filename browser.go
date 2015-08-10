@@ -14,10 +14,9 @@ var (
 	tridentVersion     = regexp.MustCompile("trident/\\d+")
 	firefoxVersion     = regexp.MustCompile("(firefox|fxios)/\\d+")
 	ucVersion          = regexp.MustCompile("ucbrowser/\\d+")
-	oprVersion         = regexp.MustCompile("opr/\\d+")
+	oprVersion         = regexp.MustCompile("(opr|opios)/\\d+")
 	operaVersion       = regexp.MustCompile("opera/\\d+")
 	silkVersion        = regexp.MustCompile("silk/\\d+")
-	gsaVersion         = regexp.MustCompile("gsa/\\d+")
 	spotifyVersion     = regexp.MustCompile("spotify/\\d+")
 )
 
@@ -43,7 +42,7 @@ func evalBrowserName(ua string) BrowserName {
 
 	if strings.Contains(ua, "applewebkit") {
 
-		if strings.Contains(ua, "opr/") {
+		if strings.Contains(ua, "opr/") || strings.Contains(ua, "opios/") {
 			return BrowserOpera
 		}
 
@@ -59,7 +58,8 @@ func evalBrowserName(ua string) BrowserName {
 			return BrowserUCBrowser
 		}
 
-		if strings.Contains(ua, "chrome/") || strings.Contains(ua, "crios/") || strings.Contains(ua, "chromium/") { //Edge, Silk and other chrome-identifying browsers must evaluate before chrome, unless we want to add more overhead
+		//Edge, Silk and other chrome-identifying browsers must evaluate before chrome, unless we want to add more overhead
+		if strings.Contains(ua, "chrome/") || strings.Contains(ua, "crios/") || strings.Contains(ua, "chromium/") {
 			return BrowserChrome
 		}
 
@@ -70,10 +70,6 @@ func evalBrowserName(ua string) BrowserName {
 
 		if strings.Contains(ua, "fxios") {
 			return BrowserFirefox
-		}
-
-		if strings.Contains(ua, " gsa/") {
-			return BrowserGSA
 		}
 
 		if strings.Contains(ua, " spotify/") {
@@ -87,6 +83,11 @@ func evalBrowserName(ua string) BrowserName {
 			if (safariFingerprints == 4 || safariFingerprints == 5) && strings.Contains(ua, "version/") && strings.Contains(ua, "safari/") && strings.Contains(ua, "mozilla/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") {
 				return BrowserSafari
 			}
+		}
+
+		// Google's search app on iPhone, leverages native Safari rather than Chrome
+		if strings.Contains(ua, " gsa/") {
+			return BrowserSafari
 		}
 	}
 
@@ -108,10 +109,6 @@ func evalBrowserName(ua string) BrowserName {
 		return BrowserUCBrowser
 	}
 
-	// if strings.Contains(ua, "nintendo") {
-	// 	return BrowserNintendo
-	// }
-
 	return BrowserUnknown
 }
 
@@ -119,10 +116,10 @@ func evalBrowserVersion(ua string, browserName BrowserName) int {
 	// Find browser version using 3 methods in order:
 	// 1st: look for generic version/#
 	// 2nd: look for browser-specific instructions (e.g. chrome/34)
-	// 3rd: infer from OS
+	// 3rd: infer from OS (iOS only)
 
-	// if there is a 'version/#' attribute with numeric version, use it
-	if bVersion.MatchString(ua) {
+	// if there is a 'version/#' attribute with numeric version, use it -- except for Chrome since Android vendors sometimes hijack version/#
+	if browserName != BrowserChrome && bVersion.MatchString(ua) {
 		v := bVersion.FindString(ua)
 		v = strings.Split(v, "/")[1]
 		i := strToInt(v)
@@ -164,12 +161,17 @@ func evalBrowserVersion(ua string, browserName BrowserName) int {
 
 		return i
 
+	case BrowserSafari: // executes typically if we're on iOS and not using a familiar browser
+		i := getiOSSafariVersion(ua)
+
+		return i
+
 	case BrowserUCBrowser:
 		i := getMajorVersion(ua, ucVersion)
 
 		return i
 	case BrowserOpera:
-		if strings.Contains(ua, "opr/") {
+		if strings.Contains(ua, "opr/") || strings.Contains(ua, "opios/") {
 			i := getMajorVersion(ua, oprVersion)
 			return i
 		}
@@ -180,10 +182,6 @@ func evalBrowserVersion(ua string, browserName BrowserName) int {
 		i := getMajorVersion(ua, silkVersion)
 		return i
 
-	case BrowserGSA:
-		i := getMajorVersion(ua, gsaVersion)
-		return i
-
 	case BrowserSpotify:
 		i := getMajorVersion(ua, spotifyVersion)
 		return i
@@ -191,49 +189,6 @@ func evalBrowserVersion(ua string, browserName BrowserName) int {
 	default:
 		return 0
 	}
-
-	// backup plans if we still don't know the version: guestimate based on highest available to the device
-	// if v == "0" {
-	// 	switch b.OS.Name {
-	// 		case "iOS":
-	// 			switch os.version {
-	// 				case 1:
-	// 				case 2:
-	// 				case 3:
-	// 				case 4:
-	// 				case 5:
-	// 				case 6:
-	// 				case 7:
-	// 				case 8:
-	// 				case 9:
-	// 				case 10:
-	// 		case "Android":
-	// 			switch os.version {
-	// 				case 1:
-	// 				case 2:
-	// 				case 3:
-	// 				case 4:
-	// 				case 5:
-	// 				case 6:
-	// 				case 7:
-	// 				case 8:
-	// 				case 9:
-	// 				case 10:
-	// 		case "OS X":
-	// 			switch os.version {
-	// 				case 1:
-	// 				case 2:
-	// 				case 3:
-	// 				case 4:
-	// 				case 5:
-	// 				case 6:
-	// 				case 7:
-	// 				case 8:
-	// 				case 9:
-	// 				case 10:
-	// 				case 11:
-	// 	}
-	// }
 
 	// Handle no match
 	return 0
@@ -263,4 +218,35 @@ func getMajorVersion(ua string, browserVersion *regexp.Regexp) int {
 	i := strToInt(ver)
 
 	return i
+}
+
+// getiOSSafariVersion accepts a full UA string and returns
+// an `int` of the major version of Safari. The latest browser
+// version released for the OS is used. This function is used
+// in uncommon scenarios such as the Google search app browser
+func getiOSSafariVersion(ua string) int {
+	v := getiOSVersion(ua)
+
+	switch v {
+	case 1: // OS version
+		return 2 // Safari version
+	case 2:
+		return 3
+	case 3:
+		return 4
+	case 4:
+		return 4
+	case 5:
+		return 5
+	case 6:
+		return 6
+	case 7:
+		return 6
+	case 8:
+		return 8
+	case 9:
+		return 8
+	}
+
+	return 0 // default
 }
