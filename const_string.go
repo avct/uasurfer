@@ -4,9 +4,9 @@ package uasurfer
 
 import "fmt"
 
-const _DeviceType_name = "DeviceUnknownDeviceComputerDeviceTabletDevicePhoneDeviceConsoleDeviceWearableDeviceTV"
+const _DeviceType_name = "DeviceUnknownComputerTabletPhoneConsoleWearableTV"
 
-var _DeviceType_index = [...]uint8{0, 13, 27, 39, 50, 63, 77, 85}
+var _DeviceType_index = [...]uint8{0, 13, 21, 27, 32, 39, 47, 49}
 
 func (i DeviceType) String() string {
 	if i < 0 || i >= DeviceType(len(_DeviceType_index)-1) {
@@ -15,9 +15,9 @@ func (i DeviceType) String() string {
 	return _DeviceType_name[_DeviceType_index[i]:_DeviceType_index[i+1]]
 }
 
-const _BrowserName_name = "BrowserUnknownBrowserChromeBrowserIEBrowserSafariBrowserFirefoxBrowserAndroidBrowserOperaBrowserBlackberryBrowserUCBrowserBrowserSilkBrowserNokiaBrowserGSABrowserSpotifyBrowserBot"
+const _BrowserName_name = "BrowserUnknownChromeIESafariFirefoxAndroidOperaBlackberryUCBrowserSilkNokiaSpotifyBot"
 
-var _BrowserName_index = [...]uint8{0, 14, 27, 36, 49, 63, 77, 89, 106, 122, 133, 145, 155, 169, 179}
+var _BrowserName_index = [...]uint8{0, 14, 20, 22, 28, 35, 42, 47, 57, 66, 70, 75, 82, 85}
 
 func (i BrowserName) String() string {
 	if i < 0 || i >= BrowserName(len(_BrowserName_index)-1) {
@@ -37,9 +37,9 @@ func (i OSName) String() string {
 	return _OSName_name[_OSName_index[i]:_OSName_index[i+1]]
 }
 
-const _Platform_name = "PlatformUnknownPlatformWindowsPlatformMacPlatformLinuxPlatformiPadPlatformiPhonePlatformBlackberryPlatformWindowsPhonePlatformKindlePlatformPlaystationPlatformXboxPlatformNintendoPlatformBot"
+const _Platform_name = "PlatformUnknownPlatformWindowsPlatformMacPlatformLinuxPlatformiPadPlatformiPhonePlatformBlackberryPlatformWindowsPhonePlatformPlaystationPlatformXboxPlatformNintendoPlatformBot"
 
-var _Platform_index = [...]uint8{0, 15, 30, 41, 54, 66, 80, 98, 118, 132, 151, 163, 179, 190}
+var _Platform_index = [...]uint8{0, 15, 30, 41, 54, 66, 80, 98, 118, 137, 149, 165, 176}
 
 func (i Platform) String() string {
 	if i < 0 || i >= Platform(len(_Platform_index)-1) {

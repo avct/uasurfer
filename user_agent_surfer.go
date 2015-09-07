@@ -29,12 +29,12 @@ type DeviceType int
 
 const (
 	DeviceUnknown DeviceType = iota
-	DeviceComputer
-	DeviceTablet
-	DevicePhone
-	DeviceConsole
-	DeviceWearable
-	DeviceTV
+	Computer
+	Tablet
+	Phone
+	Console
+	Wearable
+	TV
 )
 
 // BrowserName (int) returns a constant.
@@ -42,18 +42,18 @@ type BrowserName int
 
 const (
 	BrowserUnknown BrowserName = iota
-	BrowserChrome
-	BrowserIE
-	BrowserSafari
-	BrowserFirefox
-	BrowserAndroid
-	BrowserOpera
-	BrowserBlackberry
-	BrowserUCBrowser
-	BrowserSilk
-	BrowserNokia
-	BrowserSpotify
-	BrowserBot
+	Chrome
+	IE
+	Safari
+	Firefox
+	Android
+	Opera
+	Blackberry
+	UCBrowser
+	Silk
+	Nokia
+	Spotify
+	Bot
 )
 
 // OSName (int) returns a constant.
