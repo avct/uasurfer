@@ -28,10 +28,10 @@ browserName, browserVersion, platform, osName, osVersion, deviceType, ua := uasu
 **Usage note:** There are some minor OSes that do no return a version, see docs below, and linux OS can be hit-or-miss at this stage given the plethura of OS names. Linux as a platform is quite accurate.
 
 #### Browser Name
-* Google Chrome, Chromium - `BrowserChrome`
-* Apple Safari, Google Search Application (GSA) - `BrowserSafari`
-* Microsoft Internet Explorer & Edge - `BrowserIE`
-* Mozilla Firefox, Icecat, Iceweasel, Seamonkey - `BrowserFirefox`
+* `BrowserChrome` - Google [Chrome](https://en.wikipedia.org/wiki/Google_Chrome), [Chromium](https://en.wikipedia.org/wiki/Chromium_(web_browser))
+* `BrowserSafari` - Apple Safari, Google Search Application ([GSA](https://itunes.apple.com/us/app/google/id284815942))
+* `BrowserIE` - Microsoft [Internet Explorer](https://en.wikipedia.org/wiki/Internet_Explorer), [Edge](https://en.wikipedia.org/wiki/Microsoft_Edge)
+* `BrowserFirefox` - Mozilla Firefox, Icecat, Iceweasel, Seamonkey
 * Android WebView (Android <4.4) - `BrowserAndroid`
 * Opera - `BrowserOpera`
 * UCBrowser - `BrowserUCBrowser`
