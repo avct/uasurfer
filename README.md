@@ -29,16 +29,16 @@ browserName, browserVersion, platform, osName, osVersion, deviceType, ua := uasu
 
 #### Browser Name
 * `BrowserChrome` - Google [Chrome](https://en.wikipedia.org/wiki/Google_Chrome), [Chromium](https://en.wikipedia.org/wiki/Chromium_(web_browser))
-* `BrowserSafari` - Apple Safari, Google Search Application ([GSA](https://itunes.apple.com/us/app/google/id284815942))
+* `BrowserSafari` - Apple [Safari](https://en.wikipedia.org/wiki/Safari_(web_browser)), Google Search ([GSA](https://itunes.apple.com/us/app/google/id284815942))
 * `BrowserIE` - Microsoft [Internet Explorer](https://en.wikipedia.org/wiki/Internet_Explorer), [Edge](https://en.wikipedia.org/wiki/Microsoft_Edge)
-* `BrowserFirefox` - Mozilla Firefox, Icecat, Iceweasel, Seamonkey
-* Android WebView (Android <4.4) - `BrowserAndroid`
-* Opera - `BrowserOpera`
-* UCBrowser - `BrowserUCBrowser`
-* Amazon Silk - `BrowserSilk`
-* Spotify - `BrowserSpotify`
-* RIM Blackberry - `BrowserBlackberry`
-* Unknown - `BrowserUnknown`
+* `BrowserFirefox` - Mozilla [Firefox](https://en.wikipedia.org/wiki/Firefox), GNU [IceCat](https://en.wikipedia.org/wiki/GNU_IceCat), [Iceweasel](https://en.wikipedia.org/wiki/Mozilla_Corporation_software_rebranded_by_the_Debian_project#Iceweasel), [Seamonkey](https://en.wikipedia.org/wiki/SeaMonkey)
+* `BrowserAndroid` - Android [WebView](https://developer.chrome.com/multidevice/webview/overview) (Android <4.4)
+* `BrowserOpera` - [Opera](https://en.wikipedia.org/wiki/Opera_(web_browser))
+* `BrowserUCBrowser` - [UC Browser](https://en.wikipedia.org/wiki/UC_Browser)
+* `BrowserSilk` - Amazon [Silk](https://en.wikipedia.org/wiki/Amazon_Silk)
+* `BrowserSpotify` - [Spotify](https://en.wikipedia.org/wiki/Spotify#Clients) desktop client
+* `BrowserBlackberry` - RIM [BlackBerry](https://en.wikipedia.org/wiki/BlackBerry)
+* `BrowserUnknown` - Unknown
 
 #### Browser Version
 
