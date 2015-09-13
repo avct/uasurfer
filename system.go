@@ -160,7 +160,7 @@ func evalLinux(ua string, agentPlatform string) (Platform, OSName, int) {
 	}
 
 	// Linux, "Linux-like"
-	if strings.Contains(ua, "x11") || strings.Contains(ua, "bsd") || strings.Contains(ua, "suse") {
+	if strings.Contains(ua, "x11") || strings.Contains(ua, "bsd") || strings.Contains(ua, "suse") || strings.Contains(ua, "debian") || strings.Contains(ua, "ubuntu") {
 		return PlatformLinux, OSLinux, 0
 	}
 
