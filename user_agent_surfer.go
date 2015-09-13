@@ -62,12 +62,7 @@ type OSName int
 const (
 	OSUnknown OSName = iota
 	OSWindowsPhone
-	OSWindows2000
-	OSWindowsXP
-	OSWindowsVista
-	OSWindows7
-	OSWindows8
-	OSWindows10
+	OSWindows
 	OSMacOSX
 	OSiOS
 	OSAndroid

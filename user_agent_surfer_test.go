@@ -76,20 +76,20 @@ var testUAVars = []struct {
 
 	// Opera
 	{"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36 OPR/18.0.1284.68",
-		BrowserOpera, 18, PlatformWindows, OSWindows7, 6, DeviceComputer},
+		BrowserOpera, 18, PlatformWindows, OSWindows, 7, DeviceComputer},
 
 	{"Mozilla/5.0 (iPhone; CPU iPhone OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) OPiOS/10.2.0.93022 Mobile/12H143 Safari/9537.53",
 		BrowserOpera, 10, PlatformiPhone, OSiOS, 8, DevicePhone},
 
 	// Internet Explorer -- https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
 	{"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.123",
-		BrowserIE, 12, PlatformWindows, OSWindows10, 10, DeviceComputer},
+		BrowserIE, 12, PlatformWindows, OSWindows, 10, DeviceComputer},
 
 	{"Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)",
-		BrowserIE, 10, PlatformWindows, OSWindows8, 6, DeviceComputer},
+		BrowserIE, 10, PlatformWindows, OSWindows, 8, DeviceComputer},
 
 	{"Mozilla/5.0 (Windows NT 6.3; Trident/7.0; .NET4.0E; .NET4.0C; rv:11.0) like Gecko",
-		BrowserIE, 11, PlatformWindows, OSWindows8, 6, DeviceComputer},
+		BrowserIE, 11, PlatformWindows, OSWindows, 8, DeviceComputer},
 
 	{"Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; DEVICE INFO) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Mobile Safari/537.36 Edge/12.123",
 		BrowserIE, 12, PlatformWindowsPhone, OSWindowsPhone, 10, DevicePhone},
@@ -98,13 +98,13 @@ var testUAVars = []struct {
 		BrowserIE, 11, PlatformWindowsPhone, OSWindowsPhone, 8, DevicePhone},
 
 	{"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0; SV1; .NET CLR 1.1.4322; .NET CLR 1.0.3705; .NET CLR 2.0.50727)",
-		BrowserIE, 5, PlatformWindows, OSWindows2000, 5, DeviceComputer},
+		BrowserIE, 5, PlatformWindows, OSWindows, 4, DeviceComputer},
 
 	{"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; Trident/4.0; GTB6.4; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; OfficeLiveConnector.1.3; OfficeLivePatch.0.0; .NET CLR 1.1.4322)",
-		BrowserIE, 7, PlatformWindows, OSWindows7, 6, DeviceComputer},
+		BrowserIE, 7, PlatformWindows, OSWindows, 7, DeviceComputer},
 
 	{"Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; ARM; Trident/6.0; Touch)", //Windows Surface RT tablet
-		BrowserIE, 10, PlatformWindows, OSWindows8, 6, DeviceTablet},
+		BrowserIE, 10, PlatformWindows, OSWindows, 8, DeviceTablet},
 
 	// UC Browser
 	{"Mozilla/5.0 (Linux; U; Android 2.3.4; en-US; MT11i Build/4.0.2.A.0.62) AppleWebKit/534.31 (KHTML, like Gecko) UCBrowser/9.0.1.275 U3/0.8.0 Mobile Safari/534.31",
@@ -229,7 +229,7 @@ var testUAVars = []struct {
 
 	// Spotify (applicable for advertising applications)
 	{"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Spotify/1.0.9.133 Safari/537.36",
-		BrowserSpotify, 1, PlatformWindows, OSWindowsXP, 5, DeviceComputer},
+		BrowserSpotify, 1, PlatformWindows, OSWindows, 5, DeviceComputer},
 
 	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Spotify/1.0.9.133 Safari/537.36",
 		BrowserSpotify, 1, PlatformMac, OSMacOSX, 10, DeviceComputer},
@@ -530,39 +530,37 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (Nintendo WiiU) AppleWebKit/536.28 (KHTML, like Gecko) NX/3.0.3.12.6 NintendoBrowser/2.0.0.9362.US",
 		BrowserUnknown, 0, PlatformNintendo, OSNintendo, 0, DeviceConsole},
 
-	// Can't parse browser due to limitation of user agent library
+	// TODO fails to get opera first -- but is this a real UA string or an uncommon spoof?
 	// {"Mozilla/4.0 (compatible; MSIE 5.0; Windows 2000) Opera 6.0 [en]",
-	// BrowserIE, 5, PlatformWindows, OSWindows2000, 5, DeviceComputer},
+	// 	BrowserIE, 5, PlatformWindows, OSWindows, 4, DeviceComputer},
 
 	{"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0; SV1; .NET CLR 1.1.4322; .NET CLR 1.0.3705; .NET CLR 2.0.50727)",
-		BrowserIE, 5, PlatformWindows, OSWindows2000, 5, DeviceComputer},
+		BrowserIE, 5, PlatformWindows, OSWindows, 4, DeviceComputer},
 
 	{"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; Trident/4.0; GTB6.4; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; OfficeLiveConnector.1.3; OfficeLivePatch.0.0; .NET CLR 1.1.4322)",
-		BrowserIE, 7, PlatformWindows, OSWindows7, 6, DeviceComputer},
+		BrowserIE, 7, PlatformWindows, OSWindows, 7, DeviceComputer},
 
 	{"Mozilla/5.0 (Windows; U; Windows NT 6.1; sk; rv:1.9.1.7) Gecko/20091221 Firefox/3.5.7",
-		BrowserFirefox, 3, PlatformWindows, OSWindows7, 6, DeviceComputer},
+		BrowserFirefox, 3, PlatformWindows, OSWindows, 7, DeviceComputer},
 
 	{"Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)",
-		BrowserIE, 10, PlatformWindows, OSWindows8, 6, DeviceComputer},
+		BrowserIE, 10, PlatformWindows, OSWindows, 8, DeviceComputer},
 
 	{"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/536.5 (KHTML, like Gecko) YaBrowser/1.0.1084.5402 Chrome/19.0.1084.5402 Safari/536.5",
-		BrowserChrome, 19, PlatformWindows, OSWindows8, 6, DeviceComputer},
+		BrowserChrome, 19, PlatformWindows, OSWindows, 8, DeviceComputer},
 
 	{"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.15 (KHTML, like Gecko) Chrome/24.0.1295.0 Safari/537.15",
-		BrowserChrome, 24, PlatformWindows, OSWindows8, 6, DeviceComputer},
+		BrowserChrome, 24, PlatformWindows, OSWindows, 8, DeviceComputer},
 
 	{"Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko",
-		BrowserIE, 11, PlatformWindows, OSWindows8, 6, DeviceTablet},
+		BrowserIE, 11, PlatformWindows, OSWindows, 8, DeviceTablet},
 
-	// ...
 	{"Mozilla/5.0 (IE 11.0; Windows NT 6.3; Trident/7.0; .NET4.0E; .NET4.0C; rv:11.0) like Gecko",
-		BrowserIE, 11, PlatformWindows, OSWindows8, 6, DeviceComputer},
+		BrowserIE, 11, PlatformWindows, OSWindows, 8, DeviceComputer},
 
 	// {"Mozilla/4.0 (compatible; MSIE 4.01; Windows 95)",
 	// 	BrowserIE, 5, PlatformWindows, OSWindows95, 5, DeviceComputer},
 
-	// // ...
 	// {"Mozilla/4.0 (compatible; MSIE 5.0; Windows 95) Opera 6.02 [en]",
 	// 	BrowserIE, 5, PlatformWindows, OSWindows95, 5, DeviceComputer},
 
@@ -587,13 +585,13 @@ var testUAVars = []struct {
 	// 	BrowserUnknown, OSWindowsME, DeviceComputer},
 
 	{"Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 1.1.4322; InfoPath.2; .NET CLR 3.5.21022; .NET CLR 3.5.30729; MS-RTC LM 8; OfficeLiveConnector.1.4; OfficeLivePatch.1.3; .NET CLR 3.0.30729)",
-		BrowserIE, 8, PlatformWindows, OSWindowsVista, 6, DeviceComputer},
+		BrowserIE, 8, PlatformWindows, OSWindows, 6, DeviceComputer},
 
 	{"Mozilla/5.0 (Windows; U; Windows NT 5.1; cs; rv:1.9.1.8) Gecko/20100202 Firefox/3.5.8",
-		BrowserFirefox, 3, PlatformWindows, OSWindowsXP, 5, DeviceComputer},
+		BrowserFirefox, 3, PlatformWindows, OSWindows, 5, DeviceComputer},
 
 	{"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; )",
-		BrowserIE, 7, PlatformWindows, OSWindowsXP, 5, DeviceComputer},
+		BrowserIE, 7, PlatformWindows, OSWindows, 5, DeviceComputer},
 
 	// Can't parse due to limitation of user agent library
 	{"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Windows Phone 6.5.3.5)",
@@ -601,7 +599,7 @@ var testUAVars = []struct {
 
 	// desktop mode for Windows Phone 7
 	{"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; XBLWP7; ZuneWP7)",
-		BrowserIE, 7, PlatformWindows, OSWindows7, 6, DeviceComputer},
+		BrowserIE, 7, PlatformWindows, OSWindows, 7, DeviceComputer},
 
 	// mobile mode for Windows Phone 7
 	{"Mozilla/4.0 (compatible; MSIE 7.0; Windows Phone OS 7.0; Trident/3.1; IEMobile/7.0; HTC; T8788)",

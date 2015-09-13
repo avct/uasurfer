@@ -1,6 +1,6 @@
 # User Agent Surfer
 
-User Agent Surfer (uasurfer) is a Go package that parses and abstract HTTP User-Agent strings with particular attention to accuracy, speed, and resource efficiency. The following information is returned by uasurfer after supplying it a raw UA string:
+User Agent Surfer (uasurfer) is a Go package that parses and abstract HTTP User-Agent strings with particular attention to accuracy, speed, and resource efficiency. Each full parse requires `608 B/op` & `11 allocs/op`. The following information is returned by uasurfer after supplying it a raw UA string:
 
 * **Browser name** (e.g. `chrome`)
 * **Browser major version** (e.g. `45`)
@@ -32,7 +32,7 @@ browserName, browserVersion, platform, osName, osVersion, deviceType, ua := uasu
 * `BrowserSafari` - Apple [Safari](https://en.wikipedia.org/wiki/Safari_(web_browser)), Google Search ([GSA](https://itunes.apple.com/us/app/google/id284815942))
 * `BrowserIE` - Microsoft [Internet Explorer](https://en.wikipedia.org/wiki/Internet_Explorer), [Edge](https://en.wikipedia.org/wiki/Microsoft_Edge)
 * `BrowserFirefox` - Mozilla [Firefox](https://en.wikipedia.org/wiki/Firefox), GNU [IceCat](https://en.wikipedia.org/wiki/GNU_IceCat), [Iceweasel](https://en.wikipedia.org/wiki/Mozilla_Corporation_software_rebranded_by_the_Debian_project#Iceweasel), [Seamonkey](https://en.wikipedia.org/wiki/SeaMonkey)
-* `BrowserAndroid` - Android [WebView](https://developer.chrome.com/multidevice/webview/overview) (Android <4.4)
+* `BrowserAndroid` - Android [WebView](https://developer.chrome.com/multidevice/webview/overview) (Android OS <4.4 only)
 * `BrowserOpera` - [Opera](https://en.wikipedia.org/wiki/Opera_(web_browser))
 * `BrowserUCBrowser` - [UC Browser](https://en.wikipedia.org/wiki/UC_Browser)
 * `BrowserSilk` - Amazon [Silk](https://en.wikipedia.org/wiki/Amazon_Silk)
@@ -42,7 +42,7 @@ browserName, browserVersion, platform, osName, osVersion, deviceType, ua := uasu
 
 #### Browser Version
 
-Browser version returns an `unint8` of the correct top-level version attribute of the User-Agent String. For example Chrome 45.0.23423 would return `45`. The intention is to support math operators with versions, such as Chrome version >23.
+Browser version returns an `unint8` of the major version attribute of the User-Agent String. For example Chrome 45.0.23423 would return `45`. The intention is to support math operators with versions, such as "do XYZ for Chrome version >23".
 
 Unknown version is returned as `0`.
 
@@ -61,15 +61,17 @@ Unknown version is returned as `0`.
 * Unknown - `PlatformUnknown`
 
 #### OS Name
-* `2000`, `xp`, `vista`, `7`, `8`, `10`
-* `os x`
-* `ios`
-* `android`
-* `chromeos`
-* `webos`
-* `linux`
-* `playstation`, `xbox`, `nintendo`
-* `unknown`
+* `OSWindows2000`, `OSWindowsXP`, `OSWindowsVista`, `OSWindows7`, `OSWindows8`, `OSWindows10`
+* `OSMacOSX`
+* `OSiOS`
+* `OSAndroid`
+* `OSChromeOS`
+* `OSWebOS`
+* `OSLinux`
+* `OSPlaystation`
+* `OSXbox`
+* `OSNintendo`
+* `OSUnknown`
 
 #### OS Version
 
@@ -79,6 +81,17 @@ OS version will be an integer (unint8) for the mjor OS version, which is the NT 
 * For OS X 10.5.1, "`PlatformMac`" is the platform, "`OSMacOSX`" the name, and `5` the version.
 * For Android 5.1, "`PlatformLinux`" is the platform, "`OSAndroid`" is the name, and `5` the version.
 * For iOS 5.1, "`PlatformiPhone`" or "`PlatformiPad`" is the platform, "`OSiOS`" is the name, and `5` the version.
+
+###### Windows Version Guide
+
+OSWindows versioning uses the "NT" version of an OS as listed in the User Agent String. These versions of Windows are supported and return the associated `unint8`:
+
+* Windows 10 - `10`
+* Windows 8, 8.1 - `8`
+* Windows 7 - `7`
+* Windows Vista - `6`
+* Windows XP - `5`
+* Windows 2000 - `4`
 
 #### DeviceType
 DeviceType is typically quite accurate, though determining between phones and tablets on Android is not always possible due to how some vendors design their UA strings. A mobile Android device without tablet indicator defaults to being classified as a phone. DeviceTV supports major brands like Philips, Sharp, Vizio and steaming boxes such as Apple, Google, Roku, Amazon.
@@ -92,12 +105,13 @@ DeviceType is typically quite accurate, though determining between phones and ta
 * `DeviceUnknown`
 
 ## Example Combinations of Attributes
-* Surface RT -> `windows`, `tablet`, OS.Version >= `6`
-* Android Tablet -> `android`, `tablet`
-* Microsoft Edge -> `ie`, Browser.Version == `12`
+* Surface RT -> `OSWindows8`, `DeviceTablet`, OSVersion >= `6`
+* Android Tablet -> `OSAndroid`, `DeviceTablet`
+* Microsoft Edge -> `BrowserIE`, BrowserVersion == `12`
 
 ## To do
 
+* Remove compiled regexp in favor of string.Contains wherever possible (lowers mem/alloc)
 * Support version on Firefox derivatives (e.g. SeaMonkey)
 * Support bots
 * Support NetFront

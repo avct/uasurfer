@@ -15,6 +15,7 @@ var (
 	//kindleTest           = regexp.MustCompile("\\sKF[A-Z]{2,4}\\s")
 	androidVersion        = regexp.MustCompile("android \\d+")
 	amazonFireFingerprint = regexp.MustCompile("\\s(k[a-z]{3,5}|sd\\d{4}ur)\\s") //tablet or phone
+	// windowsVersion        = regexp.MustCompile("windows nt (\\d\\d|\\d\\.\\d)")
 )
 
 // OS type returns a lowercase name (string) of the operating system, along with its major version (int).
@@ -213,31 +214,31 @@ func evalWindows(ua string) (Platform, OSName, int) {
 
 	// Windows 10
 	if strings.Contains(ua, "windows nt 10") {
-		return PlatformWindows, OSWindows10, 10
+		return PlatformWindows, OSWindows, 10
 	}
 
 	// Windows 8
 	if strings.Contains(ua, "windows nt 6.2") || strings.Contains(ua, "windows nt 6.3") {
-		return PlatformWindows, OSWindows8, 6
+		return PlatformWindows, OSWindows, 8
 	}
 
 	// Windows 7
 	if strings.Contains(ua, "windows nt 6.1") {
-		return PlatformWindows, OSWindows7, 6
+		return PlatformWindows, OSWindows, 7
 	}
 
 	// Windows Vista
 	if strings.Contains(ua, "windows nt 6.0") {
-		return PlatformWindows, OSWindowsVista, 6
+		return PlatformWindows, OSWindows, 6
 	}
 	// Windows XP
 	if strings.Contains(ua, "windows nt 5.1") || strings.Contains(ua, "windows nt 5.2") || strings.Contains(ua, "windows xp") {
-		return PlatformWindows, OSWindowsXP, 5
+		return PlatformWindows, OSWindows, 5
 	}
 
 	// Windows 2000
-	if strings.Contains(ua, "windows nt 5.0") {
-		return PlatformWindows, OSWindows2000, 5
+	if strings.Contains(ua, "windows nt 5.0") || strings.Contains(ua, "windows 2000") {
+		return PlatformWindows, OSWindows, 4
 	}
 
 	return PlatformWindows, OSUnknown, 0 //default
