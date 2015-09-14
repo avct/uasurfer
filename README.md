@@ -93,6 +93,8 @@ OSWindows versioning uses the "NT" version of an OS as listed in the User Agent 
 * Windows XP - `5`
 * Windows 2000 - `4`
 
+Windows 95, 98, and ME represent 0.01% of traffic worldwide and are not available through this package.
+
 #### DeviceType
 DeviceType is typically quite accurate, though determining between phones and tablets on Android is not always possible due to how some vendors design their UA strings. A mobile Android device without tablet indicator defaults to being classified as a phone. DeviceTV supports major brands like Philips, Sharp, Vizio and steaming boxes such as Apple, Google, Roku, Amazon.
 
