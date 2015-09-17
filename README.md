@@ -116,7 +116,15 @@ DeviceType is typically quite accurate, though determining between phones and ta
 * Remove compiled regexp in favor of string.Contains wherever possible (lowers mem/alloc)
 * Support version on Firefox derivatives (e.g. SeaMonkey)
 * Support bots
-* Support NetFront
-* Support Nokia browser
+* Potential additional browser support:
+ * "NetFront" (1% share in India)
+ * "QQ Browser" (6.5% share in China)
+ * "Sogou Explorer" (5% share in China)
+ * "Maxthon" (1.5% share in China)
+ * "Nokia"
+* Potential additional OS support:
+ * "Nokia" (5% share in India)
+ * "Series 40" (5.5% share in India)
+ * "Windows XP" (6% share in India)
 * iOS safari browser identification based on iOS version
 * Add android version to browser identification
