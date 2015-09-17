@@ -125,6 +125,5 @@ DeviceType is typically quite accurate, though determining between phones and ta
 * Potential additional OS support:
  * "Nokia" (5% share in India)
  * "Series 40" (5.5% share in India)
- * "Windows XP" (6% share in India)
 * iOS safari browser identification based on iOS version
 * Add android version to browser identification
