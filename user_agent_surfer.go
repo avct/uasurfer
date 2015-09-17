@@ -52,6 +52,10 @@ const (
 	BrowserUCBrowser
 	BrowserSilk
 	BrowserNokia
+	BrowserNetFront
+	BrowserQQ
+	BrowserMaxthon
+	BrowserSogouExplorer
 	BrowserSpotify
 	BrowserBot
 )
