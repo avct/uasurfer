@@ -77,14 +77,14 @@ Unknown version is returned as `0`.
 
 OS version will be an integer (unint8) for the mjor OS version, which is the NT major version for Windows (e.g. NT 6.2 is `6`) and minor version for OS X (e.g. OS X 10.11.6 is `11`). `0` indicates the OS verison is unknown, or not evaluated. This is to allow ease of use around math operators the version numbers. Here are some examples across the platform, os.name, and os.version:
 
-* For Windows XP (Windows NT 5.1), "`PlatformWindows`" is the platform, "`OSWindowsXP`" is the name, and `5` the version.
+* For Windows XP (Windows NT 5.1), "`PlatformWindows`" is the platform, "`OSWindows`" is the name, and `5` the version.
 * For OS X 10.5.1, "`PlatformMac`" is the platform, "`OSMacOSX`" the name, and `5` the version.
 * For Android 5.1, "`PlatformLinux`" is the platform, "`OSAndroid`" is the name, and `5` the version.
 * For iOS 5.1, "`PlatformiPhone`" or "`PlatformiPad`" is the platform, "`OSiOS`" is the name, and `5` the version.
 
 ###### Windows Version Guide
 
-OSWindows versioning uses the "NT" version of an OS as listed in the User Agent String. These versions of Windows are supported and return the associated `unint8`:
+Windows 2000 and later versions are supported and return the associated `unint8`:
 
 * Windows 10 - `10`
 * Windows 8, 8.1 - `8`
@@ -114,8 +114,8 @@ DeviceType is typically quite accurate, though determining between phones and ta
 ## To do
 
 * Remove compiled regexp in favor of string.Contains wherever possible (lowers mem/alloc)
-* Support version on Firefox derivatives (e.g. SeaMonkey)
-* Support bots
+* Better version support on Firefox derivatives (e.g. SeaMonkey)
+* Better bot support
 * Potential additional browser support:
  * "NetFront" (1% share in India)
  * "QQ Browser" (6.5% share in China)
@@ -125,5 +125,6 @@ DeviceType is typically quite accurate, though determining between phones and ta
 * Potential additional OS support:
  * "Nokia" (5% share in India)
  * "Series 40" (5.5% share in India)
+ * Windows 2003 Server
 * iOS safari browser identification based on iOS version
 * Add android version to browser identification
