@@ -47,21 +47,21 @@ Browser version returns an `unint8` of the major version attribute of the User-A
 Unknown version is returned as `0`.
 
 #### Platform
-* Microsoft Windows - `PlatformWindows`
-* Apple Macintosh - `PlatformMac`
-* Linux - `PlatformLinux` - Android OS uses Linux platform
-* Apple iPad - `PlatformiPad`
-* Apple iPhone - `PlatformiPhone`
-* RIM Blackberry - `PlatformBlackberry`
-* Microsoft Windows Phone - `PlatformWindowsPhone`
-* Amazon Kindle & Kindle Fire - `PlatformKindle` - Fire models
-* Sony Playstation, Vita, PSP - `PlatformPlaystation`
-* Microsoft Xbox - `PlatformXbox`
-* Nintendo DS, Wii, etc. - `PlatformNintendo`
-* Unknown - `PlatformUnknown`
+* `PlatformWindows` - Microsoft Windows
+* `PlatformMac` - Apple Macintosh
+* `PlatformLinux` - Linux, including Android and other OSes
+* `PlatformiPad` - Apple iPad
+* `PlatformiPhone` - Apple iPhone
+* `PlatformBlackberry` - RIM Blackberry
+* `PlatformWindowsPhone` Microsoft Windows Phone & Mobile
+* `PlatformKindle` - Amazon Kindle & Kindle Fire
+* `PlatformPlaystation` - Sony Playstation, Vita, PSP
+* `PlatformXbox` - Microsoft Xbox - `PlatformXbox`
+* `PlatformNintendo` - Nintendo DS, Wii, etc.
+* `PlatformUnknown` - Unknown
 
 #### OS Name
-* `OSWindows2000`, `OSWindowsXP`, `OSWindowsVista`, `OSWindows7`, `OSWindows8`, `OSWindows10`
+* `OSWindows`
 * `OSMacOSX`
 * `OSiOS`
 * `OSAndroid`
