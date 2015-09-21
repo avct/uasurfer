@@ -1,6 +1,6 @@
-# User Agent Surfer
+# uasurfer
 
-User Agent Surfer (uasurfer) is a Go package that parses and abstract HTTP User-Agent strings with particular attention to accuracy, speed, and resource efficiency. Each full parse requires `608 B/op` & `11 allocs/op`. The following information is returned by uasurfer after supplying it a raw UA string:
+**User Agent Surfer** (uasurfer) is a Go package that parses and abstract HTTP User-Agent strings with particular attention to accuracy, speed, and resource efficiency. Each full parse requires `608 B/op` & `11 allocs/op`. The following information is returned by uasurfer after supplying it a raw UA string:
 
 * **Browser name** (e.g. `chrome`)
 * **Browser major version** (e.g. `45`)
@@ -13,9 +13,11 @@ Layout engine, browser language, and other esoteric attributes are not parsed.
 
 Web browsers and operating systems that account for 98.5% of all worldwide use are identified.
 
-## Parse(ua string) Function
+## Usage
 
-The `uasurfer.Parse()` function accepts a user agent string (string) and returns specific named constants along with integers (unint8) for versions.
+### Parse(ua string) Function
+
+The `Parse()` function accepts a user agent `string` and returns named constants, integers for versions, and the full UA string that was parsed (lowercase).
 
 ```
 // Define a user agent string
