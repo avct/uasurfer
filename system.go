@@ -18,19 +18,6 @@ var (
 	// windowsVersion        = regexp.MustCompile("windows nt (\\d\\d|\\d\\.\\d)")
 )
 
-// OS type returns a lowercase name (string) of the operating system, along with its major version (int).
-// To allow easy of use with math operators, the version numbers for Mac and Win may be slightly unexpected.
-// Here are some examples:
-//
-// 	For Windows XP (Windows NT 5.1), "windows" is the platform, "xp" is the name, and 5 the version.
-// 	For OS X 10.5.1, "mac" is the platform, "os x" the name, and 5 the version.
-// 	For Android 5.1, "linux" is the platform, "android" is the name, and 5 the version.
-//	For iOS 5.1, "iphone" or "ipad" is the platform, "ios" is the name, and 5 the version.
-// type OS struct {
-// 	Name    OSName
-// 	Version int
-// }
-
 // Retrieve the espoused platform and OS from the User-Agent string
 func evalSystem(ua string) (Platform, OSName, int) {
 	var (
@@ -39,7 +26,6 @@ func evalSystem(ua string) (Platform, OSName, int) {
 		platformUASection []byte //represents portion of ua string that contains platform information
 	)
 
-	// more efficient method of getting the spec string than using native regexp package (TODO: need stronger profiling verification)
 	for ; i < len(ua); i++ {
 		if ua[i] == '(' {
 			depth++

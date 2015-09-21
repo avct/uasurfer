@@ -1,10 +1,8 @@
 // Package uasurfer provides fast and reliable abstraction
-// of HTTP User-Agent strings. The BrowserProfile struct contains browser name
-// (string), browser version (int), platform name (string), os name (string),
-// os version (int), device type (string). The philosophy is to identify only
-// technology that holds >1% market share, and to avoid expending resources
-// and accuracy on guessing at esoteric UA strings.
-// TODO: Go package names are usually short avoid underscore. Best to rename it to something like useragent
+// of HTTP User-Agent strings. The philosophy is to identify
+// technologies that holds >1% market share, and to avoid
+// expending resources and accuracy on guessing at esoteric UA
+// strings.
 package uasurfer
 
 //go:generate stringer -type=DeviceType,BrowserName,OSName,Platform -output=const_string.go
@@ -13,20 +11,11 @@ import (
 	"strings"
 )
 
-// The BrowserProfile type contains all the attributes parsed and inferred from the User-Agent string.
-// type BrowserProfile struct {
-// 	UA             string
-// 	Browser        BrowserName
-// 	BrowserVersion int
-// 	Platform       Platform
-// 	OS             OSName
-// 	OSVersion      int
-// 	DeviceType     DeviceType
-// }
-
 // DeviceType (int) returns a constant.
 type DeviceType int
 
+// A complete list of supported devices in the
+// form of constants.
 const (
 	DeviceUnknown DeviceType = iota
 	DeviceComputer
@@ -40,6 +29,8 @@ const (
 // BrowserName (int) returns a constant.
 type BrowserName int
 
+// A complete list of supported web browsers in the
+// form of constants.
 const (
 	BrowserUnknown BrowserName = iota
 	BrowserChrome
@@ -63,6 +54,10 @@ const (
 // OSName (int) returns a constant.
 type OSName int
 
+// A complete list of supported OSes in the
+// form of constants. For handling particular versions
+// of operating systems (e.g. Windows 2000), see
+// the README.md file.
 const (
 	OSUnknown OSName = iota
 	OSWindowsPhone
@@ -84,6 +79,10 @@ const (
 // Platform (int) returns a constant.
 type Platform int
 
+// A complete list of supported platforms in the
+// form of constants. Many OSes report their
+// true platform, such as Android OS being Linux
+// platform.
 const (
 	PlatformUnknown Platform = iota
 	PlatformWindows
@@ -98,16 +97,6 @@ const (
 	PlatformNintendo
 	PlatformBot
 )
-
-// func (b *BrowserProfile) initialize() {
-// 	b.UA = ""
-// 	b.Browser.Name = BrowserUnknown
-// 	b.Browser.Version = 0
-// 	b.Platform = PlatformUnknown
-// 	b.OS.Name = OSUnknown
-// 	b.OS.Version = 0
-// 	b.DeviceType = DeviceUnknown
-// }
 
 // Parse accepts a raw user agent (string) and returns the
 // browser name (int), browser version
