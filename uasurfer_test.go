@@ -257,6 +257,13 @@ var testUAVars = []struct {
 	{"Opera/9.80 (S60; SymbOS; Opera Mobi/352; U; de) Presto/2.4.15 Version/10.00",
 		BrowserOpera, 10, PlatformUnknown, OSUnknown, 0, DevicePhone},
 
+	// BrowserQQ
+	// {"Mozilla/5.0 (Windows NT 6.2; WOW64; Trident/7.0; Touch; .NET4.0E; .NET4.0C; .NET CLR 3.5.30729; .NET CLR 2.0.50727; .NET CLR 3.0.30729; InfoPath.3; Tablet PC 2.0; QQBrowser/7.6.21433.400; rv:11.0) like Gecko",
+	// 	BrowserQQ, 7, PlatformWindows, OSWindows, 8, DeviceTablet},
+
+	// {"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36 QQBrowser/9.0.2191.400",
+	// 	BrowserQQ, 9, PlatformWindows, OSWindows, 7, DeviceComputer},
+
 	// SUBMITTED TESTS
 	{"Mozilla/5.0 (Linux; U; Android 1.0; en-us; dream) AppleWebKit/525.10+ (KHTML,like Gecko) Version/3.0.4 Mobile Safari/523.12.2",
 		BrowserAndroid, 3, PlatformLinux, OSAndroid, 1, DevicePhone},
