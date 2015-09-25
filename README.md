@@ -1,8 +1,10 @@
 # uasurfer
 
-**User Agent Surfer** (uasurfer) is a lightweight Golang package that parses and abstracts HTTP User-Agent strings with particular attention to accuracy, speed, and resource efficiency.
+![User Agent Surfer](http://avocet.io/images/misc/user_agent_surfer.png)
 
-The following information is returned by uasurfer after supplying it a raw UA string:
+**User Agent Surfer** (uasurfer) is a lightweight Golang package that parses and abstracts [HTTP User-Agent strings](https://en.wikipedia.org/wiki/User_agent) with particular attention device type.
+
+The following information is returned by uasurfer from a raw HTTP User-Agent string:
 
 * **Browser name** (e.g. `chrome`)
 * **Browser major version** (e.g. `45`)
@@ -13,7 +15,7 @@ The following information is returned by uasurfer after supplying it a raw UA st
 
 Layout engine, browser language, and other esoteric attributes are not parsed.
 
-Web browsers and operating systems that account for 98.5% of all worldwide use are identified.
+Web browsers and operating systems that account for 98.5% of all worldwide market share are identified.
 
 ## Usage
 
@@ -97,10 +99,10 @@ Windows 2000 and later versions are supported and return the associated `unint8`
 * Windows XP - `5`
 * Windows 2000 - `4`
 
-Windows 95, 98, and ME represent 0.01% of traffic worldwide and are not available through this package.
+Windows 95, 98, and ME represent 0.01% of traffic worldwide and are not available through this package at this time.
 
 #### DeviceType
-DeviceType is typically quite accurate, though determining between phones and tablets on Android is not always possible due to how some vendors design their UA strings. A mobile Android device without tablet indicator defaults to being classified as a phone. DeviceTV supports major brands like Philips, Sharp, Vizio and steaming boxes such as Apple, Google, Roku, Amazon.
+DeviceType is typically quite accurate, though determining between phones and tablets on Android is not always possible due to how some vendors design their UA strings. A mobile Android device without tablet indicator defaults to being classified as a phone. DeviceTV supports major brands such as Philips, Sharp, Vizio and steaming boxes such as Apple, Google, Roku, Amazon.
 
 * `DeviceComputer`
 * `DevicePhone`
