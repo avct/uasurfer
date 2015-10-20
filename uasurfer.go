@@ -100,7 +100,7 @@ const (
 // browser name (int), browser version
 // (int), platform (int), OS name (int), OS version (int),
 // device type (int), and raw user agent (string).
-func Parse(ua string) (BrowserName, int, Platform, OSName, int, DeviceType) {
+func Parse(ua string) (BrowserName, int, Platform, OSName, int, DeviceType, string) {
 	ua = strings.ToLower(ua)
 
 	platform, osName, osVersion := evalSystem(ua)
@@ -108,5 +108,5 @@ func Parse(ua string) (BrowserName, int, Platform, OSName, int, DeviceType) {
 	browserVersion := evalBrowserVersion(ua, browserName)
 	deviceType := evalDevice(ua, osName, platform, browserName)
 
-	return browserName, browserVersion, platform, osName, osVersion, deviceType
+	return browserName, browserVersion, platform, osName, osVersion, deviceType, ua
 }

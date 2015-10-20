@@ -647,7 +647,7 @@ func TestAgentSurfer(t *testing.T) {
 	//bp := new(BrowserProfile)
 	for i, determined := range testUAVars {
 		//bp.Parse(determined.UA)
-		browserName, browserVersion, platform, osName, osVersion, deviceType := Parse(determined.UA)
+		browserName, browserVersion, platform, osName, osVersion, deviceType, _ := Parse(determined.UA)
 
 		if browserName != determined.browserName {
 			t.Errorf("%d browserName: got %v, wanted %v", i, browserName, determined.browserName)
