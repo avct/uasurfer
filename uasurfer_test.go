@@ -17,6 +17,21 @@ var testUAVars = []struct {
 	osVersion      int
 	deviceType     DeviceType
 }{
+	// Empty
+	{"",
+		BrowserUnknown, 0, PlatformUnknown, OSUnknown, 0, DeviceUnknown},
+
+	// Single char
+	{"a",
+		BrowserUnknown, 0, PlatformUnknown, OSUnknown, 0, DeviceUnknown},
+
+	// Some random string
+	{"some random string",
+		BrowserUnknown, 0, PlatformUnknown, OSUnknown, 0, DeviceUnknown},
+
+	// Potentially malformed ua
+	{")(",
+		BrowserUnknown, 0, PlatformUnknown, OSUnknown, 0, DeviceUnknown},
 
 	// iPhone
 	{"Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/546.10 (KHTML, like Gecko) Version/6.0 Mobile/7E18WD Safari/8536.25",
@@ -291,7 +306,7 @@ var testUAVars = []struct {
 
 	// TODO: support names of Android OS?
 	{"Mozilla/5.0 (Linux; U; Android Donut; de-de; HTC Tattoo 1.52.161.1 Build/Donut) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1",
-		BrowserAndroid, 3, PlatformLinux, OSAndroid, 0, DevicePhone},
+		BrowserAndroid, 3, PlatformLinux, OSAndroid, 1, DevicePhone},
 
 	{"Mozilla/5.0 (Linux; U; Android 1.6; en-gb; HTC Tattoo Build/DRC79) AppleWebKit/525.10+ (KHTML, like Gecko) Version/3.0.4 Mobile Safari/523.12.2",
 		BrowserAndroid, 3, PlatformLinux, OSAndroid, 1, DevicePhone},
@@ -695,9 +710,15 @@ func BenchmarkAgentSurfer(b *testing.B) {
 	num := len(testUAVars)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		browserName, _, _, _, _, _, _ := Parse(testUAVars[i%num].UA)
+		Parse(testUAVars[i%num].UA)
+	}
+}
 
-		_ = browserName
+func BenchmarkEvalSystem(b *testing.B) {
+	num := len(testUAVars)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		evalSystem(testUAVars[i%num].UA)
 	}
 }
 

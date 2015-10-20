@@ -120,9 +120,10 @@ func evalBrowserVersion(ua string, browserName BrowserName) int {
 
 	// if there is a 'version/#' attribute with numeric version, use it -- except for Chrome since Android vendors sometimes hijack version/#
 	if browserName != BrowserChrome && bVersion.MatchString(ua) {
-		v := bVersion.FindString(ua)
-		v = strings.Split(v, "/")[1]
-		i := strToInt(v)
+		ua = bVersion.FindString(ua)
+		s := strings.Index(ua, "/")
+		ua = ua[s+1:]
+		i := strToInt(ua)
 		return i
 	}
 
@@ -189,9 +190,6 @@ func evalBrowserVersion(ua string, browserName BrowserName) int {
 	default:
 		return 0
 	}
-
-	// Handle no match
-	return 0
 }
 
 // Subfunction of evalBrowser() that takes two parameters: regex (string) and
@@ -202,17 +200,9 @@ func getMajorVersion(ua string, browserVersion *regexp.Regexp) int {
 
 	if ver != "" {
 		if strings.Contains(ver, "/") {
-			ver = strings.Split(ver, "/")[1] //e.g. "version/10.0.2"
-			i := strToInt(ver)
-			return i
+			return getVersionNumber(ver, "/")
 		}
-
-		if strings.Contains(ver, " ") {
-			ver = strings.Split(ver, " ")[1] //e.g. "msie 10.0"
-			i := strToInt(ver)
-			return i
-		}
-		return 0
+		return getVersionNumber(ver, " ")
 	}
 
 	i := strToInt(ver)
@@ -249,4 +239,10 @@ func getiOSSafariVersion(ua string) int {
 	}
 
 	return 0 // default
+}
+
+func getVersionNumber(s, delim string) int {
+	ind := strings.Index(s, delim)
+	i := strToInt(s[ind+1:])
+	return i
 }

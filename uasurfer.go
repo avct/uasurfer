@@ -5,11 +5,9 @@
 // strings.
 package uasurfer
 
-//go:generate stringer -type=DeviceType,BrowserName,OSName,Platform -output=const_string.go
+import "strings"
 
-import (
-	"strings"
-)
+//go:generate stringer -type=DeviceType,BrowserName,OSName,Platform -output=const_string.go
 
 // DeviceType (int) returns a constant.
 type DeviceType int
