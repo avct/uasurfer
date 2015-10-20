@@ -714,18 +714,13 @@ func BenchmarkAgentSurfer(b *testing.B) {
 	}
 }
 
-// func BenchmarkEvalDevice(b *testing.B) {
-// 	num := len(testUAVars)
-// 	b.ResetTimer()
-// 	for i := 0; i < b.N; i++ {
-// 		b.StopTimer()
-// 		platform, osName, _ := evalSystem(testUAVars[i%num].UA)
-// 		browserName := evalBrowserName(testUAVars[i%num].UA)
-// 		b.StartTimer()
-// 		evalDevice(testUAVars[i%num].UA, osName, platform, browserName)
-// 		b.StopTimer()
-// 	}
-// }
+func BenchmarkEvalSystem(b *testing.B) {
+	num := len(testUAVars)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		evalSystem(testUAVars[i%num].UA)
+	}
+}
 
 // // Chrome for Mac
 // func BenchmarkParseChromeMac(b *testing.B) {
