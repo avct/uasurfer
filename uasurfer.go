@@ -5,11 +5,9 @@
 // strings.
 package uasurfer
 
-//go:generate stringer -type=DeviceType,BrowserName,OSName,Platform -output=const_string.go
+import "strings"
 
-import (
-	"strings"
-)
+//go:generate stringer -type=DeviceType,BrowserName,OSName,Platform -output=const_string.go
 
 // DeviceType (int) returns a constant.
 type DeviceType int
@@ -102,7 +100,7 @@ const (
 // browser name (int), browser version
 // (int), platform (int), OS name (int), OS version (int),
 // device type (int), and raw user agent (string).
-func Parse(ua string) (BrowserName, int, Platform, OSName, int, DeviceType, string) {
+func Parse(ua string) (BrowserName, int, Platform, OSName, int, DeviceType) {
 	ua = strings.ToLower(ua)
 
 	platform, osName, osVersion := evalSystem(ua)
@@ -110,5 +108,5 @@ func Parse(ua string) (BrowserName, int, Platform, OSName, int, DeviceType, stri
 	browserVersion := evalBrowserVersion(ua, browserName)
 	deviceType := evalDevice(ua, osName, platform, browserName)
 
-	return browserName, browserVersion, platform, osName, osVersion, deviceType, ua
+	return browserName, browserVersion, platform, osName, osVersion, deviceType
 }
