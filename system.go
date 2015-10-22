@@ -248,6 +248,9 @@ func evalMacintosh(uaPlatformGroup string) (Platform, OSName, int) {
 // an `int` of the major version of iOS, or `0` (unknown) on error.
 func getiOSVersion(uaPlatformGroup string) int {
 	s := iosVersion.FindString(uaPlatformGroup)
+	if len(s) == 0 {
+		return 0
+	}
 	i := strToInt(string(s[len(s)-1]))
 	return i
 }
