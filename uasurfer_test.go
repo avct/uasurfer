@@ -54,9 +54,15 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (iPhone; U; CPU iPhone OS 5_1_1 like Mac OS X; en) AppleWebKit/534.46.0 (KHTML, like Gecko) CriOS/19.0.1084.60 Mobile/9B206 Safari/534.48.3",
 		BrowserChrome, 19, PlatformiPhone, OSiOS, 5, DevicePhone},
 
+	{"Mozilla/5.0 (Linux; Android 6.0; Nexus 5X Build/MDB08L) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36",
+		BrowserChrome, 46, PlatformLinux, OSAndroid, 6, DevicePhone},
+
 	// Chromium (Chrome)
 	{"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.19 (KHTML, like Gecko) Ubuntu/11.10 Chromium/18.0.1025.142 Chrome/18.0.1025.142 Safari/535.19",
 		BrowserChrome, 18, PlatformLinux, OSLinux, 0, DeviceComputer},
+
+	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36",
+		BrowserChrome, 45, PlatformMac, OSMacOSX, 11, DeviceComputer},
 
 	//TODO: refactor "getMajorVersion()" to handle this device/chrome version douchebaggery
 	// {"Mozilla/5.0 (Linux; Android 4.4.2; en-gb; SAMSUNG SM-G800F Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Version/1.6 Chrome/28.0.1500.94 Mobile Safari/537.36",
