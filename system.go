@@ -251,7 +251,9 @@ func getiOSVersion(uaPlatformGroup string) int {
 	if len(s) == 0 {
 		return 0
 	}
-	i := strToInt(string(s[len(s)-1]))
+
+	// catpure and trim the last 2 characters; convert to int
+	i := strToInt(strings.TrimSpace(string(s[len(s)-2:])))
 	return i
 }
 
