@@ -68,7 +68,7 @@ Unknown version is returned as `0`.
 
 #### OS Name
 * `OSWindows`
-* `OSMacOSX` // includes "macOS Sierra"
+* `OSMacOSX` - includes "macOS Sierra"
 * `OSiOS`
 * `OSAndroid`
 * `OSChromeOS`
