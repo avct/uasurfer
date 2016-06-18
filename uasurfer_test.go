@@ -78,6 +78,9 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_5; en-us) AppleWebKit/525.26.2 (KHTML, like Gecko) Version/3.2 Safari/525.26.12",
 		BrowserSafari, 3, PlatformMac, OSMacOSX, 5, DeviceComputer},
 
+	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12) AppleWebKit/602.1.32 (KHTML, like Gecko) Version/10.0 Safari/602.1.32", // macOS Sierra dev beta
+		BrowserSafari, 10, PlatformMac, OSMacOSX, 12, DeviceComputer},
+
 	// Firefox
 	{"Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) FxiOS/1.0 Mobile/12F69 Safari/600.1.4",
 		BrowserFirefox, 1, PlatformiPhone, OSiOS, 8, DevicePhone},
