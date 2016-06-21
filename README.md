@@ -1,6 +1,6 @@
 # uasurfer
 
-![User Agent Surfer](http://avocet.io/images/misc/user_agent_surfer.png)
+![uasurfer-100px](https://cloud.githubusercontent.com/assets/597902/16172506/9debc136-357a-11e6-90fb-c7c46f50dff0.png)
 
 **User Agent Surfer** (uasurfer) is a lightweight Golang package that parses and abstracts [HTTP User-Agent strings](https://en.wikipedia.org/wiki/User_agent) with particular attention device type.
 
@@ -68,7 +68,7 @@ Unknown version is returned as `0`.
 
 #### OS Name
 * `OSWindows`
-* `OSMacOSX`
+* `OSMacOSX` - includes "macOS Sierra"
 * `OSiOS`
 * `OSAndroid`
 * `OSChromeOS`
@@ -121,7 +121,7 @@ DeviceType is typically quite accurate, though determining between phones and ta
 
 * Remove compiled regexp in favor of string.Contains wherever possible (lowers mem/alloc)
 * Better version support on Firefox derivatives (e.g. SeaMonkey)
-* Better bot support
+* Better bot identification
 * Potential additional browser support:
  * "NetFront" (1% share in India)
  * "QQ Browser" (6.5% share in China)

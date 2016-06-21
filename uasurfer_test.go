@@ -47,6 +47,9 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (iPad; CPU OS 9_0 like Mac OS X) AppleWebKit/601.1.17 (KHTML, like Gecko) Version/8.0 Mobile/13A175 Safari/600.1.4",
 		BrowserSafari, 8, PlatformiPad, OSiOS, 9, DeviceTablet},
 
+	{"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.32 (KHTML, like Gecko) Version/10.0 Mobile/14A5261v Safari/602.1",
+		BrowserSafari, 10, PlatformiPhone, OSiOS, 10, DevicePhone},
+
 	// Chrome
 	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36",
 		BrowserChrome, 43, PlatformMac, OSMacOSX, 10, DeviceComputer},
@@ -74,6 +77,9 @@ var testUAVars = []struct {
 
 	{"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_5; en-us) AppleWebKit/525.26.2 (KHTML, like Gecko) Version/3.2 Safari/525.26.12",
 		BrowserSafari, 3, PlatformMac, OSMacOSX, 5, DeviceComputer},
+
+	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12) AppleWebKit/602.1.32 (KHTML, like Gecko) Version/10.0 Safari/602.1.32", // macOS Sierra dev beta
+		BrowserSafari, 10, PlatformMac, OSMacOSX, 12, DeviceComputer},
 
 	// Firefox
 	{"Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) FxiOS/1.0 Mobile/12F69 Safari/600.1.4",

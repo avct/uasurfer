@@ -8,7 +8,7 @@ import (
 
 var (
 	safariFingerprints = regexp.MustCompile("\\w{3}\\/\\d")
-	bVersion           = regexp.MustCompile("version/\\d+")
+	bVersion           = regexp.MustCompile("version/\\d+") // standard browser versioning e.g. "Version/10.0"
 	chromeVersion      = regexp.MustCompile("(chrome|crios|crmo)/\\d+")
 	ieVersion          = regexp.MustCompile("(msie\\s|edge/)\\d+")
 	tridentVersion     = regexp.MustCompile("trident/\\d+")
@@ -36,7 +36,8 @@ var (
 // version (int) is returned.
 func evalBrowserName(ua string) BrowserName {
 
-	if strings.Contains(ua, "blackberry") || strings.Contains(ua, "playbook") || strings.Contains(ua, "bb10") || strings.Contains(ua, "rim ") { //blackberry goes first because it reads as MSIE & Safari
+	// Blackberry goes first because it reads as MSIE & Safari
+	if strings.Contains(ua, "blackberry") || strings.Contains(ua, "playbook") || strings.Contains(ua, "bb10") || strings.Contains(ua, "rim ") {
 		return BrowserBlackberry
 	}
 
@@ -58,7 +59,7 @@ func evalBrowserName(ua string) BrowserName {
 			return BrowserUCBrowser
 		}
 
-		//Edge, Silk and other chrome-identifying browsers must evaluate before chrome, unless we want to add more overhead
+		// Edge, Silk and other chrome-identifying browsers must evaluate before chrome, unless we want to add more overhead
 		if strings.Contains(ua, "chrome/") || strings.Contains(ua, "crios/") || strings.Contains(ua, "chromium/") || strings.Contains(ua, "crmo/") {
 			return BrowserChrome
 		}
@@ -138,20 +139,12 @@ func evalBrowserVersion(ua string, browserName BrowserName) int {
 			return i
 		}
 
-		// switch based on trident version indicator https://en.wikipedia.org/wiki/Trident_(layout_engine)
+		// get MSIE version from trident version https://en.wikipedia.org/wiki/Trident_(layout_engine)
 		if strings.Contains(ua, "trident") {
 			i := getMajorVersion(ua, tridentVersion)
-			switch i {
-			case 3:
-				return 7
-			case 4:
-				return 8
-			case 5:
-				return 9
-			case 6:
-				return 10
-			case 7:
-				return 11
+			// convert trident versions 3-7 to MSIE version
+			if (i >= 3) && (i <= 7) {
+				return i + 4
 			}
 		}
 
@@ -171,6 +164,7 @@ func evalBrowserVersion(ua string, browserName BrowserName) int {
 		i := getMajorVersion(ua, ucVersion)
 
 		return i
+
 	case BrowserOpera:
 		if strings.Contains(ua, "opr/") || strings.Contains(ua, "opios/") {
 			i := getMajorVersion(ua, oprVersion)
@@ -179,6 +173,7 @@ func evalBrowserVersion(ua string, browserName BrowserName) int {
 
 		i := getMajorVersion(ua, operaVersion)
 		return i
+
 	case BrowserSilk:
 		i := getMajorVersion(ua, silkVersion)
 		return i
@@ -217,30 +212,20 @@ func getMajorVersion(ua string, browserVersion *regexp.Regexp) int {
 func getiOSSafariVersion(ua string) int {
 	v := getiOSVersion(ua)
 
-	switch v {
-	case 1: // OS version
-		return 2 // Safari version
-	case 2:
-		return 3
-	case 3:
-		return 4
-	case 4:
-		return 4
-	case 5:
-		return 5
-	case 6:
-		return 6
-	case 7:
-		return 6
-	case 8:
-		return 8
-	case 9:
-		return 8
+	// early Safari used a version number +1 to OS version
+	if (v <= 3) && (v >= 1) {
+		return v + 1
+	}
+
+	// later Safari typically matches iOS version after v3
+	if v >= 4 {
+		return v
 	}
 
 	return 0 // default
 }
 
+// returns version number to the left of a delimiter
 func getVersionNumber(s, delim string) int {
 	ind := strings.Index(s, delim)
 	i := strToInt(s[ind+1:])
