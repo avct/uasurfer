@@ -81,8 +81,15 @@ func evalBrowserName(ua string) BrowserName {
 			// Safari is the most generic, archtypical User-Agent on the market -- it's identified by making sure effectively by checking for attribute purity. It's fingerprint should have 4 or 5 total x/y attributes, 'mobile/version' being optional
 			safariFingerprints := len(safariFingerprints.FindAllString(ua, -1))
 
-			if (safariFingerprints == 4 || safariFingerprints == 5) && strings.Contains(ua, "version/") && strings.Contains(ua, "safari/") && strings.Contains(ua, "mozilla/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") {
-				return BrowserSafari
+			if strings.Contains(ua, "mozilla/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") {
+				if safariFingerprints == 4 || safariFingerprints == 5 && strings.Contains(ua, "version/") && strings.Contains(ua, "safari/") {
+					return BrowserSafari
+				}
+
+				// presume it's safari unless another esoteric browser is being specified (webOSBrowser, SamsungBrowser, etc.)
+				if !strings.Contains(ua, "browser/") && !strings.Contains(ua, "os/") {
+					return BrowserSafari
+				}
 			}
 		}
 
@@ -108,6 +115,10 @@ func evalBrowserName(ua string) BrowserName {
 
 	if strings.Contains(ua, "ucbrowser") {
 		return BrowserUCBrowser
+	}
+
+	if strings.Contains(ua, "phantomjs") || strings.Contains(ua, "googlebot") {
+		return BrowserBot
 	}
 
 	return BrowserUnknown

@@ -53,7 +53,7 @@ func evalSystem(ua string) (Platform, OSName, int) {
 		return PlatformBlackberry, OSBlackberry, 0
 	case "x11", "linux":
 		return evalLinux(ua, agentPlatform)
-	case "ipad", "iphone":
+	case "ipad", "iphone", "ipod touch", "ipod":
 		return evaliOS(specs, agentPlatform)
 	case "macintosh":
 		return evalMacintosh(ua)
@@ -120,7 +120,7 @@ func evalLinux(ua string, agentPlatform string) (Platform, OSName, int) {
 	}
 
 	// Android, Kindle Fire
-	if strings.Contains(ua, "android") {
+	if strings.Contains(ua, "android") || strings.Contains(ua, "googletv") {
 		// Android
 		if v, ok := findVersionNumber(agentPlatform, "android "); ok {
 			return PlatformLinux, OSAndroid, v
@@ -143,7 +143,7 @@ func evalLinux(ua string, agentPlatform string) (Platform, OSName, int) {
 		return PlatformLinux, OSLinux, 0
 	}
 
-	return PlatformLinux, OSUnknown, 0 //default
+	return PlatformLinux, OSLinux, 0 //default
 
 }
 
@@ -159,6 +159,11 @@ func evaliOS(uaPlatform string, agentPlatform string) (Platform, OSName, int) {
 	// iPad
 	if uaPlatform == "ipad" {
 		return PlatformiPad, OSiOS, getiOSVersion(agentPlatform)
+	}
+
+	// iPod
+	if uaPlatform == "ipod touch" || uaPlatform == "ipod" {
+		return PlatformiPod, OSiOS, getiOSVersion(agentPlatform)
 	}
 
 	return PlatformiPad, OSUnknown, 0 //default

@@ -14,7 +14,7 @@ func evalDevice(ua string, os OSName, platform Platform, browser BrowserName) De
 		return DeviceComputer
 	}
 
-	if platform == PlatformiPad || strings.Contains(ua, "tablet") || strings.Contains(ua, "kindle/") || strings.Contains(ua, "playbook") {
+	if platform == PlatformiPad || platform == PlatformiPod || strings.Contains(ua, "tablet") || strings.Contains(ua, "kindle/") || strings.Contains(ua, "playbook") {
 		return DeviceTablet
 	}
 
