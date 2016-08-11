@@ -121,7 +121,6 @@ DeviceType is typically quite accurate, though determining between phones and ta
 
 * Remove compiled regexp in favor of string.Contains wherever possible (lowers mem/alloc)
 * Better version support on Firefox derivatives (e.g. SeaMonkey)
-* Better bot identification
 * Potential additional browser support:
  * "NetFront" (1% share in India)
  * "QQ Browser" (6.5% share in China)
@@ -134,3 +133,7 @@ DeviceType is typically quite accurate, though determining between phones and ta
  * Windows 2003 Server
 * iOS safari browser identification based on iOS version
 * Add android version to browser identification
+* old Macs
+ * "opera/9.64 (macintosh; ppc mac os x; u; en) presto/2.1.1"
+* old Windows
+ * "mozilla/5.0 (windows nt 4.0; wow64) applewebkit/537.36 (khtml, like gecko) chrome/37.0.2049.0 safari/537.36"

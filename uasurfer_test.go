@@ -157,6 +157,13 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (X11; U; CrOS i686 9.10.0; en-US) AppleWebKit/532.5 (KHTML, like Gecko) Chrome/4.0.253.0 Safari/532.5",
 		BrowserChrome, 4, PlatformLinux, OSChromeOS, 0, DeviceComputer},
 
+	// iPod, iPod Touch
+	{"mozilla/5.0 (ipod touch; cpu iphone os 9_3_3 like mac os x) applewebkit/601.1.46 (khtml, like gecko) version/9.0 mobile/13g34 safari/601.1",
+		BrowserSafari, 9, PlatformiPod, OSiOS, 9, DeviceTablet},
+
+	{"mozilla/5.0 (ipod; cpu iphone os 6_1_6 like mac os x) applewebkit/536.26 (khtml, like gecko) version/6.0 mobile/10b500 safari/8536.25",
+		BrowserSafari, 6, PlatformiPod, OSiOS, 6, DeviceTablet},
+
 	// WebOS
 	{"Mozilla/5.0 (hp-tablet; Linux; hpwOS/3.0.0; U; de-DE) AppleWebKit/534.6 (KHTML, like Gecko) wOSBrowser/233.70 Safari/534.6 TouchPad/1.0",
 		BrowserUnknown, 0, PlatformLinux, OSWebOS, 0, DeviceTablet},
@@ -230,7 +237,7 @@ var testUAVars = []struct {
 		BrowserChrome, 31, PlatformUnknown, OSUnknown, 0, DeviceTV},
 
 	{"Mozilla/5.0 (Linux; GoogleTV 3.2; VAP430 Build/MASTER) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.77 Safari/534.24", // Google TV
-		BrowserChrome, 11, PlatformLinux, OSUnknown, 0, DeviceTV},
+		BrowserChrome, 11, PlatformLinux, OSAndroid, 0, DeviceTV},
 
 	{"Mozilla/5.0 (Linux; Android 5.0; ADT-1 Build/LPX13D) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.89 Mobile Safari/537.36", // Android TV
 		BrowserChrome, 40, PlatformLinux, OSAndroid, 5, DeviceTV},
@@ -239,7 +246,7 @@ var testUAVars = []struct {
 		BrowserChrome, 25, PlatformLinux, OSAndroid, 4, DeviceTV},
 
 	{"Mozilla/5.0 (Unknown; Linux armv7l) AppleWebKit/537.1+ (KHTML, like Gecko) Safari/537.1+ LG Browser/6.00.00(+mouse+3D+SCREEN+TUNER; LGE; GLOBAL-PLAT5; 03.07.01; 0x00000001;); LG NetCast.TV-2013/03.17.01 (LG, GLOBAL-PLAT4, wired)", // LG TV
-		BrowserUnknown, 0, PlatformLinux, OSUnknown, 0, DeviceTV},
+		BrowserUnknown, 0, PlatformLinux, OSLinux, 0, DeviceTV},
 
 	{"Mozilla/5.0 (X11; FreeBSD; U; Viera; de-DE) AppleWebKit/537.11 (KHTML, like Gecko) Viera/3.10.0 Chrome/23.0.1271.97 Safari/537.11", // Panasonic Viera
 		BrowserChrome, 23, PlatformLinux, OSLinux, 0, DeviceTV},
@@ -249,6 +256,12 @@ var testUAVars = []struct {
 
 	{"Roku/DVP-5.2 (025.02E03197A)", // Roku
 		BrowserUnknown, 0, PlatformUnknown, OSUnknown, 0, DeviceTV},
+
+	{"mozilla/5.0 (smart-tv; linux; tizen 2.3) applewebkit/538.1 (khtml, like gecko) samsungbrowser/1.0 tv safari/538.1", // Samsung SmartTV
+		BrowserUnknown, 0, PlatformLinux, OSLinux, 0, DeviceTV},
+
+	{"mozilla/5.0 (linux; u) applewebkit/537.36 (khtml, like gecko) version/4.0 mobile safari/537.36 smarttv/6.0 (netcast)",
+		BrowserUnknown, 4, PlatformLinux, OSLinux, 0, DeviceTV},
 
 	// Google search app (GSA) for iOS -- it's Safari in disguise as of v6
 	{"Mozilla/5.0 (iPad; CPU OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) GSA/6.0.51363 Mobile/12F69 Safari/600.1.4",
@@ -262,11 +275,14 @@ var testUAVars = []struct {
 		BrowserSpotify, 1, PlatformMac, OSMacOSX, 10, DeviceComputer},
 
 	// Bots
-	// {"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-	// 	"bot", 0, "bot", "bot", 0, DeviceBot},
+	{"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+		BrowserBot, 0, PlatformBot, OSBot, 0, DeviceComputer},
 
 	// {"Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-	// 	"bot", 0, "bot", "bot", 0, DeviceBot},
+	// 	BrowserBot, 0, PlatformBot, OSBot, 6, DeviceComputer},
+
+	{"mozilla/5.0 (unknown; linux x86_64) applewebkit/538.1 (khtml, like gecko) phantomjs/2.1.1 safari/538.1",
+		BrowserBot, 0, PlatformBot, OSBot, 0, DeviceComputer},
 
 	// Unknown or partially handled
 	{"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.1b3pre) Gecko/20090223 SeaMonkey/2.0a3", //Seamonkey (~FF)
