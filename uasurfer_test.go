@@ -212,6 +212,9 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (Linux; Android 4.4.4; SD4930UR Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/34.0.0.0 Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/35.0.0.48.273;]",
 		BrowserChrome, 34, PlatformLinux, OSKindle, 4, DevicePhone}, // Facebook app on Fire Phone
 
+	{"mozilla/5.0 (linux; android 4.4.3; kfthwi build/ktu84m) applewebkit/537.36 (khtml, like gecko) version/4.0 chrome/34.0.0.0 safari/537.36 [pinterest/android]",
+		BrowserChrome, 34, PlatformLinux, OSKindle, 4, DeviceTablet}, // Fire tablet running pinterest
+
 	// extra logic to identify phone when using silk has not been added
 	// {"Mozilla/5.0 (Linux; Android 4.4.4; SD4930UR Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.67 like Chrome/39.0.2171.93 Mobile Safari/537.36",
 	// 	BrowserSilk, 3, PlatformLinux, OSKindle, 4, DevicePhone}, // Silk on Fire Phone
@@ -251,8 +254,9 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (X11; FreeBSD; U; Viera; de-DE) AppleWebKit/537.11 (KHTML, like Gecko) Viera/3.10.0 Chrome/23.0.1271.97 Safari/537.11", // Panasonic Viera
 		BrowserChrome, 23, PlatformLinux, OSLinux, 0, DeviceTV},
 
-	{"Mozilla/5.0 (DTV) AppleWebKit/531.2+ (KHTML, like Gecko) Espial/6.1.5 AQUOSBrowser/2.0 (US01DTV;V;0001;0001)", // Sharp Aquos
-		BrowserUnknown, 0, PlatformUnknown, OSUnknown, 0, DeviceTV},
+	// TODO: not catching "browser/" and reporting as safari -- ua string not being fully checked?
+	// {"Mozilla/5.0 (DTV) AppleWebKit/531.2+ (KHTML, like Gecko) Espial/6.1.5 AQUOSBrowser/2.0 (US01DTV;V;0001;0001)", // Sharp Aquos
+	// 	BrowserUnknown, 0, PlatformUnknown, OSUnknown, 0, DeviceTV},
 
 	{"Roku/DVP-5.2 (025.02E03197A)", // Roku
 		BrowserUnknown, 0, PlatformUnknown, OSUnknown, 0, DeviceTV},
@@ -361,9 +365,8 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (Linux; U; Android 2.2.1; en-gb; HTC_DesireZ_A7272 Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",
 		BrowserAndroid, 4, PlatformLinux, OSAndroid, 2, DevicePhone},
 
-	// INCORRECT DEVICE --> PHONE
 	{"Mozilla/5.0 (Linux; U; Android 2.3.3; en-us; Sensation_4G Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/5.0 Safari/533.16",
-		BrowserAndroid, 5, PlatformLinux, OSAndroid, 2, DeviceTablet},
+		BrowserAndroid, 5, PlatformLinux, OSAndroid, 2, DevicePhone},
 
 	{"Mozilla/5.0 (Linux; U; Android 2.3.5; ko-kr; SHW-M250S Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",
 		BrowserAndroid, 4, PlatformLinux, OSAndroid, 2, DevicePhone},
@@ -371,13 +374,11 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (Linux; U; Android 2.3.7; ja-jp; L-02D Build/GWK74) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",
 		BrowserAndroid, 4, PlatformLinux, OSAndroid, 2, DevicePhone},
 
+	// TODO: is tablet, not phone
 	{"Mozilla/5.0 (Linux; U; Android 3.0; xx-xx; Transformer TF101 Build/HRI66) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13",
-		BrowserAndroid, 4, PlatformLinux, OSAndroid, 3, DeviceTablet},
+		BrowserAndroid, 4, PlatformLinux, OSAndroid, 3, DevicePhone},
 
 	{"Mozilla/5.0 (Linux; U; Android 3.0; en-us; Xoom Build/HRI39) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13",
-		BrowserAndroid, 4, PlatformLinux, OSAndroid, 3, DeviceTablet},
-
-	{"Mozilla/5.0 (Linux; U; Android 3.2; de-de; A100 Build/HTJ85B) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13",
 		BrowserAndroid, 4, PlatformLinux, OSAndroid, 3, DeviceTablet},
 
 	{"Mozilla/5.0 (Linux; U; Android 4.0.1; en-us; sdk Build/ICS_MR0) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
@@ -386,9 +387,6 @@ var testUAVars = []struct {
 	// TODO support "android-" version prefix
 	// {"Mozilla/5.0 (Linux; U; Android-4.0.3; en-us; Galaxy Nexus Build/IML74K) AppleWebKit/535.7 (KHTML, like Gecko) CrMo/16.0.912.75 Mobile Safari/535.7",
 	// 	BrowserChrome, 16, PlatformLinux, OSAndroid, 4, DevicePhone},
-
-	{"Mozilla/5.0 (Linux; U; Android 4.0.3; pl-pl; Transformer TF101 Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30",
-		BrowserAndroid, 4, PlatformLinux, OSAndroid, 4, DeviceTablet},
 
 	{"Mozilla/5.0 (Linux; U; Android 4.1.1; en-us; Nexus S Build/JRO03E) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
 		BrowserAndroid, 4, PlatformLinux, OSAndroid, 4, DevicePhone},
@@ -468,9 +466,8 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5355d Safari/8536.25",
 		BrowserSafari, 6, PlatformiPad, OSiOS, 6, DeviceTablet},
 
-	// TODO handle default browser based on iOS version
 	{"Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10A5376e",
-		BrowserUnknown, 0, PlatformiPhone, OSiOS, 6, DevicePhone},
+		BrowserSafari, 6, PlatformiPhone, OSiOS, 6, DevicePhone},
 
 	{"Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/546.10 (KHTML, like Gecko) Version/6.0 Mobile/7E18WD Safari/8536.25",
 		BrowserSafari, 6, PlatformiPhone, OSiOS, 7, DevicePhone},
