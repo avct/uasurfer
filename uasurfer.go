@@ -108,10 +108,12 @@ func Parse(ua string) (BrowserName, int, Platform, OSName, int, DeviceType, stri
 	if platform == PlatformBot || osName == OSBot {
 		return BrowserBot, 0, PlatformBot, OSBot, 0, DeviceComputer, ua
 	}
+
 	browserName := evalBrowserName(ua)
 	if browserName == BrowserBot {
 		return BrowserBot, 0, PlatformBot, OSBot, 0, DeviceComputer, ua
 	}
+
 	browserVersion := evalBrowserVersion(ua, browserName)
 	deviceType := evalDevice(ua, osName, platform, browserName)
 

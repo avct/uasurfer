@@ -29,10 +29,15 @@ func evalDevice(ua string, os OSName, platform Platform, browser BrowserName) De
 
 	if os == OSAndroid {
 		// android phones report as "mobile", android tablets should not but often do -- http://android-developers.blogspot.com/2010/12/android-browser-user-agent-issues.html
-		if strings.Contains(ua, "mobile") && (!strings.Contains(ua, "nexus 7") || !strings.Contains(ua, "nexus 9") || !strings.Contains(ua, "nexus 10") || !strings.Contains(ua, "xoom")) {
+		if strings.Contains(ua, "mobile") {
 			return DevicePhone
 		}
-		return DeviceTablet
+
+		if strings.Contains(ua, "tablet") || strings.Contains(ua, "nexus 7") || strings.Contains(ua, "nexus 9") || strings.Contains(ua, "nexus 10") || strings.Contains(ua, "xoom") {
+			return DeviceTablet
+		}
+
+		return DevicePhone // default to phone
 	}
 
 	if platform == PlatformPlaystation || platform == PlatformXbox || platform == PlatformNintendo {
@@ -43,7 +48,8 @@ func evalDevice(ua string, os OSName, platform Platform, browser BrowserName) De
 		return DeviceWearable
 	}
 
-	if browser == BrowserSilk {
+	// specifically above "mobile" string check as Kindle Fire tablets report as "mobile"
+	if browser == BrowserSilk || os == OSKindle && !strings.Contains(ua, "sd4930ur") {
 		return DeviceTablet
 	}
 
