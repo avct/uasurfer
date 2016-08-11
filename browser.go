@@ -7,17 +7,17 @@ import (
 )
 
 var (
-	safariFingerprints = regexp.MustCompile("\\w{3}\\/\\d")
-	bVersion           = regexp.MustCompile("version/\\d+") // standard browser versioning e.g. "Version/10.0"
-	chromeVersion      = regexp.MustCompile("(chrome|crios|crmo)/\\d+")
-	ieVersion          = regexp.MustCompile("(msie\\s|edge/)\\d+")
-	tridentVersion     = regexp.MustCompile("trident/\\d+")
-	firefoxVersion     = regexp.MustCompile("(firefox|fxios)/\\d+")
-	ucVersion          = regexp.MustCompile("ucbrowser/\\d+")
-	oprVersion         = regexp.MustCompile("(opr|opios)/\\d+")
-	operaVersion       = regexp.MustCompile("opera/\\d+")
-	silkVersion        = regexp.MustCompile("silk/\\d+")
-	spotifyVersion     = regexp.MustCompile("spotify/\\d+")
+	// safariFingerprints = regexp.MustCompile("\\w{3}\\/\\d")
+	bVersion       = regexp.MustCompile("version/\\d+") // standard browser versioning e.g. "Version/10.0"
+	chromeVersion  = regexp.MustCompile("(chrome|crios|crmo)/\\d+")
+	ieVersion      = regexp.MustCompile("(msie\\s|edge/)\\d+")
+	tridentVersion = regexp.MustCompile("trident/\\d+")
+	firefoxVersion = regexp.MustCompile("(firefox|fxios)/\\d+")
+	ucVersion      = regexp.MustCompile("ucbrowser/\\d+")
+	oprVersion     = regexp.MustCompile("(opr|opios)/\\d+")
+	operaVersion   = regexp.MustCompile("opera/\\d+")
+	silkVersion    = regexp.MustCompile("silk/\\d+")
+	spotifyVersion = regexp.MustCompile("spotify/\\d+")
 )
 
 // Browser struct contains the lowercase name of the browser, along
@@ -78,18 +78,11 @@ func evalBrowserName(ua string) BrowserName {
 		}
 
 		if strings.Contains(ua, "like gecko") {
-			// Safari is the most generic, archtypical User-Agent on the market -- it's identified by making sure effectively by checking for attribute purity. It's fingerprint should have 4 or 5 total x/y attributes, 'mobile/version' being optional
-			safariFingerprints := len(safariFingerprints.FindAllString(ua, -1))
+			// presume it's safari unless an esoteric browser is being specified (webOSBrowser, SamsungBrowser, etc.)
+			if strings.Contains(ua, "mozilla/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") && strings.Contains(ua, "safari/") && !strings.Contains(ua, "browser/") && !strings.Contains(ua, "os/") {
 
-			if strings.Contains(ua, "mozilla/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") {
-				if safariFingerprints == 4 || safariFingerprints == 5 && strings.Contains(ua, "version/") && strings.Contains(ua, "safari/") {
-					return BrowserSafari
-				}
+				return BrowserSafari
 
-				// presume it's safari unless another esoteric browser is being specified (webOSBrowser, SamsungBrowser, etc.)
-				if !strings.Contains(ua, "browser/") && !strings.Contains(ua, "os/") {
-					return BrowserSafari
-				}
 			}
 		}
 

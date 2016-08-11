@@ -466,8 +466,9 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5355d Safari/8536.25",
 		BrowserSafari, 6, PlatformiPad, OSiOS, 6, DeviceTablet},
 
-	{"Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10A5376e",
-		BrowserSafari, 6, PlatformiPhone, OSiOS, 6, DevicePhone},
+	// possibly a bot, unconfirmed -- lacking "Safari/xx"
+	// {"Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10A5376e",
+	// 	BrowserSafari, 6, PlatformiPhone, OSiOS, 6, DevicePhone},
 
 	{"Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/546.10 (KHTML, like Gecko) Version/6.0 Mobile/7E18WD Safari/8536.25",
 		BrowserSafari, 6, PlatformiPhone, OSiOS, 7, DevicePhone},
@@ -706,30 +707,16 @@ func TestAgentSurfer(t *testing.T) {
 	}
 }
 
-// func TestExternalFile(t *testing.T) {
-// 	// open list of UA strings
-// 	inputFile, err := os.Open("./ua_test_set_bs.txt")
-
-// 	if err != nil {
-// 		panic(err)
-// 		os.Exit(1)
-// 	}
-// 	defer inputFile.Close()
-
-// 	// prepare yourself
-// 	reader := bufio.NewReader(inputFile)
-// 	scanner := bufio.NewScanner(reader)
-
-// 	// goodbye console
-// 	i := 1
-// 	for scanner.Scan() {
-// 		fmt.Println("-  ", i, "  -")
-// 		fmt.Println(scanner.Text())
-// 		browserName, browserVersion, platform, osName, osVersion, deviceType, _ := Parse(scanner.Text())
-// 		fmt.Println(browserName, browserVersion, platform, osName, osVersion, deviceType)
-// 		i++
-// 	}
-// }
+// BenchmarkAgentSurfer-8          	  200000	      7485 ns/op	     321 B/op	       4 allocs/op
+// BenchmarkEvalSystem-8           	  500000	      2694 ns/op	       0 B/op	       0 allocs/op
+// BenchmarkEvalBrowserName-8      	 2000000	       762 ns/op	       6 B/op	       0 allocs/op
+// BenchmarkEvalBrowserVersion-8   	 1000000	      1392 ns/op	      15 B/op	       0 allocs/op
+// BenchmarkEvalDevice-8           	 3000000	       486 ns/op	       0 B/op	       0 allocs/op
+// BenchmarkParseChromeMac-8       	  500000	      3576 ns/op	     288 B/op	       4 allocs/op
+// BenchmarkParseChromeWin-8       	  500000	      3329 ns/op	     240 B/op	       3 allocs/op
+// BenchmarkParseChromeAndroid-8   	  200000	      6520 ns/op	     320 B/op	       4 allocs/op
+// BenchmarkParseSafariMac-8       	  100000	     14021 ns/op	     512 B/op	       9 allocs/op
+// BenchmarkParseSafariiPad-8      	  100000	     13787 ns/op	     528 B/op	      10 allocs/op
 
 func BenchmarkAgentSurfer(b *testing.B) {
 	num := len(testUAVars)
@@ -747,42 +734,66 @@ func BenchmarkEvalSystem(b *testing.B) {
 	}
 }
 
-// // Chrome for Mac
-// func BenchmarkParseChromeMac(b *testing.B) {
-// 	b.ResetTimer()
-// 	for i := 0; i < b.N; i++ {
-// 		browserName, browserVersion, platform, osName, osVersion, deviceType, _ := Parse("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36")
-// 	}
-// }
+func BenchmarkEvalBrowserName(b *testing.B) {
+	num := len(testUAVars)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		evalBrowserName(testUAVars[i%num].UA)
+	}
+}
 
-// // Chrome for Windows
-// func BenchmarkParseChromeWin(b *testing.B) {
-// 	b.ResetTimer()
-// 	for i := 0; i < b.N; i++ {
-// 		browserName, browserVersion, platform, osName, osVersion, deviceType, _ := Parse("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36")
-// 	}
-// }
+func BenchmarkEvalBrowserVersion(b *testing.B) {
+	num := len(testUAVars)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		evalBrowserVersion(testUAVars[i%num].UA, testUAVars[i%num].browserName)
+	}
+}
 
-// // Chrome for Android
-// func BenchmarkParseChromeAndroid(b *testing.B) {
-// 	b.ResetTimer()
-// 	for i := 0; i < b.N; i++ {
-// 		browserName, browserVersion, platform, osName, osVersion, deviceType, _ := Parse("Mozilla/5.0 (Linux; Android 4.4.2; GT-P5210 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.93 Safari/537.36")
-// 	}
-// }
+func BenchmarkEvalDevice(b *testing.B) {
+	num := len(testUAVars)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		evalDevice(testUAVars[i%num].UA, testUAVars[i%num].osName, testUAVars[i%num].Platform, testUAVars[i%num].browserName)
+	}
+}
 
-// // Safari for Mac
-// func BenchmarkParseSafariMac(b *testing.B) {
-// 	b.ResetTimer()
-// 	for i := 0; i < b.N; i++ {
-// 		browserName, browserVersion, platform, osName, osVersion, deviceType, _ := Parse("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12")
-// 	}
-// }
+// Chrome for Mac
+func BenchmarkParseChromeMac(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		Parse("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36")
+	}
+}
 
-// // Safari for iPad
-// func BenchmarkParseSafariiPad(b *testing.B) {
-// 	b.ResetTimer()
-// 	for i := 0; i < b.N; i++ {
-// 		browserName, browserVersion, platform, osName, osVersion, deviceType, _ := Parse("Mozilla/5.0 (iPad; CPU OS 8_1_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B440 Safari/600.1.4")
-// 	}
-// }
+// Chrome for Windows
+func BenchmarkParseChromeWin(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		Parse("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36")
+	}
+}
+
+// Chrome for Android
+func BenchmarkParseChromeAndroid(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		Parse("Mozilla/5.0 (Linux; Android 4.4.2; GT-P5210 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.93 Safari/537.36")
+	}
+}
+
+// Safari for Mac
+func BenchmarkParseSafariMac(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		Parse("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12")
+	}
+}
+
+// Safari for iPad
+func BenchmarkParseSafariiPad(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		Parse("Mozilla/5.0 (iPad; CPU OS 8_1_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B440 Safari/600.1.4")
+	}
+}
