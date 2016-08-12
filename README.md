@@ -6,32 +6,34 @@
 
 The following information is returned by uasurfer from a raw HTTP User-Agent string:
 
-* **Browser name** (e.g. `chrome`)
-* **Browser major version** (e.g. `45`)
-* **Platform** (e.g. `ipad`)
-* **OS name** (e.g. `ios`)
-* **OS major version** (e.g. `9`)
-* **Device type** (e.g. `tablet`)
+| Name           | Example | Coverage in 192,792 parses |
+|----------------|---------|--------------------------------|
+| Browser name    | `chrome` | 99.85%                         |
+| Browser version | `53` | 99.17%                         |
+| Platform       | `ipad`  | 99.97%                         |
+| OS name         | `ios`  | 99.96%                         |
+| OS version      | `10`   | 98.81%                         |
+| Device type    |  `tablet` | 99.98%                         |
 
 Layout engine, browser language, and other esoteric attributes are not parsed.
 
-Web browsers and operating systems that account for 98.5% of all worldwide market share are identified.
+Coverage is estimated from a random sample of real UA strings collected across thousands of sources in US and EU mid-2016.
 
 ## Usage
 
 ### Parse(ua string) Function
 
-The `Parse()` function accepts a user agent `string` and returns named constants, integers for versions, and the full UA string that was parsed (lowercase).
+The `Parse()` function accepts a user agent `string` and returns named constants, integers for versions, and the full UA string that was parsed (lowercase). A string can be retrieved by adding `.String()` to a variable, such as `uasurfer.BrowserName.String()`.
 
 ```
 // Define a user agent string
 myUA := "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36"
 
-// Parse() is multivariate, including returning the full UA string last
+// Parse() returns all attributes, including returning the full UA string last
 browserName, browserVersion, platform, osName, osVersion, deviceType, ua := uasurfer.Parse(myUA)
 ```
 
-**Usage note:** There are some minor OSes that do no return a version, see docs below, and linux OS can be hit-or-miss at this stage given the plethura of OS names. Linux as a platform is quite accurate.
+**Usage note:** There are some OSes that do not return a version, see docs below. Linux is typically not reported with a specific Linux distro name or version.
 
 #### Browser Name
 * `BrowserChrome` - Google [Chrome](https://en.wikipedia.org/wiki/Google_Chrome), [Chromium](https://en.wikipedia.org/wiki/Chromium_(web_browser))
