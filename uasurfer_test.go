@@ -466,10 +466,6 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5355d Safari/8536.25",
 		BrowserSafari, 6, PlatformiPad, OSiOS, 6, DeviceTablet},
 
-	// possibly a bot, unconfirmed -- lacking "Safari/xx"
-	// {"Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10A5376e",
-	// 	BrowserSafari, 6, PlatformiPhone, OSiOS, 6, DevicePhone},
-
 	{"Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/546.10 (KHTML, like Gecko) Version/6.0 Mobile/7E18WD Safari/8536.25",
 		BrowserSafari, 6, PlatformiPhone, OSiOS, 7, DevicePhone},
 
@@ -706,17 +702,6 @@ func TestAgentSurfer(t *testing.T) {
 		}
 	}
 }
-
-// BenchmarkAgentSurfer-8          	  200000	      7485 ns/op	     321 B/op	       4 allocs/op
-// BenchmarkEvalSystem-8           	  500000	      2694 ns/op	       0 B/op	       0 allocs/op
-// BenchmarkEvalBrowserName-8      	 2000000	       762 ns/op	       6 B/op	       0 allocs/op
-// BenchmarkEvalBrowserVersion-8   	 1000000	      1392 ns/op	      15 B/op	       0 allocs/op
-// BenchmarkEvalDevice-8           	 3000000	       486 ns/op	       0 B/op	       0 allocs/op
-// BenchmarkParseChromeMac-8       	  500000	      3576 ns/op	     288 B/op	       4 allocs/op
-// BenchmarkParseChromeWin-8       	  500000	      3329 ns/op	     240 B/op	       3 allocs/op
-// BenchmarkParseChromeAndroid-8   	  200000	      6520 ns/op	     320 B/op	       4 allocs/op
-// BenchmarkParseSafariMac-8       	  100000	     14021 ns/op	     512 B/op	       9 allocs/op
-// BenchmarkParseSafariiPad-8      	  100000	     13787 ns/op	     528 B/op	      10 allocs/op
 
 func BenchmarkAgentSurfer(b *testing.B) {
 	num := len(testUAVars)

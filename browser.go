@@ -7,7 +7,6 @@ import (
 )
 
 var (
-	// safariFingerprints = regexp.MustCompile("\\w{3}\\/\\d")
 	bVersion       = regexp.MustCompile("version/\\d+") // standard browser versioning e.g. "Version/10.0"
 	chromeVersion  = regexp.MustCompile("(chrome|crios|crmo)/\\d+")
 	ieVersion      = regexp.MustCompile("(msie\\s|edge/)\\d+")
