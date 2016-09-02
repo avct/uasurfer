@@ -311,7 +311,8 @@ var testUAVars = []struct {
 	// {"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36 QQBrowser/9.0.2191.400",
 	// 	BrowserQQ, 9, PlatformWindows, OSWindows, 7, DeviceComputer},
 
-	// SUBMITTED TESTS
+	// ANDROID TESTS
+
 	{"Mozilla/5.0 (Linux; U; Android 1.0; en-us; dream) AppleWebKit/525.10+ (KHTML,like Gecko) Version/3.0.4 Mobile Safari/523.12.2",
 		BrowserAndroid, 3, PlatformLinux, OSAndroid, 1, DevicePhone},
 
@@ -385,6 +386,7 @@ var testUAVars = []struct {
 		BrowserAndroid, 4, PlatformLinux, OSAndroid, 4, DevicePhone},
 
 	// TODO support "android-" version prefix
+	// However, can't find reference to this naming scheme in real-world UA gathering
 	// {"Mozilla/5.0 (Linux; U; Android-4.0.3; en-us; Galaxy Nexus Build/IML74K) AppleWebKit/535.7 (KHTML, like Gecko) CrMo/16.0.912.75 Mobile Safari/535.7",
 	// 	BrowserChrome, 16, PlatformLinux, OSAndroid, 4, DevicePhone},
 
@@ -414,6 +416,17 @@ var testUAVars = []struct {
 
 	{"Mozilla/5.0 (Linux; Android 4.4; Nexus 4 Build/KRT16E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.105 Mobile Safari",
 		BrowserChrome, 30, PlatformLinux, OSAndroid, 4, DevicePhone},
+
+	{"Mozilla/5.0 (Linux; Android 6.0.1; SM-G930V Build/MMB29M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36",
+		BrowserChrome, 52, PlatformLinux, OSAndroid, 6, DevicePhone},
+
+	{"Mozilla/5.0 (Linux; Android 7.0; Nexus 5X Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36",
+		BrowserChrome, 52, PlatformLinux, OSAndroid, 7, DevicePhone},
+
+	{"Mozilla/5.0 (Linux; Android 7.0; Nexus 6P Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/52.0.2743.98 Mobile Safari/537.36",
+		BrowserChrome, 52, PlatformLinux, OSAndroid, 7, DevicePhone},
+
+	// BLACKBERRY TESTS
 
 	{"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) BlackBerry8703e/4.1.0 Profile/MIDP-2.0 Configuration/CLDC-1.1 VendorID/104",
 		BrowserBlackberry, 0, PlatformBlackberry, OSBlackberry, 0, DevicePhone},
