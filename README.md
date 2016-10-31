@@ -23,7 +23,7 @@ Coverage is estimated from a random sample of real UA strings collected across t
 
 ### Parse(ua string) Function
 
-The `Parse()` function accepts a user agent `string` and returns UserAgent struct with named constants and integers for versions, and the full UA string that was parsed (lowercase). A string can be retrieved by adding `.String()` to a variable, such as `uasurfer.BrowserName.String()`.
+The `Parse()` function accepts a user agent `string` and returns UserAgent struct with named constants and integers for versions (minor, major and patch separately), and the full UA string that was parsed (lowercase). A string can be retrieved by adding `.String()` to a variable, such as `uasurfer.BrowserName.String()`.
 
 ```
 // Define a user agent string
@@ -38,12 +38,20 @@ where example UserAgent is:
 {
     Browser {
         BrowserName: BrowserIE,
-        BrowserVersion: 9,
+        Version: {
+            Major: 9,
+            Minor: 0,
+            Patch: 2,
+        },
     },
     OS {
         Platform: PlatformWindows,
         Name: OSWindows,
-        Version: 8,
+        Version: {
+            Major: 8,
+            Minor: 1,
+            Patch: 0,
+        },
     },
     DeviceType: DeviceComputer,
 }

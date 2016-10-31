@@ -97,6 +97,12 @@ const (
 	PlatformBot
 )
 
+type Version struct {
+	Major int
+	Minor int
+	Patch int
+}
+
 type UserAgent struct {
 	Browser    Browser
 	OS         OS
@@ -105,13 +111,13 @@ type UserAgent struct {
 
 type Browser struct {
 	Name    BrowserName
-	Version int
+	Version Version
 }
 
 type OS struct {
 	Platform Platform
 	Name     OSName
-	Version  int
+	Version  Version
 }
 
 // Parse accepts a raw user agent (string) and returns the
