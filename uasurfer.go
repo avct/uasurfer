@@ -97,6 +97,32 @@ const (
 	PlatformBot
 )
 
+type Version struct {
+	Major int
+	Minor int
+	Patch int
+}
+
+func (v Version) Less(c Version) bool {
+	if v.Major < c.Major {
+		return true
+	}
+
+	if v.Major > c.Major {
+		return false
+	}
+
+	if v.Minor < c.Minor {
+		return true
+	}
+
+	if v.Minor > c.Minor {
+		return false
+	}
+
+	return v.Patch < c.Patch
+}
+
 type UserAgent struct {
 	Browser    Browser
 	OS         OS
@@ -105,13 +131,13 @@ type UserAgent struct {
 
 type Browser struct {
 	Name    BrowserName
-	Version int
+	Version Version
 }
 
 type OS struct {
 	Platform Platform
 	Name     OSName
-	Version  int
+	Version  Version
 }
 
 // Parse accepts a raw user agent (string) and returns the
