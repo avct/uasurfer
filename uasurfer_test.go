@@ -10,12 +10,6 @@ import (
 var testUAVars = []struct {
 	UA string
 	UserAgent
-	/*browserName    BrowserName
-	browserVersion int
-	Platform       Platform
-	osName         OSName
-	osVersion      int
-	deviceType     DeviceType*/
 }{
 	// Empty
 	{"",
