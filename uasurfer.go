@@ -103,6 +103,26 @@ type Version struct {
 	Patch int
 }
 
+func (v Version) Less(c Version) bool {
+	if v.Major < c.Major {
+		return true
+	}
+
+	if v.Major > c.Major {
+		return false
+	}
+
+	if v.Minor < c.Minor {
+		return true
+	}
+
+	if v.Minor > c.Minor {
+		return false
+	}
+
+	return v.Patch < c.Patch
+}
+
 type UserAgent struct {
 	Browser    Browser
 	OS         OS
