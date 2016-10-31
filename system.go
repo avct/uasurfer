@@ -20,7 +20,7 @@ var (
 	semver = regexp.MustCompile("\\d+(?:[_\\.]\\d+)*")
 )
 
-// Retrieve the espoused platform and OS from the User-Agent string
+// Retrieve the espoused platform, OS name and version from the User-Agent string
 func evalSystem(ua string) (Platform, OSName, Version) {
 
 	if len(ua) == 0 {
@@ -109,7 +109,7 @@ func evalSystem(ua string) (Platform, OSName, Version) {
 
 }
 
-// evalLinux returns the `Platform`, `OSName` and `int` of UAs with
+// evalLinux returns the `Platform`, `OSName` and Version of UAs with
 // 'linux' listed as their platform.
 func evalLinux(ua string, agentPlatform string) (Platform, OSName, Version) {
 
@@ -148,7 +148,7 @@ func evalLinux(ua string, agentPlatform string) (Platform, OSName, Version) {
 
 }
 
-// evaliOS returns the `Platform`, `OSName` and `int` of UAs with
+// evaliOS returns the `Platform`, `OSName` and Version of UAs with
 // 'ipad' or 'iphone' listed as their platform.
 func evaliOS(uaPlatform string, agentPlatform string) (Platform, OSName, Version) {
 
@@ -238,7 +238,7 @@ func evalMacintosh(uaPlatformGroup string) (Platform, OSName, Version) {
 }
 
 // getiOSVersion accepts the platform portion of a UA string and returns
-// an `int` of the major version of iOS, or `0` (unknown) on error.
+// a Version.
 func getiOSVersion(uaPlatformGroup string) Version {
 	s := iosVersion.FindString(uaPlatformGroup)
 	if len(s) == 0 {
@@ -252,7 +252,7 @@ func getiOSVersion(uaPlatformGroup string) Version {
 	return strToVersion(s)
 }
 
-// strToInt simply accepts a string and returns an `int`,
+// strToInt simply accepts a string and returns a `int`,
 // with '0' being default.
 func strToInt(str string) int {
 	i, _ := strconv.Atoi(str)
@@ -260,7 +260,7 @@ func strToInt(str string) int {
 }
 
 // strToVer accepts a string and returns a Version,
-// with '0' being default.
+// with {0, 0, 0} being default.
 func strToVersion(str string) Version {
 	ver := Version{}
 

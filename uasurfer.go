@@ -141,9 +141,7 @@ type OS struct {
 }
 
 // Parse accepts a raw user agent (string) and returns the
-// browser name (int), browser version
-// (int), platform (int), OS name (int), OS version (int),
-// device type (int), and raw user agent (string).
+// UserAgent and raw user agent (string).
 func Parse(ua string) (UserAgent, string) {
 	ua = strings.ToLower(ua)
 	resp := UserAgent{}
