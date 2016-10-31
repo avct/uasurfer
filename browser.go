@@ -7,32 +7,33 @@ import (
 )
 
 var (
-	bVersion       = regexp.MustCompile("version/\\d+") // standard browser versioning e.g. "Version/10.0"
-	chromeVersion  = regexp.MustCompile("(chrome|crios|crmo)/\\d+")
-	ieVersion      = regexp.MustCompile("(msie\\s|edge/)\\d+")
-	tridentVersion = regexp.MustCompile("trident/\\d+")
-	firefoxVersion = regexp.MustCompile("(firefox|fxios)/\\d+")
-	ucVersion      = regexp.MustCompile("ucbrowser/\\d+")
-	oprVersion     = regexp.MustCompile("(opr|opios)/\\d+")
-	operaVersion   = regexp.MustCompile("opera/\\d+")
-	silkVersion    = regexp.MustCompile("silk/\\d+")
-	spotifyVersion = regexp.MustCompile("spotify/\\d+")
+	bVersion       = regexp.MustCompile("version/\\d+(?:[_\\.]\\d+)*") // standard browser versioning e.g. "Version/10.0"
+	chromeVersion  = regexp.MustCompile("(chrome|crios|crmo)/\\d+(?:\\.\\d+)*")
+	ieVersion      = regexp.MustCompile("(msie\\s|edge/)\\d+(?:\\.\\d+)*")
+	tridentVersion = regexp.MustCompile("trident/\\d+(?:\\.\\d+)*")
+	firefoxVersion = regexp.MustCompile("(firefox|fxios)/\\d+(?:\\.\\d+)*")
+	ucVersion      = regexp.MustCompile("ucbrowser/\\d+(?:\\.\\d+)*")
+	oprVersion     = regexp.MustCompile("(opr|opios)/\\d+(?:\\.\\d+)*")
+	operaVersion   = regexp.MustCompile("opera/\\d+(?:\\.\\d+)*")
+	silkVersion    = regexp.MustCompile("silk/\\d+(?:\\.\\d+)*")
+	spotifyVersion = regexp.MustCompile("spotify/\\d+(?:\\.\\d+)*")
 )
 
 // Browser struct contains the lowercase name of the browser, along
-// with its major browser version number. Browser are grouped together without
+// with its browser version number. Browser are grouped together without
 // consideration for device. For example, Chrome (Chrome/43.0) and Chrome for iOS
-// (CriOS/43.0) would both return as "chrome" (name) and 43 (version). Similarly
+// (CriOS/43.0) would both return as "chrome" (name) and 43.0 (version). Similarly
 // Internet Explorer 11 and Edge 12 would return as "ie" and "11" or "12", respectively.
 // type Browser struct {
-// 	Name    BrowserName
-// 	Version int
+// 		Name    BrowserName
+// 		Version struct {
+// 			Major int
+// 			Minor int
+// 			Patch int
+// 		}
 // }
 
-// Retrieve the espoused major version of the browser if possible, prioritizing
-// the "Version/#" UA attribute over others. Set to 0 if no version
-// is obtainable. A lowercase browser name (string) and its
-// version (int) is returned.
+// Retrieve browser name from UA strings
 func evalBrowserName(ua string) BrowserName {
 
 	// Blackberry goes first because it reads as MSIE & Safari
@@ -116,83 +117,73 @@ func evalBrowserName(ua string) BrowserName {
 	return BrowserUnknown
 }
 
-func evalBrowserVersion(ua string, browserName BrowserName) int {
-	// Find browser version using 3 methods in order:
-	// 1st: look for generic version/#
-	// 2nd: look for browser-specific instructions (e.g. chrome/34)
-	// 3rd: infer from OS (iOS only)
+// Retrieve browser version returning 0.0.0 if none is available
+// Methods used in order:
+// 1st: look for generic version/#
+// 2nd: look for browser-specific instructions (e.g. chrome/34)
+// 3rd: infer from OS (iOS only)
+func evalBrowserVersion(ua string, browserName BrowserName) Version {
 
 	// if there is a 'version/#' attribute with numeric version, use it -- except for Chrome since Android vendors sometimes hijack version/#
 	if browserName != BrowserChrome && bVersion.MatchString(ua) {
 		ua = bVersion.FindString(ua)
 		s := strings.Index(ua, "/")
 		ua = ua[s+1:]
-		i := strToInt(ua)
+		i := strToVersion(ua)
 		return i
 	}
 
 	switch browserName {
 	case BrowserChrome:
 		// match both chrome and crios
-		return getMajorVersion(ua, chromeVersion)
+		return getVersion(ua, chromeVersion)
 	case BrowserIE:
 		if strings.Contains(ua, "msie") || strings.Contains(ua, "edge") {
-			i := getMajorVersion(ua, ieVersion)
-
-			return i
+			return getVersion(ua, ieVersion)
 		}
 
 		// get MSIE version from trident version https://en.wikipedia.org/wiki/Trident_(layout_engine)
 		if strings.Contains(ua, "trident") {
-			i := getMajorVersion(ua, tridentVersion)
+			i := getVersion(ua, tridentVersion)
 			// convert trident versions 3-7 to MSIE version
-			if (i >= 3) && (i <= 7) {
-				return i + 4
+			if (i.Major >= 3) && (i.Major <= 7) {
+				i.Major += 4
+				return i
 			}
 		}
 
-		return 0
+		return Version{}
 
 	case BrowserFirefox:
-		i := getMajorVersion(ua, firefoxVersion)
-
-		return i
+		return getVersion(ua, firefoxVersion)
 
 	case BrowserSafari: // executes typically if we're on iOS and not using a familiar browser
-		i := getiOSSafariVersion(ua)
-
-		return i
+		return getiOSSafariVersion(ua)
 
 	case BrowserUCBrowser:
-		i := getMajorVersion(ua, ucVersion)
-
-		return i
+		return getVersion(ua, ucVersion)
 
 	case BrowserOpera:
 		if strings.Contains(ua, "opr/") || strings.Contains(ua, "opios/") {
-			i := getMajorVersion(ua, oprVersion)
-			return i
+			return getVersion(ua, oprVersion)
 		}
 
-		i := getMajorVersion(ua, operaVersion)
-		return i
+		return getVersion(ua, operaVersion)
 
 	case BrowserSilk:
-		i := getMajorVersion(ua, silkVersion)
-		return i
+		return getVersion(ua, silkVersion)
 
 	case BrowserSpotify:
-		i := getMajorVersion(ua, spotifyVersion)
-		return i
+		return getVersion(ua, spotifyVersion)
 
 	default:
-		return 0
+		return Version{}
 	}
 }
 
 // Subfunction of evalBrowser() that takes two parameters: regex (string) and
-// user agent (string) and returns the number as a string. '0' denotes no version.
-func getMajorVersion(ua string, browserVersion *regexp.Regexp) int {
+// user agent (string) and returns Version. '0.0.0' denotes no version.
+func getVersion(ua string, browserVersion *regexp.Regexp) Version {
 
 	ver := browserVersion.FindString(ua)
 
@@ -203,34 +194,26 @@ func getMajorVersion(ua string, browserVersion *regexp.Regexp) int {
 		return getVersionNumber(ver, " ")
 	}
 
-	i := strToInt(ver)
-
-	return i
+	return strToVersion(ver)
 }
 
 // getiOSSafariVersion accepts a full UA string and returns
-// an `int` of the major version of Safari. The latest browser
+// an Version of Safari. The latest browser
 // version released for the OS is used. This function is used
 // in uncommon scenarios such as the Google search app browser
-func getiOSSafariVersion(ua string) int {
+func getiOSSafariVersion(ua string) Version {
 	v := getiOSVersion(ua)
 
 	// early Safari used a version number +1 to OS version
-	if (v <= 3) && (v >= 1) {
-		return v + 1
+	if (v.Major <= 3) && (v.Major >= 1) {
+		v.Major++
 	}
 
-	// later Safari typically matches iOS version after v3
-	if v >= 4 {
-		return v
-	}
-
-	return 0 // default
+	return v
 }
 
 // returns version number to the left of a delimiter
-func getVersionNumber(s, delim string) int {
+func getVersionNumber(s, delim string) Version {
 	ind := strings.Index(s, delim)
-	i := strToInt(s[ind+1:])
-	return i
+	return strToVersion(s[ind+1:])
 }
