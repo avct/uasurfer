@@ -20,19 +20,20 @@ var (
 )
 
 // Browser struct contains the lowercase name of the browser, along
-// with its major browser version number. Browser are grouped together without
+// with its browser version number. Browser are grouped together without
 // consideration for device. For example, Chrome (Chrome/43.0) and Chrome for iOS
-// (CriOS/43.0) would both return as "chrome" (name) and 43 (version). Similarly
+// (CriOS/43.0) would both return as "chrome" (name) and 43.0 (version). Similarly
 // Internet Explorer 11 and Edge 12 would return as "ie" and "11" or "12", respectively.
 // type Browser struct {
-// 	Name    BrowserName
-// 	Version int
+// 		Name    BrowserName
+// 		Version struct {
+// 			Major int
+// 			Minor int
+// 			Patch int
+// 		}
 // }
 
-// Retrieve the espoused major version of the browser if possible, prioritizing
-// the "Version/#" UA attribute over others. Set to 0 if no version
-// is obtainable. A lowercase browser name (string) and its
-// version (int) is returned.
+// Retrieve browser name from UA strings
 func evalBrowserName(ua string) BrowserName {
 
 	// Blackberry goes first because it reads as MSIE & Safari
@@ -116,11 +117,12 @@ func evalBrowserName(ua string) BrowserName {
 	return BrowserUnknown
 }
 
+// Retrieve browser version returning 0.0.0 if none is available
+// Methods used in order:
+// 1st: look for generic version/#
+// 2nd: look for browser-specific instructions (e.g. chrome/34)
+// 3rd: infer from OS (iOS only)
 func evalBrowserVersion(ua string, browserName BrowserName) Version {
-	// Find browser version using 3 methods in order:
-	// 1st: look for generic version/#
-	// 2nd: look for browser-specific instructions (e.g. chrome/34)
-	// 3rd: infer from OS (iOS only)
 
 	// if there is a 'version/#' attribute with numeric version, use it -- except for Chrome since Android vendors sometimes hijack version/#
 	if browserName != BrowserChrome && bVersion.MatchString(ua) {
@@ -180,7 +182,7 @@ func evalBrowserVersion(ua string, browserName BrowserName) Version {
 }
 
 // Subfunction of evalBrowser() that takes two parameters: regex (string) and
-// user agent (string) and returns the number as a string. '0' denotes no version.
+// user agent (string) and returns Version. '0.0.0' denotes no version.
 func getVersion(ua string, browserVersion *regexp.Regexp) Version {
 
 	ver := browserVersion.FindString(ua)
@@ -196,7 +198,7 @@ func getVersion(ua string, browserVersion *regexp.Regexp) Version {
 }
 
 // getiOSSafariVersion accepts a full UA string and returns
-// an `int` of the major version of Safari. The latest browser
+// an Version of Safari. The latest browser
 // version released for the OS is used. This function is used
 // in uncommon scenarios such as the Google search app browser
 func getiOSSafariVersion(ua string) Version {
