@@ -23,14 +23,30 @@ Coverage is estimated from a random sample of real UA strings collected across t
 
 ### Parse(ua string) Function
 
-The `Parse()` function accepts a user agent `string` and returns named constants, integers for versions, and the full UA string that was parsed (lowercase). A string can be retrieved by adding `.String()` to a variable, such as `uasurfer.BrowserName.String()`.
+The `Parse()` function accepts a user agent `string` and returns UserAgent struct with named constants and integers for versions, and the full UA string that was parsed (lowercase). A string can be retrieved by adding `.String()` to a variable, such as `uasurfer.BrowserName.String()`.
 
 ```
 // Define a user agent string
 myUA := "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36"
 
 // Parse() returns all attributes, including returning the full UA string last
-browserName, browserVersion, platform, osName, osVersion, deviceType, ua := uasurfer.Parse(myUA)
+ua, uaString := uasurfer.Parse(myUA)
+```
+
+where example UserAgent is:
+```
+{
+    Browser {
+        BrowserName: BrowserIE,
+        BrowserVersion: 9,
+    },
+    OS {
+        Platform: PlatformWindows,
+        Name: OSWindows,
+        Version: 8,
+    },
+    DeviceType: DeviceComputer,
+}
 ```
 
 **Usage note:** There are some OSes that do not return a version, see docs below. Linux is typically not reported with a specific Linux distro name or version.
