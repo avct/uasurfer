@@ -1,24 +1,6 @@
 package uasurfer
 
-import (
-	"regexp"
-
-	//"strconv"
-	"strings"
-)
-
-var (
-	bVersion       = regexp.MustCompile("version/\\d+(?:[_\\.]\\d+)*") // standard browser versioning e.g. "Version/10.0"
-	chromeVersion  = regexp.MustCompile("(chrome|crios|crmo)/\\d+(?:\\.\\d+)*")
-	ieVersion      = regexp.MustCompile("(msie\\s|edge/)\\d+(?:\\.\\d+)*")
-	tridentVersion = regexp.MustCompile("trident/\\d+(?:\\.\\d+)*")
-	firefoxVersion = regexp.MustCompile("(firefox|fxios)/\\d+(?:\\.\\d+)*")
-	ucVersion      = regexp.MustCompile("ucbrowser/\\d+(?:\\.\\d+)*")
-	oprVersion     = regexp.MustCompile("(opr|opios)/\\d+(?:\\.\\d+)*")
-	operaVersion   = regexp.MustCompile("opera/\\d+(?:\\.\\d+)*")
-	silkVersion    = regexp.MustCompile("silk/\\d+(?:\\.\\d+)*")
-	spotifyVersion = regexp.MustCompile("spotify/\\d+(?:\\.\\d+)*")
-)
+import "strings"
 
 // Browser struct contains the lowercase name of the browser, along
 // with its browser version number. Browser are grouped together without
@@ -116,28 +98,22 @@ notwebkit:
 // 3rd: infer from OS (iOS only)
 func (u *UserAgent) evalBrowserVersion(ua string) {
 	// if there is a 'version/#' attribute with numeric version, use it -- except for Chrome since Android vendors sometimes hijack version/#
-	if u.Browser.Name != BrowserChrome && bVersion.MatchString(ua) {
-		ua = bVersion.FindString(ua)
-		s := strings.Index(ua, "/")
-		ua = ua[s+1:]
-		u.Browser.Version.parse(ua)
+	if u.Browser.Name != BrowserChrome && u.Browser.Version.findVersionNumber(ua, "version/") {
 		return
 	}
 
 	switch u.Browser.Name {
 	case BrowserChrome:
 		// match both chrome and crios
-		u.Browser.getVersion(ua, chromeVersion)
+		_ = u.Browser.Version.findVersionNumber(ua, "chrome/") || u.Browser.Version.findVersionNumber(ua, "crios/") || u.Browser.Version.findVersionNumber(ua, "crmo/")
 
 	case BrowserIE:
-		if strings.Contains(ua, "msie") || strings.Contains(ua, "edge") {
-			u.Browser.getVersion(ua, ieVersion)
+		if u.Browser.Version.findVersionNumber(ua, "msie ") || u.Browser.Version.findVersionNumber(ua, "edge/") {
 			return
 		}
 
 		// get MSIE version from trident version https://en.wikipedia.org/wiki/Trident_(layout_engine)
-		if strings.Contains(ua, "trident") {
-			u.Browser.getVersion(ua, tridentVersion)
+		if u.Browser.Version.findVersionNumber(ua, "trident/") {
 			// convert trident versions 3-7 to MSIE version
 			if (u.Browser.Version.Major >= 3) && (u.Browser.Version.Major <= 7) {
 				u.Browser.Version.Major += 4
@@ -145,68 +121,25 @@ func (u *UserAgent) evalBrowserVersion(ua string) {
 		}
 
 	case BrowserFirefox:
-		u.Browser.getVersion(ua, firefoxVersion)
+		_ = u.Browser.Version.findVersionNumber(ua, "firefox/") || u.Browser.Version.findVersionNumber(ua, "fxios/")
 
 	case BrowserSafari: // executes typically if we're on iOS and not using a familiar browser
-		u.getiOSSafariVersion()
+		u.Browser.Version = u.OS.Version
+		// early Safari used a version number +1 to OS version
+		if (u.Browser.Version.Major <= 3) && (u.Browser.Version.Major >= 1) {
+			u.Browser.Version.Major++
+		}
 
 	case BrowserUCBrowser:
-		u.Browser.getVersion(ua, ucVersion)
+		_ = u.Browser.Version.findVersionNumber(ua, "ucbrowser/")
 
 	case BrowserOpera:
-		if strings.Contains(ua, "opr/") || strings.Contains(ua, "opios/") {
-			u.Browser.getVersion(ua, oprVersion)
-			return
-		}
-		u.Browser.getVersion(ua, operaVersion)
+		_ = u.Browser.Version.findVersionNumber(ua, "opr/") || u.Browser.Version.findVersionNumber(ua, "opios/") || u.Browser.Version.findVersionNumber(ua, "opera/")
 
 	case BrowserSilk:
-		u.Browser.getVersion(ua, silkVersion)
+		_ = u.Browser.Version.findVersionNumber(ua, "silk/")
 
 	case BrowserSpotify:
-		u.Browser.getVersion(ua, spotifyVersion)
+		_ = u.Browser.Version.findVersionNumber(ua, "spotify/")
 	}
-}
-
-// Retrieve browser version returning 0.0.0 if none is available
-// Methods used in order:
-// 1st: look for generic version/#
-// 2nd: look for browser-specific instructions (e.g. chrome/34)
-// 3rd: infer from OS (iOS only)
-
-// Subfunction of evalBrowser() that takes two parameters: regex (string) and
-// user agent (string) and returns Version. '0.0.0' denotes no version.
-func (b *Browser) getVersion(ua string, browserVersion *regexp.Regexp) {
-
-	ver := browserVersion.FindString(ua)
-
-	if ver != "" {
-		if strings.Contains(ver, "/") {
-			b.getVersionNumber(ver, "/")
-			return
-		}
-		b.getVersionNumber(ver, " ")
-		return
-	}
-
-	b.Version.parse(ver)
-}
-
-// getiOSSafariVersion accepts a full UA string and returns
-// an Version of Safari. The latest browser
-// version released for the OS is used. This function is used
-// in uncommon scenarios such as the Google search app browser
-func (u *UserAgent) getiOSSafariVersion() {
-	u.Browser.Version = u.OS.Version
-
-	// early Safari used a version number +1 to OS version
-	if (u.Browser.Version.Major <= 3) && (u.Browser.Version.Major >= 1) {
-		u.Browser.Version.Major++
-	}
-}
-
-// returns version number to the left of a delimiter
-func (b *Browser) getVersionNumber(s, delim string) {
-	ind := strings.Index(s, delim)
-	b.Version.parse(s[ind+1:])
 }

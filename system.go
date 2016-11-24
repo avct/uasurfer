@@ -7,17 +7,7 @@ import (
 )
 
 var (
-	iosVersion           = regexp.MustCompile("(cpu|iphone) os \\d+(?:_\\d+)*")
-	osxVersionUnderscore = regexp.MustCompile("os x 10_\\d+")
-	osxVersionDot        = regexp.MustCompile("os x 10\\.\\d+")
-	wpVerLong            = regexp.MustCompile("windows\\sphone\\sos\\s\\d+(?:\\.\\d+)*")
-	wpVerShort           = regexp.MustCompile("windows\\sphone\\s\\d+(?:\\.\\d+)*")
-	//kindleTest           = regexp.MustCompile("\\sKF[A-Z]{2,4}\\s")
-	androidVersion        = regexp.MustCompile("android \\d+(?:\\.\\d+)*")
 	amazonFireFingerprint = regexp.MustCompile("\\s(k[a-z]{3,5}|sd\\d{4}ur)\\s") //tablet or phone
-	// windowsVersion        = regexp.MustCompile("windows nt (\\d\\d|\\d\\.\\d)")
-	digits = regexp.MustCompile("\\d+")
-	semver = regexp.MustCompile("\\d+(?:[_\\.]\\d+)*")
 )
 
 func (u *UserAgent) evalOS(ua string) bool {
@@ -138,14 +128,14 @@ func (u *UserAgent) evalLinux(ua string, agentPlatform string) {
 		// get the version of Android if available, though we don't call this OSAndroid
 		u.OS.Platform = PlatformLinux
 		u.OS.Name = OSKindle
-		u.OS.findVersionNumber(agentPlatform, "android ")
+		u.OS.Version.findVersionNumber(agentPlatform, "android ")
 
 	// Android, Kindle Fire
 	case strings.Contains(ua, "android") || strings.Contains(ua, "googletv"):
 		// Android
 		u.OS.Platform = PlatformLinux
 		u.OS.Name = OSAndroid
-		u.OS.findVersionNumber(agentPlatform, "android ")
+		u.OS.Version.findVersionNumber(agentPlatform, "android ")
 
 	// ChromeOS
 	case strings.Contains(ua, "cros"):
@@ -200,7 +190,7 @@ func (u *UserAgent) evaliOS(uaPlatform string, agentPlatform string) {
 func (u *UserAgent) evalWindowsPhone(agentPlatform string) {
 	u.OS.Platform = PlatformWindowsPhone
 
-	if u.OS.findVersionNumber(agentPlatform, "windows phone os ") || u.OS.findVersionNumber(agentPlatform, "windows phone ") {
+	if u.OS.Version.findVersionNumber(agentPlatform, "windows phone os ") || u.OS.Version.findVersionNumber(agentPlatform, "windows phone ") {
 		u.OS.Name = OSWindowsPhone
 	} else {
 		u.OS.Name = OSUnknown
@@ -214,7 +204,7 @@ func (u *UserAgent) evalWindows(ua string) {
 	case strings.Contains(ua, "xbox"):
 		u.OS.Platform = PlatformXbox
 		u.OS.Name = OSXbox
-		if !u.OS.findVersionNumber(ua, "windows nt ") {
+		if !u.OS.Version.findVersionNumber(ua, "windows nt ") {
 			u.OS.Version.Major = 6
 			u.OS.Version.Minor = 0
 			u.OS.Version.Patch = 0
@@ -225,7 +215,7 @@ func (u *UserAgent) evalWindows(ua string) {
 		u.OS.Platform = PlatformWindows
 		u.OS.Name = OSUnknown
 
-	case strings.Contains(ua, "windows nt ") && u.OS.findVersionNumber(ua, "windows nt "):
+	case strings.Contains(ua, "windows nt ") && u.OS.Version.findVersionNumber(ua, "windows nt "):
 		u.OS.Platform = PlatformWindows
 		u.OS.Name = OSWindows
 
@@ -244,21 +234,19 @@ func (u *UserAgent) evalWindows(ua string) {
 }
 
 func (u *UserAgent) evalMacintosh(uaPlatformGroup string) {
-
 	u.OS.Platform = PlatformMac
-
-	if u.OS.findVersionNumber(uaPlatformGroup, "os x 10_") || u.OS.findVersionNumber(uaPlatformGroup, "os x 10.") {
+	if i := strings.Index(uaPlatformGroup, "os x 10"); i != -1 {
 		u.OS.Name = OSMacOSX
-		u.OS.Version.Patch, u.OS.Version.Minor, u.OS.Version.Major = u.OS.Version.Minor, u.OS.Version.Major, 10
-	} else {
-		u.OS.Name = OSUnknown
+		u.OS.Version.parse(uaPlatformGroup[i+5:])
+
+		return
 	}
+	u.OS.Name = OSUnknown
 }
 
-func (o *OS) findVersionNumber(s string, m string) bool {
+func (v *Version) findVersionNumber(s string, m string) bool {
 	if ind := strings.Index(s, m); ind != -1 {
-		o.Version.parse(semver.FindString(s[ind+len(m):]))
-		return true
+		return v.parse(s[ind+len(m):])
 	}
 	return false
 }
@@ -266,16 +254,17 @@ func (o *OS) findVersionNumber(s string, m string) bool {
 // getiOSVersion accepts the platform portion of a UA string and returns
 // a Version.
 func (o *OS) getiOSVersion(uaPlatformGroup string) {
-	s := iosVersion.FindString(uaPlatformGroup)
-	if len(s) == 0 {
+	if i := strings.Index(uaPlatformGroup, "cpu iphone os "); i != -1 {
+		o.Version.parse(uaPlatformGroup[i+14:])
 		return
 	}
 
-	if l := strings.LastIndex(s, " "); l > -1 {
-		s = s[l+1:]
+	if i := strings.Index(uaPlatformGroup, "cpu os "); i != -1 {
+		o.Version.parse(uaPlatformGroup[i+7:])
+		return
 	}
 
-	o.Version.parse(s)
+	o.Version.parse(uaPlatformGroup)
 }
 
 // strToInt simply accepts a string and returns a `int`,
@@ -287,63 +276,57 @@ func strToInt(str string) int {
 
 // strToVer accepts a string and returns a Version,
 // with {0, 0, 0} being default.
-func (v *Version) parse(str string) {
-
-	var vs []string
-	if strings.Index(str, "_") > -1 {
-		vs = strings.Split(str, "_")
-	} else {
-		vs = strings.Split(str, ".")
+func (v *Version) parse(str string) bool {
+	if len(str) == 0 || str[0] < '0' || str[0] > '9' {
+		return false
 	}
+	for i := 0; i < 3; i++ {
+		empty := true
+		val := 0
+		l := len(str) - 1
 
-	i := 0
-	for _, s := range vs {
-		if i > 2 {
-			break
-		}
+		for k, c := range str {
+			if c >= '0' && c <= '9' {
+				if empty {
+					val = int(c) - 48
+					empty = false
+					if k == l {
+						str = str[:0]
+					}
+					continue
+				}
 
-		if len(s) == 0 {
-			continue
-		}
-
-		// handle 0-prefixed versions
-		if s[:1] == "0" {
-			switch i {
-			case 0:
-				v.Major = 0
-
-			case 1:
-				v.Minor = 0
-
-			case 2:
-				v.Patch = 0
-			}
-			i++
-
-			k := 0
-			for k < len(s) {
-				if s[k] != '0' {
+				if val == 0 {
+					if c == '0' {
+						if k == l {
+							str = str[:0]
+						}
+						continue
+					}
+					str = str[k:]
 					break
 				}
-				k++
-			}
-			s = s[k:]
 
-			if len(s) == 0 {
+				val = 10*val + int(c) - 48
+				if k == l {
+					str = str[:0]
+				}
 				continue
 			}
+			str = str[k+1:]
+			break
 		}
 
 		switch i {
 		case 0:
-			v.Major, _ = strconv.Atoi(s)
+			v.Major = val
 
 		case 1:
-			v.Minor, _ = strconv.Atoi(s)
+			v.Minor = val
 
 		case 2:
-			v.Patch, _ = strconv.Atoi(s)
+			v.Patch = val
 		}
-		i++
 	}
+	return true
 }
