@@ -4,62 +4,57 @@ import (
 	"strings"
 )
 
-// Retrieve and/or deduce the espoused device type running the browser. Returns string enum: Computer, Phone, Tablet, Wearable, TV, Console
-func evalDevice(ua string, os OSName, platform Platform, browser BrowserName) DeviceType {
+func (u *UserAgent) evalDevice(ua string) {
+	switch {
 
-	if platform == PlatformWindows || platform == PlatformMac || os == OSChromeOS {
+	case u.OS.Platform == PlatformWindows || u.OS.Platform == PlatformMac || u.OS.Name == OSChromeOS:
 		if strings.Contains(ua, "mobile") || strings.Contains(ua, "touch") {
-			return DeviceTablet // windows rt, linux haxor tablets
+			u.DeviceType = DeviceTablet // windows rt, linux haxor tablets
+			return
 		}
-		return DeviceComputer
-	}
+		u.DeviceType = DeviceComputer
 
-	if platform == PlatformiPad || platform == PlatformiPod || strings.Contains(ua, "tablet") || strings.Contains(ua, "kindle/") || strings.Contains(ua, "playbook") {
-		return DeviceTablet
-	}
+	case u.OS.Platform == PlatformiPad || u.OS.Platform == PlatformiPod || strings.Contains(ua, "tablet") || strings.Contains(ua, "kindle/") || strings.Contains(ua, "playbook"):
+		u.DeviceType = DeviceTablet
 
-	if platform == PlatformiPhone || platform == PlatformBlackberry || strings.Contains(ua, "phone") {
-		return DevicePhone
-	}
+	case u.OS.Platform == PlatformiPhone || u.OS.Platform == PlatformBlackberry || strings.Contains(ua, "phone"):
+		u.DeviceType = DevicePhone
 
 	// long list of smarttv and tv dongle identifiers
-	if strings.Contains(ua, "tv") || strings.Contains(ua, "crkey") || strings.Contains(ua, "googletv") || strings.Contains(ua, "aftb") || strings.Contains(ua, "adt-") || strings.Contains(ua, "roku") || strings.Contains(ua, "viera") || strings.Contains(ua, "aquos") || strings.Contains(ua, "dtv") || strings.Contains(ua, "appletv") || strings.Contains(ua, "smarttv") || strings.Contains(ua, "tuner") || strings.Contains(ua, "smart-tv") || strings.Contains(ua, "hbbtv") || strings.Contains(ua, "netcast") || strings.Contains(ua, "vizio") {
-		return DeviceTV
-	}
+	case strings.Contains(ua, "tv") || strings.Contains(ua, "crkey") || strings.Contains(ua, "googletv") || strings.Contains(ua, "aftb") || strings.Contains(ua, "adt-") || strings.Contains(ua, "roku") || strings.Contains(ua, "viera") || strings.Contains(ua, "aquos") || strings.Contains(ua, "dtv") || strings.Contains(ua, "appletv") || strings.Contains(ua, "smarttv") || strings.Contains(ua, "tuner") || strings.Contains(ua, "smart-tv") || strings.Contains(ua, "hbbtv") || strings.Contains(ua, "netcast") || strings.Contains(ua, "vizio"):
+		u.DeviceType = DeviceTV
 
-	if os == OSAndroid {
+	case u.OS.Name == OSAndroid:
 		// android phones report as "mobile", android tablets should not but often do -- http://android-developers.blogspot.com/2010/12/android-browser-user-agent-issues.html
 		if strings.Contains(ua, "mobile") {
-			return DevicePhone
+			u.DeviceType = DevicePhone
+			return
 		}
 
 		if strings.Contains(ua, "tablet") || strings.Contains(ua, "nexus 7") || strings.Contains(ua, "nexus 9") || strings.Contains(ua, "nexus 10") || strings.Contains(ua, "xoom") {
-			return DeviceTablet
+			u.DeviceType = DeviceTablet
+			return
 		}
 
-		return DevicePhone // default to phone
-	}
+		u.DeviceType = DevicePhone // default to phone
 
-	if platform == PlatformPlaystation || platform == PlatformXbox || platform == PlatformNintendo {
-		return DeviceConsole
-	}
+	case u.OS.Platform == PlatformPlaystation || u.OS.Platform == PlatformXbox || u.OS.Platform == PlatformNintendo:
+		u.DeviceType = DeviceConsole
 
-	if strings.Contains(ua, "glass") || strings.Contains(ua, "watch") || strings.Contains(ua, "sm-v") {
-		return DeviceWearable
-	}
+	case strings.Contains(ua, "glass") || strings.Contains(ua, "watch") || strings.Contains(ua, "sm-v"):
+		u.DeviceType = DeviceWearable
 
 	// specifically above "mobile" string check as Kindle Fire tablets report as "mobile"
-	if browser == BrowserSilk || os == OSKindle && !strings.Contains(ua, "sd4930ur") {
-		return DeviceTablet
-	}
+	case u.Browser.Name == BrowserSilk || u.OS.Name == OSKindle && !strings.Contains(ua, "sd4930ur"):
+		u.DeviceType = DeviceTablet
 
-	if strings.Contains(ua, "mobile") || strings.Contains(ua, "touch") || strings.Contains(ua, " mobi") || strings.Contains(ua, "webos") { //anything "mobile"/"touch" that didn't get captured as tablet, console or wearable is presumed a phone
-		return DevicePhone
-	}
+	case strings.Contains(ua, "mobile") || strings.Contains(ua, "touch") || strings.Contains(ua, " mobi") || strings.Contains(ua, "webos"): //anything "mobile"/"touch" that didn't get captured as tablet, console or wearable is presumed a phone
+		u.DeviceType = DevicePhone
 
-	if os == OSLinux { // linux goes last since it's in so many other device types (tvs, wearables, android-based stuff)
-		return DeviceComputer
-	}
+	case u.OS.Name == OSLinux: // linux goes last since it's in so many other device types (tvs, wearables, android-based stuff)
+		u.DeviceType = DeviceComputer
 
-	return DeviceUnknown
+	default:
+		u.DeviceType = DeviceUnknown
+	}
 }

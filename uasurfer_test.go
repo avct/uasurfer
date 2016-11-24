@@ -1,11 +1,10 @@
 package uasurfer
 
-import (
-	// "bufio"
-	// "fmt"
-	// "os"
-	"testing"
-)
+import
+// "bufio"
+// "fmt"
+// "os"
+"testing"
 
 var testUAVars = []struct {
 	UA string
@@ -869,7 +868,7 @@ func TestAgentSurfer(t *testing.T) {
 	//bp := new(BrowserProfile)
 	for i, determined := range testUAVars {
 		//bp.Parse(determined.UA)
-		ua, _ := Parse(determined.UA)
+		ua := Parse(determined.UA)
 
 		if ua.Browser.Name != determined.Browser.Name {
 			t.Errorf("%d browserName: got %v, wanted %v", i, ua.Browser.Name, determined.Browser.Name)
@@ -913,33 +912,42 @@ func BenchmarkAgentSurfer(b *testing.B) {
 
 func BenchmarkEvalSystem(b *testing.B) {
 	num := len(testUAVars)
+	v := UserAgent{}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		evalSystem(testUAVars[i%num].UA)
+		v.evalOS(testUAVars[i%num].UA)
 	}
 }
 
 func BenchmarkEvalBrowserName(b *testing.B) {
 	num := len(testUAVars)
+	v := UserAgent{}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		evalBrowserName(testUAVars[i%num].UA)
+		v.evalBrowserName(testUAVars[i%num].UA)
 	}
 }
 
 func BenchmarkEvalBrowserVersion(b *testing.B) {
 	num := len(testUAVars)
+	v := UserAgent{}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		evalBrowserVersion(testUAVars[i%num].UA, testUAVars[i%num].Browser.Name)
+		v.Browser.Name = testUAVars[i%num].Browser.Name
+		v.evalBrowserVersion(testUAVars[i%num].UA)
 	}
 }
 
 func BenchmarkEvalDevice(b *testing.B) {
 	num := len(testUAVars)
+	v := UserAgent{}
+
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		evalDevice(testUAVars[i%num].UA, testUAVars[i%num].OS.Name, testUAVars[i%num].OS.Platform, testUAVars[i%num].Browser.Name)
+		v.OS.Name = testUAVars[i%num].OS.Name
+		v.OS.Platform = testUAVars[i%num].OS.Platform
+		v.Browser.Name = testUAVars[i%num].Browser.Name
+		v.evalDevice(testUAVars[i%num].UA)
 	}
 }
 

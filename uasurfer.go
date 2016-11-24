@@ -140,28 +140,25 @@ type OS struct {
 	Version  Version
 }
 
-// Parse accepts a raw user agent (string) and returns the
-// UserAgent and raw user agent (string).
-func Parse(ua string) (UserAgent, string) {
+// Parse accepts a raw user agent (string) and returns the UserAgent.
+func Parse(ua string) *UserAgent {
 	ua = strings.ToLower(ua)
-	resp := UserAgent{}
+	resp := &UserAgent{}
 
-	resp.OS.Platform, resp.OS.Name, resp.OS.Version = evalSystem(ua)
-	if resp.OS.Platform == PlatformBot || resp.OS.Name == OSBot {
-		resp.DeviceType = DeviceComputer
-		return resp, ua
+	switch {
+	case len(ua) == 0:
+		resp.OS.Platform = PlatformUnknown
+		resp.OS.Name = OSUnknown
+		resp.Browser.Name = BrowserUnknown
+		resp.DeviceType = DeviceUnknown
+
+	// stop on on first case returning true
+	case resp.evalOS(ua):
+	case resp.evalBrowserName(ua):
+	default:
+		resp.evalBrowserVersion(ua)
+		resp.evalDevice(ua)
 	}
 
-	resp.Browser.Name = evalBrowserName(ua)
-	if resp.Browser.Name == BrowserBot {
-		resp.OS.Platform = PlatformBot
-		resp.OS.Name = OSBot
-		resp.DeviceType = DeviceComputer
-		return resp, ua
-	}
-
-	resp.Browser.Version = evalBrowserVersion(ua, resp.Browser.Name)
-	resp.DeviceType = evalDevice(ua, resp.OS.Name, resp.OS.Platform, resp.Browser.Name)
-
-	return resp, ua
+	return resp
 }
