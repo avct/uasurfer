@@ -97,6 +97,32 @@ const (
 	PlatformBot
 )
 
+type Version struct {
+	Major int
+	Minor int
+	Patch int
+}
+
+func (v Version) Less(c Version) bool {
+	if v.Major < c.Major {
+		return true
+	}
+
+	if v.Major > c.Major {
+		return false
+	}
+
+	if v.Minor < c.Minor {
+		return true
+	}
+
+	if v.Minor > c.Minor {
+		return false
+	}
+
+	return v.Patch < c.Patch
+}
+
 type UserAgent struct {
 	Browser    Browser
 	OS         OS
@@ -105,39 +131,34 @@ type UserAgent struct {
 
 type Browser struct {
 	Name    BrowserName
-	Version int
+	Version Version
 }
 
 type OS struct {
 	Platform Platform
 	Name     OSName
-	Version  int
+	Version  Version
 }
 
-// Parse accepts a raw user agent (string) and returns the
-// browser name (int), browser version
-// (int), platform (int), OS name (int), OS version (int),
-// device type (int), and raw user agent (string).
-func Parse(ua string) (UserAgent, string) {
+// Parse accepts a raw user agent (string) and returns the UserAgent.
+func Parse(ua string) *UserAgent {
 	ua = strings.ToLower(ua)
-	resp := UserAgent{}
+	resp := &UserAgent{}
 
-	resp.OS.Platform, resp.OS.Name, resp.OS.Version = evalSystem(ua)
-	if resp.OS.Platform == PlatformBot || resp.OS.Name == OSBot {
-		resp.DeviceType = DeviceComputer
-		return resp, ua
+	switch {
+	case len(ua) == 0:
+		resp.OS.Platform = PlatformUnknown
+		resp.OS.Name = OSUnknown
+		resp.Browser.Name = BrowserUnknown
+		resp.DeviceType = DeviceUnknown
+
+	// stop on on first case returning true
+	case resp.evalOS(ua):
+	case resp.evalBrowserName(ua):
+	default:
+		resp.evalBrowserVersion(ua)
+		resp.evalDevice(ua)
 	}
 
-	resp.Browser.Name = evalBrowserName(ua)
-	if resp.Browser.Name == BrowserBot {
-		resp.OS.Platform = PlatformBot
-		resp.OS.Name = OSBot
-		resp.DeviceType = DeviceComputer
-		return resp, ua
-	}
-
-	resp.Browser.Version = evalBrowserVersion(ua, resp.Browser.Name)
-	resp.DeviceType = evalDevice(ua, resp.OS.Name, resp.OS.Platform, resp.Browser.Name)
-
-	return resp, ua
+	return resp
 }
