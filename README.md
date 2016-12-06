@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/avct/uasurfer.svg?branch=master)](https://travis-ci.org/avct/uasurfer)  [![GoDoc](https://godoc.org/github.com/avct/uasurfer?status.svg)](https://godoc.org/github.com/avct/uasurfer)  [![Go Report Card](https://goreportcard.com/badge/github.com/avct/uasurfer)](https://goreportcard.com/report/github.com/avct/uasurfer)
+
 # uasurfer
 
 ![uasurfer-100px](https://cloud.githubusercontent.com/assets/597902/16172506/9debc136-357a-11e6-90fb-c7c46f50dff0.png)
