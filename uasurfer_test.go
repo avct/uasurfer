@@ -1,10 +1,8 @@
 package uasurfer
 
-import
-// "bufio"
-// "fmt"
-// "os"
-"testing"
+import (
+	"testing"
+)
 
 var testUAVars = []struct {
 	UA string
@@ -12,19 +10,19 @@ var testUAVars = []struct {
 }{
 	// Empty
 	{"",
-		UserAgent{}},
+	 UserAgent{}},
 
 	// Single char
 	{"a",
-		UserAgent{}},
+	 UserAgent{}},
 
 	// Some random string
 	{"some random string",
-		UserAgent{}},
+	 UserAgent{}},
 
 	// Potentially malformed ua
 	{")(",
-		UserAgent{}},
+	 UserAgent{}},
 
 	// iPhone
 	{"Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/546.10 (KHTML, like Gecko) Version/6.0 Mobile/7E18WD Safari/8536.25",
@@ -169,6 +167,26 @@ var testUAVars = []struct {
 		UserAgent{
 			Browser{BrowserUCBrowser, Version{9, 4, 0}}, OS{PlatformUnknown, OSUnknown, Version{0, 0, 0}}, DevicePhone}},
 
+	{"UCWEB/2.0 (MIDP-2.0; U; Adr 4.3; en-US; PadFone_T00C) U2/1.0.0 UCBrowser/9.2.0.419 U2/1.0.0 Mobile",
+		UserAgent{
+			Browser{BrowserUCBrowser, Version{9, 2, 0}}, OS{PlatformOracle, OSAndroid, Version{4, 3, 0}}, DevicePhone}},
+
+	{"UCWEB/2.0 (MIDP-2.0; U; Adr 5.1; id; Micromax_Q383) U2/1.0.0 UCBrowser/9.0.2.389 U2/1.0.0 Ponsel",
+		UserAgent{
+			Browser{BrowserUCBrowser, Version{9, 0, 2}}, OS{PlatformOracle, OSAndroid, Version{5, 1, 0}}, DevicePhone}},
+
+	{"UCWEB/2.0 (MIDP-2.0; U; Adr 4.1.2; id; GT-P3100) U2/1.0.0 UCBrowser/10.7.6.805 U2/1.0.0 Mobile",
+		UserAgent{
+			Browser{BrowserUCBrowser, Version{10, 7, 6}}, OS{PlatformOracle, OSAndroid, Version{4, 1, 2}}, DeviceTablet}},
+
+	{"UCWEB/2.0 (MIDP-2.0; U; Adr 4.4.2; en-US; SM-T210) U2/1.0.0 UCBrowser/10.7.9.856 U2/1.0.0 Mobile",
+		UserAgent{
+			Browser{BrowserUCBrowser, Version{10, 7, 9}}, OS{PlatformOracle, OSAndroid, Version{4, 4, 2}}, DeviceTablet}},
+
+	{"UCWEB/2.0 (MIDP-2.0; U; Adr 4.1.2; en-US; IdeaTabA1000-G) U2/1.0.0 UCBrowser/10.7.9.856 U2/1.0.0 Mobile",
+		UserAgent{
+			Browser{BrowserUCBrowser, Version{10, 7, 9}}, OS{PlatformOracle, OSAndroid, Version{4, 1, 2}}, DeviceTablet}},
+
 	// Nokia Browser
 	// {"Mozilla/5.0 (Series40; Nokia501/14.0.4/java_runtime_version=Nokia_Asha_1_2; Profile/MIDP-2.1 Configuration/CLDC-1.1) Gecko/20100401 S40OviBrowser/4.0.0.0.45",
 	// 	UserAgent{
@@ -189,11 +207,11 @@ var testUAVars = []struct {
 	// iPod, iPod Touch
 	{"mozilla/5.0 (ipod touch; cpu iphone os 9_3_3 like mac os x) applewebkit/601.1.46 (khtml, like gecko) version/9.0 mobile/13g34 safari/601.1",
 		UserAgent{
-			Browser{BrowserSafari, Version{9, 0, 0}}, OS{PlatformiPod, OSiOS, Version{9, 3, 3}}, DeviceTablet}},
+			Browser{BrowserSafari, Version{9, 0, 0}}, OS{PlatformiPod, OSiOS, Version{9, 3, 3}}, DevicePhone}},
 
 	{"mozilla/5.0 (ipod; cpu iphone os 6_1_6 like mac os x) applewebkit/536.26 (khtml, like gecko) version/6.0 mobile/10b500 safari/8536.25",
 		UserAgent{
-			Browser{BrowserSafari, Version{6, 0, 0}}, OS{PlatformiPod, OSiOS, Version{6, 1, 6}}, DeviceTablet}},
+			Browser{BrowserSafari, Version{6, 0, 0}}, OS{PlatformiPod, OSiOS, Version{6, 1, 6}}, DevicePhone}},
 
 	// WebOS
 	{"Mozilla/5.0 (hp-tablet; Linux; hpwOS/3.0.0; U; de-DE) AppleWebKit/534.6 (KHTML, like Gecko) wOSBrowser/233.70 Safari/534.6 TouchPad/1.0",
@@ -255,7 +273,7 @@ var testUAVars = []struct {
 
 	{"Mozilla/5.0 (Linux; Android 4.4.4; SD4930UR Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/34.0.0.0 Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/35.0.0.48.273;]",
 		UserAgent{
-			Browser{BrowserChrome, Version{34, 0, 0}}, OS{PlatformLinux, OSKindle, Version{4, 4, 4}}, DevicePhone}}, // Facebook app on Fire Phone
+			Browser{BrowserFBApp, Version{4, 0, 0}}, OS{PlatformLinux, OSKindle, Version{4, 4, 4}}, DevicePhone}}, // Facebook app on Fire Phone
 
 	{"mozilla/5.0 (linux; android 4.4.3; kfthwi build/ktu84m) applewebkit/537.36 (khtml, like gecko) version/4.0 chrome/34.0.0.0 safari/537.36 [pinterest/android]",
 		UserAgent{
@@ -776,7 +794,7 @@ var testUAVars = []struct {
 
 	{"Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko",
 		UserAgent{
-			Browser{BrowserIE, Version{11, 0, 0}}, OS{PlatformWindows, OSWindows, Version{6, 3, 0}}, DeviceTablet}},
+			Browser{BrowserIE, Version{11, 0, 0}}, OS{PlatformWindows, OSWindows, Version{6, 3, 0}}, DeviceComputer}},
 
 	{"Mozilla/5.0 (IE 11.0; Windows NT 6.3; Trident/7.0; .NET4.0E; .NET4.0C; rv:11.0) like Gecko",
 		UserAgent{
@@ -862,9 +880,51 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; Xbox)",
 		UserAgent{
 			Browser{BrowserIE, Version{9, 0, 0}}, OS{PlatformXbox, OSXbox, Version{6, 1, 0}}, DeviceConsole}},
+
+	{"SAMSUNG-SM-B550H Opera/9.80 (J2ME/MIDP; Opera Mini/8.0.40168/37.9339; U; pl) Presto/2.12.423 Version/12.16",
+		UserAgent{
+			Browser{BrowserOperaMini, Version{8, 0, 40168}}, OS{PlatformUnknown, OSUnknown, Version{0, 0, 0}}, DevicePhone}},
+
+	// Puffin
+	{"Mozilla/5.0 (X11; U; Linux x86_64; hi-IN) AppleWebKit/537.36 (KHTML, like Gecko) Safari/537.36 Puffin/5.2.0IT Chrome/52.0.2623",
+		UserAgent{
+			Browser{BrowserPuffin, Version{5, 2, 0}}, OS{PlatformiPad, OSiOS, Version{0, 0, 0}}, DeviceTablet}},
+
+	{"Mozilla/5.0 (X11; U; Linux x86_64; fr-fr) AppleWebKit/537.36 (KHTML, like Gecko) Safari/537.36 Puffin/4.8.0.2965AP Chrome/52.0.2623",
+		UserAgent{
+			Browser{BrowserPuffin, Version{4, 8, 0}}, OS{PlatformLinux, OSAndroid, Version{0, 0, 0}}, DevicePhone}},
+
+	{"Mozilla/5.0 (X11; U; Linux x86_64; es-es) AppleWebKit/537.36 (KHTML, like Gecko) Safari/537.36 Puffin/4.8.0.2965AT Chrome/52.0.2623",
+		UserAgent{
+			Browser{BrowserPuffin, Version{4, 8, 0}}, OS{PlatformLinux, OSAndroid, Version{0, 0, 0}}, DeviceTablet}},
+
+	{"Mozilla/5.0 (X11; U; Linux x86_64; tr-TR) AppleWebKit/537.36 (KHTML, like Gecko)  Chrome/30.0.1599.114 Safari/537.36 Puffin/5.2.0IP",
+		UserAgent{
+			Browser{BrowserPuffin, Version{5, 2, 0}}, OS{PlatformiPhone, OSiOS, Version{0, 0, 0}}, DevicePhone}},
+
+	{"Mozilla/5.0 (Windows NT 6.2; ARM; Trident/7.0; Touch; rv:11.0; WPDesktop; Lumia 830) like Gecko",
+		UserAgent{
+			Browser{BrowserIE, Version{11, 0, 0}}, OS{PlatformWindows, OSWindows, Version{6, 2, 0}}, DevicePhone}},
+
+	{"Mozilla/5.0 (Linux; U; Android 6.0; zh-cn; Letv X500 Build/DAXCNCU5902012161S) AppleWebKit/537.36 (KHTML, like Gecko)Version/4.0 Chrome/37.0.0.0 MQQBrowser/6.9 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{37, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{6, 0, 0}}, DevicePhone}},
+
+	{"Mozilla/5.0 (Linux; U; Android 6.0; zh-cn; Letv X500 Build/DAXCNCU5902012161S) AppleWebKit/537.36 (KHTML, like Gecko)Version/4.0 Chrome/37.0.0.0 MQQBrowser/6.9 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{37, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{6, 0, 0}}, DevicePhone}},
+
+	{"Mozilla/5.0 (Linux; U; Android 4.4.2; en-US; SM-T211 Build/KOT49H) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 UCBrowser/11.1.5.890 U3/0.8.0 Mobile Safari/534.30",
+		UserAgent{
+			Browser{BrowserUCBrowser, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{4, 4, 2}}, DeviceTablet}},
 }
 
 func TestAgentSurfer(t *testing.T) {
+
+	//ua := Parse("Mozilla/5.0 (Linux; U; Android 4.4.2; en-US; SM-T211 Build/KOT49H) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 UCBrowser/11.1.5.890 U3/0.8.0 Mobile Safari/534.30")
+	//t.Logf("%v",ua)
+	//return
+
 	//bp := new(BrowserProfile)
 	for i, determined := range testUAVars {
 		//bp.Parse(determined.UA)
@@ -887,6 +947,7 @@ func TestAgentSurfer(t *testing.T) {
 
 		if ua.OS.Name != determined.OS.Name {
 			t.Errorf("%d os: got %s, wanted %s", i, ua.OS.Name, determined.OS.Name)
+			t.Logf("%d agent: %s", i, ua)
 			t.Logf("%d agent: %s", i, determined.UA)
 		}
 
@@ -906,7 +967,7 @@ func BenchmarkAgentSurfer(b *testing.B) {
 	num := len(testUAVars)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		Parse(testUAVars[i%num].UA)
+		Parse(testUAVars[i % num].UA)
 	}
 }
 
@@ -915,7 +976,7 @@ func BenchmarkEvalSystem(b *testing.B) {
 	v := UserAgent{}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		v.evalOS(testUAVars[i%num].UA)
+		v.evalOS(testUAVars[i % num].UA)
 	}
 }
 
@@ -924,7 +985,7 @@ func BenchmarkEvalBrowserName(b *testing.B) {
 	v := UserAgent{}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		v.evalBrowserName(testUAVars[i%num].UA)
+		v.evalBrowserName(testUAVars[i % num].UA)
 	}
 }
 
@@ -933,8 +994,8 @@ func BenchmarkEvalBrowserVersion(b *testing.B) {
 	v := UserAgent{}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		v.Browser.Name = testUAVars[i%num].Browser.Name
-		v.evalBrowserVersion(testUAVars[i%num].UA)
+		v.Browser.Name = testUAVars[i % num].Browser.Name
+		v.evalBrowserVersion(testUAVars[i % num].UA)
 	}
 }
 
@@ -944,10 +1005,10 @@ func BenchmarkEvalDevice(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		v.OS.Name = testUAVars[i%num].OS.Name
-		v.OS.Platform = testUAVars[i%num].OS.Platform
-		v.Browser.Name = testUAVars[i%num].Browser.Name
-		v.evalDevice(testUAVars[i%num].UA)
+		v.OS.Name = testUAVars[i % num].OS.Name
+		v.OS.Platform = testUAVars[i % num].OS.Platform
+		v.Browser.Name = testUAVars[i % num].Browser.Name
+		v.evalDevice(testUAVars[i % num].UA)
 	}
 }
 

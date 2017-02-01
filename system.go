@@ -22,7 +22,7 @@ func (u *UserAgent) evalOS(ua string) bool {
 		e = len(ua)
 	}
 
-	agentPlatform := ua[s+1 : e]
+	agentPlatform := ua[s + 1: e]
 	specsEnd := strings.Index(agentPlatform, ";")
 	var specs string
 	if specsEnd != -1 {
@@ -33,6 +33,9 @@ func (u *UserAgent) evalOS(ua string) bool {
 
 	//strict OS & version identification
 	switch specs {
+	case "midp-2.0":
+		u.evalOracle(ua, agentPlatform)
+
 	case "android":
 		u.evalLinux(ua, agentPlatform)
 
@@ -137,6 +140,11 @@ func (u *UserAgent) evalLinux(ua string, agentPlatform string) {
 		u.OS.Name = OSAndroid
 		u.OS.Version.findVersionNumber(agentPlatform, "android ")
 
+	case strings.Contains(ua, "adr "):
+		u.OS.Platform = PlatformLinux
+		u.OS.Name = OSAndroid
+		u.OS.Version.findVersionNumber(agentPlatform, "adr ")
+
 	// ChromeOS
 	case strings.Contains(ua, "cros"):
 		u.OS.Platform = PlatformLinux
@@ -148,7 +156,15 @@ func (u *UserAgent) evalLinux(ua string, agentPlatform string) {
 		u.OS.Name = OSWebOS
 
 	// Linux, "Linux-like"
-	case strings.Contains(ua, "x11") || strings.Contains(ua, "bsd") || strings.Contains(ua, "suse") || strings.Contains(ua, "debian") || strings.Contains(ua, "ubuntu"):
+	case strings.Contains(ua, "bsd") || strings.Contains(ua, "suse") || strings.Contains(ua, "debian") || strings.Contains(ua, "ubuntu"):
+		u.OS.Platform = PlatformLinux
+		u.OS.Name = OSLinux
+
+	case strings.Contains(ua, "x11"):
+		if strings.Contains(ua, "puffin") {
+			u.evalPuffin(ua, agentPlatform)
+			return
+		}
 		u.OS.Platform = PlatformLinux
 		u.OS.Name = OSLinux
 
@@ -184,6 +200,53 @@ func (u *UserAgent) evaliOS(uaPlatform string, agentPlatform string) {
 	default:
 		u.OS.Platform = PlatformiPad
 		u.OS.Name = OSUnknown
+	}
+}
+
+func (u *UserAgent) evalOracle(ua string, agentPlatform string) {
+
+	switch {
+	case strings.Contains(ua, "adr "):
+		u.OS.Platform = PlatformOracle
+		u.OS.Name = OSAndroid
+		u.OS.Version.findVersionNumber(agentPlatform, "adr ")
+
+	default:
+		u.OS.Platform = PlatformOracle
+		u.OS.Name = OSAndroid
+	}
+}
+
+// https://www.whatismybrowser.com/blog/view/2013-06-10-puffin-browsers-new-user-agent-format
+func (u *UserAgent) evalPuffin(ua string, agentPlatform string) {
+
+	i := strings.Index(ua, "puffin/")
+	ver := ua[i:]
+
+	switch {
+	case strings.Contains(ver, "at"):
+		u.OS.Platform = PlatformLinux
+		u.OS.Name = OSAndroid
+		u.DeviceType = DeviceTablet
+
+	case strings.Contains(ver, "ap"):
+		u.OS.Platform = PlatformLinux
+		u.OS.Name = OSAndroid
+		u.DeviceType = DevicePhone
+
+	case strings.Contains(ver, "it"):
+		u.OS.Platform = PlatformiPad
+		u.OS.Name = OSiOS
+		u.DeviceType = DeviceTablet
+
+	case strings.Contains(ver, "ip"):
+		u.OS.Platform = PlatformiPhone
+		u.OS.Name = OSiOS
+		u.DeviceType = DevicePhone
+
+	default:
+		u.OS.Platform = PlatformLinux
+		u.OS.Name = OSAndroid
 	}
 }
 
@@ -237,7 +300,7 @@ func (u *UserAgent) evalMacintosh(uaPlatformGroup string) {
 	u.OS.Platform = PlatformMac
 	if i := strings.Index(uaPlatformGroup, "os x 10"); i != -1 {
 		u.OS.Name = OSMacOSX
-		u.OS.Version.parse(uaPlatformGroup[i+5:])
+		u.OS.Version.parse(uaPlatformGroup[i + 5:])
 
 		return
 	}
@@ -246,7 +309,7 @@ func (u *UserAgent) evalMacintosh(uaPlatformGroup string) {
 
 func (v *Version) findVersionNumber(s string, m string) bool {
 	if ind := strings.Index(s, m); ind != -1 {
-		return v.parse(s[ind+len(m):])
+		return v.parse(s[ind + len(m):])
 	}
 	return false
 }
@@ -255,12 +318,12 @@ func (v *Version) findVersionNumber(s string, m string) bool {
 // a Version.
 func (o *OS) getiOSVersion(uaPlatformGroup string) {
 	if i := strings.Index(uaPlatformGroup, "cpu iphone os "); i != -1 {
-		o.Version.parse(uaPlatformGroup[i+14:])
+		o.Version.parse(uaPlatformGroup[i + 14:])
 		return
 	}
 
 	if i := strings.Index(uaPlatformGroup, "cpu os "); i != -1 {
-		o.Version.parse(uaPlatformGroup[i+7:])
+		o.Version.parse(uaPlatformGroup[i + 7:])
 		return
 	}
 
@@ -313,7 +376,7 @@ func (v *Version) parse(str string) bool {
 				}
 				continue
 			}
-			str = str[k+1:]
+			str = str[k + 1:]
 			break
 		}
 

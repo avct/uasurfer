@@ -40,13 +40,16 @@ const (
 	BrowserBlackberry
 	BrowserUCBrowser
 	BrowserSilk
-	BrowserNokia
-	BrowserNetFront
-	BrowserQQ
-	BrowserMaxthon
-	BrowserSogouExplorer
+	//BrowserNokia
+	//BrowserNetFront
+	//BrowserQQ
+	//BrowserMaxthon
+	//BrowserSogouExplorer
 	BrowserSpotify
 	BrowserBot
+	BrowserOperaMini
+	BrowserPuffin
+	BrowserFBApp
 )
 
 // OSName (int) returns a constant.
@@ -95,6 +98,7 @@ const (
 	PlatformXbox
 	PlatformNintendo
 	PlatformBot
+	PlatformOracle
 )
 
 type Version struct {
