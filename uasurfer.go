@@ -166,3 +166,11 @@ func Parse(ua string) *UserAgent {
 
 	return resp
 }
+
+func (b *Browser) FormattedName() string {
+	return strings.TrimPrefix(b.Name.String(), "Browser")
+}
+
+func (o *OS) FormattedName() string {
+	return strings.TrimPrefix(o.Name.String(), "OS")
+}
