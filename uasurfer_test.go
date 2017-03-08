@@ -865,40 +865,51 @@ var testUAVars = []struct {
 }
 
 func TestAgentSurfer(t *testing.T) {
-	//bp := new(BrowserProfile)
-	for i, determined := range testUAVars {
-		//bp.Parse(determined.UA)
-		ua := Parse(determined.UA)
+	for _, determined := range testUAVars {
+		t.Run("", func(t *testing.T) {
+			testFuncs := []func(string) *UserAgent{
+				Parse,
+				func(ua string) *UserAgent {
+					u := new(UserAgent)
+					ParseUserAgent(ua, u)
+					return u
+				},
+			}
 
-		if ua.Browser.Name != determined.Browser.Name {
-			t.Errorf("%d browserName: got %v, wanted %v", i, ua.Browser.Name, determined.Browser.Name)
-			t.Logf("%d agent: %s", i, determined.UA)
-		}
+			for _, f := range testFuncs {
+				ua := f(determined.UA)
 
-		if ua.Browser.Version != determined.Browser.Version {
-			t.Errorf("%d browser version: got %d, wanted %d", i, ua.Browser.Version, determined.Browser.Version)
-			t.Logf("%d agent: %s", i, determined.UA)
-		}
+				if ua.Browser.Name != determined.Browser.Name {
+					t.Errorf("browserName: got %v, wanted %v", ua.Browser.Name, determined.Browser.Name)
+					t.Logf("agent: %s", determined.UA)
+				}
 
-		if ua.OS.Platform != determined.OS.Platform {
-			t.Errorf("%d platform: got %v, wanted %v", i, ua.OS.Platform, determined.OS.Platform)
-			t.Logf("%d agent: %s", i, determined.UA)
-		}
+				if ua.Browser.Version != determined.Browser.Version {
+					t.Errorf("browser version: got %d, wanted %d", ua.Browser.Version, determined.Browser.Version)
+					t.Logf("agent: %s", determined.UA)
+				}
 
-		if ua.OS.Name != determined.OS.Name {
-			t.Errorf("%d os: got %s, wanted %s", i, ua.OS.Name, determined.OS.Name)
-			t.Logf("%d agent: %s", i, determined.UA)
-		}
+				if ua.OS.Platform != determined.OS.Platform {
+					t.Errorf("platform: got %v, wanted %v", ua.OS.Platform, determined.OS.Platform)
+					t.Logf("agent: %s", determined.UA)
+				}
 
-		if ua.OS.Version != determined.OS.Version {
-			t.Errorf("%d os version: got %d, wanted %d", i, ua.OS.Version, determined.OS.Version)
-			t.Logf("%d agent: %s", i, determined.UA)
-		}
+				if ua.OS.Name != determined.OS.Name {
+					t.Errorf("os: got %s, wanted %s", ua.OS.Name, determined.OS.Name)
+					t.Logf("agent: %s", determined.UA)
+				}
 
-		if ua.DeviceType != determined.DeviceType {
-			t.Errorf("%d device type: got %v, wanted %v", i, ua.DeviceType, determined.DeviceType)
-			t.Logf("%d agent: %s", i, determined.UA)
-		}
+				if ua.OS.Version != determined.OS.Version {
+					t.Errorf("os version: got %d, wanted %d", ua.OS.Version, determined.OS.Version)
+					t.Logf("agent: %s", determined.UA)
+				}
+
+				if ua.DeviceType != determined.DeviceType {
+					t.Errorf("device type: got %v, wanted %v", ua.DeviceType, determined.DeviceType)
+					t.Logf("agent: %s", determined.UA)
+				}
+			}
+		})
 	}
 }
 
@@ -907,6 +918,16 @@ func BenchmarkAgentSurfer(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		Parse(testUAVars[i%num].UA)
+	}
+}
+
+func BenchmarkAgentSurferReuse(b *testing.B) {
+	dest := new(UserAgent)
+	num := len(testUAVars)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		dest.Reset()
+		ParseUserAgent(testUAVars[i%num].UA, dest)
 	}
 }
 

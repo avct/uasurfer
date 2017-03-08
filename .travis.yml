@@ -3,10 +3,8 @@ sudo: false
 language: go
  
 go:
-  - tip
+  - 1.8
   - 1.7
-  - 1.6
-  - 1.5
  
 script:
   - go test
