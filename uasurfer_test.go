@@ -910,6 +910,15 @@ func BenchmarkAgentSurfer(b *testing.B) {
 	}
 }
 
+func BenchmarkAgentSurferReuse(b *testing.B) {
+	dest := new(UserAgent)
+	num := len(testUAVars)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		ParseUserAgent(testUAVars[i%num].UA, dest)
+	}
+}
+
 func BenchmarkEvalSystem(b *testing.B) {
 	num := len(testUAVars)
 	v := UserAgent{}

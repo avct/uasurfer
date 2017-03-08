@@ -140,25 +140,39 @@ type OS struct {
 	Version  Version
 }
 
+// Reset resets the UserAgent to it's zero value
+func (ua *UserAgent) Reset() {
+	ua.Browser = Browser{}
+	ua.OS = OS{}
+	ua.DeviceType = DeviceUnknown
+}
+
 // Parse accepts a raw user agent (string) and returns the UserAgent.
 func Parse(ua string) *UserAgent {
-	ua = strings.ToLower(ua)
-	resp := &UserAgent{}
+	dest := new(UserAgent)
+	parse(ua, dest)
+	return dest
+}
 
+func ParseUserAgent(ua string, dest *UserAgent) {
+	dest.Reset()
+	parse(ua, dest)
+}
+
+func parse(ua string, dest *UserAgent) {
+	ua = strings.ToLower(ua)
 	switch {
 	case len(ua) == 0:
-		resp.OS.Platform = PlatformUnknown
-		resp.OS.Name = OSUnknown
-		resp.Browser.Name = BrowserUnknown
-		resp.DeviceType = DeviceUnknown
+		dest.OS.Platform = PlatformUnknown
+		dest.OS.Name = OSUnknown
+		dest.Browser.Name = BrowserUnknown
+		dest.DeviceType = DeviceUnknown
 
 	// stop on on first case returning true
-	case resp.evalOS(ua):
-	case resp.evalBrowserName(ua):
+	case dest.evalOS(ua):
+	case dest.evalBrowserName(ua):
 	default:
-		resp.evalBrowserVersion(ua)
-		resp.evalDevice(ua)
+		dest.evalBrowserVersion(ua)
+		dest.evalDevice(ua)
 	}
-
-	return resp
 }
