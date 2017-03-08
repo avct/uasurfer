@@ -179,6 +179,8 @@ func parse(ua string, dest *UserAgent) {
 	}
 }
 
+// normalise normalises the user supplied agent string so that
+// we can more easily parse it.
 func normalise(ua string) string {
 	if len(ua) <= 1024 {
 		var buf [1024]byte
@@ -195,7 +197,7 @@ func normalise(ua string) string {
 
 // copyLower copies a lowercase version of s to b. It assumes s contains only single byte characters
 // and will panic if b is nil or is not long enough to contain all the bytes from s.
-// It returns early with false if any chacracters were non ascii.
+// It returns early with false if any characters were non ascii.
 func copyLower(b []byte, s string) bool {
 	for j := 0; j < len(s); j++ {
 		c := s[j]
