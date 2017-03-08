@@ -154,8 +154,10 @@ func Parse(ua string) *UserAgent {
 	return dest
 }
 
+// ParseUserAgent is the same as Parse, but populates the supplied UserAgent.
+// It is the caller's responsibility to call Reset() on the UserAgent before
+// passing it to this function.
 func ParseUserAgent(ua string, dest *UserAgent) {
-	dest.Reset()
 	parse(ua, dest)
 }
 

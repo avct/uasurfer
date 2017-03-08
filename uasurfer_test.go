@@ -915,6 +915,7 @@ func BenchmarkAgentSurferReuse(b *testing.B) {
 	num := len(testUAVars)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
+		dest.Reset()
 		ParseUserAgent(testUAVars[i%num].UA, dest)
 	}
 }
