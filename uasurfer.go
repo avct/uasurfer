@@ -141,7 +141,7 @@ type OS struct {
 }
 
 // Parse accepts a raw user agent (string) and returns the UserAgent.
-func Parse(ua string) *UserAgent {
+func Parse(ua string) UserAgent {
 	ua = strings.ToLower(ua)
 	resp := &UserAgent{}
 
@@ -160,5 +160,5 @@ func Parse(ua string) *UserAgent {
 		resp.evalDevice(ua)
 	}
 
-	return resp
+	return *resp
 }

@@ -1,10 +1,6 @@
 package uasurfer
 
-import
-// "bufio"
-// "fmt"
-// "os"
-"testing"
+import "testing"
 
 var testUAVars = []struct {
 	UA string
