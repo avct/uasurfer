@@ -1,6 +1,8 @@
 package uasurfer
 
-import "strings"
+import (
+	"strings"
+)
 
 // Browser struct contains the lowercase name of the browser, along
 // with its browser version number. Browser are grouped together without
@@ -18,7 +20,6 @@ import "strings"
 
 // Retrieve browser name from UA strings
 func (u *UserAgent) evalBrowserName(ua string) bool {
-
 	// Blackberry goes first because it reads as MSIE & Safari
 	if strings.Contains(ua, "blackberry") || strings.Contains(ua, "playbook") || strings.Contains(ua, "bb10") || strings.Contains(ua, "rim ") {
 		u.Browser.Name = BrowserBlackberry
@@ -54,7 +55,7 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 			u.Browser.Name = BrowserSpotify
 
 		// presume it's safari unless an esoteric browser is being specified (webOSBrowser, SamsungBrowser, etc.)
-		case strings.Contains(ua, "like gecko") && strings.Contains(ua, "mozilla/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") && strings.Contains(ua, "safari/") && !strings.Contains(ua, "browser/") && !strings.Contains(ua, "os/"):
+		case strings.Contains(ua, "like gecko") && strings.Contains(ua, "mozilla/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") && !strings.Contains(ua, "browser/") && !strings.Contains(ua, "os/"):
 			u.Browser.Name = BrowserSafari
 
 		// Google's search app on iPhone, leverages native Safari rather than Chrome
