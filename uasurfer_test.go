@@ -277,6 +277,9 @@ var testUAVars = []struct {
 			Browser{BrowserIE, Version{9, 0, 0}}, OS{PlatformXbox, OSXbox, Version{6, 1, 0}}, DeviceConsole}},
 
 	// Playstation
+	{"Mozilla/5.0 (PlayStation 4 4.50) AppleWebKit/601.2 (KHTML, like Gecko)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformPlaystation, OSPlaystation, Version{0, 0, 0}}, DeviceConsole}},
 
 	{"Mozilla/5.0 (Playstation Vita 1.61) AppleWebKit/531.22.8 (KHTML, like Gecko) Silk/3.2",
 		UserAgent{

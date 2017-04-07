@@ -55,7 +55,11 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 			u.Browser.Name = BrowserSpotify
 
 		// presume it's safari unless an esoteric browser is being specified (webOSBrowser, SamsungBrowser, etc.)
-		case strings.Contains(ua, "like gecko") && strings.Contains(ua, "mozilla/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") && !strings.Contains(ua, "browser/") && !strings.Contains(ua, "os/"):
+		case strings.Contains(ua, "like gecko") && strings.Contains(ua, "mozilla/") && strings.Contains(ua, "safari/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") && !strings.Contains(ua, "browser/") && !strings.Contains(ua, "os/"):
+			u.Browser.Name = BrowserSafari
+
+		// if we got this far and the device is iPhone or iPad, assume safari. Some agents don't actually contain the word "safari"
+		case strings.Contains(ua, "iphone") || strings.Contains(ua, "ipad"):
 			u.Browser.Name = BrowserSafari
 
 		// Google's search app on iPhone, leverages native Safari rather than Chrome
@@ -64,6 +68,7 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 
 		default:
 			goto notwebkit
+
 		}
 		return u.isBot()
 	}
