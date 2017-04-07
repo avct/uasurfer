@@ -1,10 +1,6 @@
 package uasurfer
 
-import
-// "bufio"
-// "fmt"
-// "os"
-"testing"
+import "testing"
 
 var testUAVars = []struct {
 	UA string
@@ -281,6 +277,9 @@ var testUAVars = []struct {
 			Browser{BrowserIE, Version{9, 0, 0}}, OS{PlatformXbox, OSXbox, Version{6, 1, 0}}, DeviceConsole}},
 
 	// Playstation
+	{"Mozilla/5.0 (PlayStation 4 4.50) AppleWebKit/601.2 (KHTML, like Gecko)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformPlaystation, OSPlaystation, Version{0, 0, 0}}, DeviceConsole}},
 
 	{"Mozilla/5.0 (Playstation Vita 1.61) AppleWebKit/531.22.8 (KHTML, like Gecko) Silk/3.2",
 		UserAgent{
@@ -615,6 +614,10 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (iPad; CPU OS 7_0_2 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A501 Safari/9537.53",
 		UserAgent{
 			Browser{BrowserSafari, Version{7, 0, 0}}, OS{PlatformiPad, OSiOS, Version{7, 0, 2}}, DeviceTablet}},
+
+	{"Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 [FBAN/FBIOS;FBAV/86.0.0.48.52;FBBV/53842252;FBDV/iPhone9,1;FBMD/iPhone;FBSN/iOS;FBSV/10.2.1;FBSS/2;FBCR/Verizon;FBID/phone;FBLC/en_US;FBOP/5;FBRV/0]",
+		UserAgent{
+			Browser{BrowserSafari, Version{10, 2, 1}}, OS{PlatformiPhone, OSiOS, Version{10, 2, 1}}, DevicePhone}},
 
 	// TODO handle default browser based on iOS version
 	// {"Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/538.34.9 (KHTML, like Gecko) Mobile/12A4265u",
