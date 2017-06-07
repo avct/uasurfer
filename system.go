@@ -108,7 +108,7 @@ func (u *UserAgent) isBot() bool {
 		return true
 	}
 
-	if u.Browser.Name == BrowserBot {
+	if u.Browser.Name >= BrowserBot && u.Browser.Name <= BrowserYahooBot {
 		u.OS.Platform = PlatformBot
 		u.OS.Name = OSBot
 		u.DeviceType = DeviceComputer

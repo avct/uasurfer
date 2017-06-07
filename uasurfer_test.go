@@ -341,9 +341,57 @@ var testUAVars = []struct {
 			Browser{BrowserSpotify, Version{1, 0, 9}}, OS{PlatformMac, OSMacOSX, Version{10, 10, 2}}, DeviceComputer}},
 
 	// Bots
+	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/600.2.5 (KHTML, like Gecko) Version/8.0.2 Safari/600.2.5 (Applebot/0.1; +http://www.apple.com/go/applebot)",
+		UserAgent{
+			Browser{BrowserAppleBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{10, 10, 1}}, DeviceComputer}},
+
+	{"Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)",
+		UserAgent{
+			Browser{BrowserBaiduBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{0, 0, 0}}, DeviceComputer}},
+
+	{"Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)",
+		UserAgent{
+			Browser{BrowserBingBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{0, 0, 0}}, DeviceComputer}},
+
+	{"DuckDuckBot/1.0; (+http://duckduckgo.com/duckduckbot.html)",
+		UserAgent{
+			Browser{BrowserDuckDuckGoBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{0, 0, 0}}, DeviceComputer}},
+
+	{"facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)",
+		UserAgent{
+			Browser{BrowserFacebookBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{0, 0, 0}}, DeviceComputer}},
+
+	{"Facebot/1.0",
+		UserAgent{
+			Browser{BrowserFacebookBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{0, 0, 0}}, DeviceComputer}},
+
 	{"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
 		UserAgent{
-			Browser{BrowserBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{0, 0, 0}}, DeviceComputer}},
+			Browser{BrowserGoogleBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{0, 0, 0}}, DeviceComputer}},
+
+	{"LinkedInBot/1.0 (compatible; Mozilla/5.0; Jakarta Commons-HttpClient/3.1 +http://www.linkedin.com)",
+		UserAgent{
+			Browser{BrowserLinkedInBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{0, 0, 0}}, DeviceComputer}},
+
+	{"msnbot/2.0b (+http://search.msn.com/msnbot.htm)",
+		UserAgent{
+			Browser{BrowserMsnBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{0, 0, 0}}, DeviceComputer}},
+
+	{"Pingdom.com_bot_version_1.4_(http://www.pingdom.com/)",
+		UserAgent{
+			Browser{BrowserPingdomBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{0, 0, 0}}, DeviceComputer}},
+
+	{"Twitterbot/1.0",
+		UserAgent{
+			Browser{BrowserTwitterBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{0, 0, 0}}, DeviceComputer}},
+
+	{"Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)",
+		UserAgent{
+			Browser{BrowserYandexBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{0, 0, 0}}, DeviceComputer}},
+
+	{"Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)",
+		UserAgent{
+			Browser{BrowserYahooBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{0, 0, 0}}, DeviceComputer}},
 
 	// {"Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
 	// 	BrowserBot, Version{0,0,0}}, OS{PlatformBot, OSBot, Version{6,0,0}}, DeviceComputer}},
