@@ -46,7 +46,19 @@ const (
 	BrowserMaxthon
 	BrowserSogouExplorer
 	BrowserSpotify
-	BrowserBot
+	BrowserBot // Bot list begins here
+	BrowserAppleBot
+	BrowserBaiduBot
+	BrowserBingBot
+	BrowserDuckDuckGoBot
+	BrowserFacebookBot
+	BrowserGoogleBot
+	BrowserLinkedInBot
+	BrowserMsnBot
+	BrowserPingdomBot
+	BrowserTwitterBot
+	BrowserYandexBot
+	BrowserYahooBot // Bot list ends here
 )
 
 // OSName (int) returns a constant.

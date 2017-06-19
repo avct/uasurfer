@@ -54,6 +54,10 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 		case strings.Contains(ua, " spotify/"):
 			u.Browser.Name = BrowserSpotify
 
+		// AppleBot uses webkit signature as well
+		case strings.Contains(ua, "applebot"):
+			u.Browser.Name = BrowserAppleBot
+
 		// presume it's safari unless an esoteric browser is being specified (webOSBrowser, SamsungBrowser, etc.)
 		case strings.Contains(ua, "like gecko") && strings.Contains(ua, "mozilla/") && strings.Contains(ua, "safari/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") && !strings.Contains(ua, "browser/") && !strings.Contains(ua, "os/"):
 			u.Browser.Name = BrowserSafari
@@ -87,11 +91,48 @@ notwebkit:
 	case strings.Contains(ua, "ucbrowser"):
 		u.Browser.Name = BrowserUCBrowser
 
-	case strings.Contains(ua, "phantomjs") || strings.Contains(ua, "googlebot"):
+	case strings.Contains(ua, "applebot"):
+		u.Browser.Name = BrowserAppleBot
+
+	case strings.Contains(ua, "baiduspider"):
+		u.Browser.Name = BrowserBaiduBot
+
+	case strings.Contains(ua, "adidxbot") || strings.Contains(ua, "bingbot") || strings.Contains(ua, "bingpreview"):
+		u.Browser.Name = BrowserBingBot
+
+	case strings.Contains(ua, "duckduckbot"):
+		u.Browser.Name = BrowserDuckDuckGoBot
+
+	case strings.Contains(ua, "facebot") || strings.Contains(ua, "facebookexternalhit"):
+		u.Browser.Name = BrowserFacebookBot
+
+	case strings.Contains(ua, "googlebot"):
+		u.Browser.Name = BrowserGoogleBot
+
+	case strings.Contains(ua, "linkedinbot"):
+		u.Browser.Name = BrowserLinkedInBot
+
+	case strings.Contains(ua, "msnbot"):
+		u.Browser.Name = BrowserMsnBot
+
+	case strings.Contains(ua, "pingdom.com_bot"):
+		u.Browser.Name = BrowserPingdomBot
+
+	case strings.Contains(ua, "twitterbot"):
+		u.Browser.Name = BrowserTwitterBot
+
+	case strings.Contains(ua, "yandex") || strings.Contains(ua, "yadirectfetcher"):
+		u.Browser.Name = BrowserYandexBot
+
+	case strings.Contains(ua, "yahoo"):
+		u.Browser.Name = BrowserYahooBot
+
+	case strings.Contains(ua, "phantomjs"):
 		u.Browser.Name = BrowserBot
 
 	default:
 		u.Browser.Name = BrowserUnknown
+
 	}
 
 	return u.isBot()
