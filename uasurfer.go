@@ -174,3 +174,7 @@ func (b *Browser) FormattedName() string {
 func (o *OS) FormattedName() string {
 	return strings.TrimPrefix(o.Name.String(), "OS")
 }
+
+func (ua *UserAgent) DeviceFormattedName() string {
+	return strings.TrimPrefix(ua.DeviceType.String(), "Device")
+}
