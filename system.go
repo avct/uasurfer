@@ -46,7 +46,7 @@ func (u *UserAgent) evalOS(ua string) bool {
 	case "ipad", "iphone", "ipod touch", "ipod":
 		u.evaliOS(specs, agentPlatform)
 
-	case "macintosh":
+	case "macintosh", "CFNetwork":
 		u.evalMacintosh(ua)
 
 	default:
@@ -61,7 +61,7 @@ func (u *UserAgent) evalOS(ua string) bool {
 			u.evalWindowsPhone(agentPlatform)
 
 		// Windows, Xbox
-		case strings.Contains(ua, "windows "):
+		case strings.Contains(ua, "windows ") || strings.Contains(ua, "Microsoft-CryptoAPI"):
 			u.evalWindows(ua)
 
 		// Kindle
