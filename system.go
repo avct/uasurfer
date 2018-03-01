@@ -61,7 +61,7 @@ func (u *UserAgent) evalOS(ua string) bool {
 			u.evalWindowsPhone(agentPlatform)
 
 		// Windows, Xbox
-		case strings.Contains(ua, "windows "):
+		case strings.Contains(ua, "windows ") || strings.Contains(ua, "microsoft-cryptoapi"):
 			u.evalWindows(ua)
 
 		// Kindle
@@ -91,6 +91,10 @@ func (u *UserAgent) evalOS(ua string) bool {
 		// Android
 		case strings.Contains(ua, "android"):
 			u.evalLinux(ua, agentPlatform)
+
+		// Apple CFNetwork
+		case strings.Contains(ua, "cfnetwork") && strings.Contains(ua, "darwin"):
+			u.evalMacintosh(ua)
 
 		default:
 			u.OS.Platform = PlatformUnknown
