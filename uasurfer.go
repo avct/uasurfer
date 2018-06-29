@@ -186,9 +186,10 @@ func parse(ua string, dest *UserAgent) {
 	case dest.evalOS(ua):
 	case dest.evalBrowserName(ua):
 	default:
-		dest.evalBrowserVersion(ua)
 		dest.evalDevice(ua)
 	}
+	// try to decode browser and googlebot versions
+	dest.evalBrowserVersion(ua)
 }
 
 // normalise normalises the user supplied agent string so that

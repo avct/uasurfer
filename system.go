@@ -127,18 +127,18 @@ func (u *UserAgent) isBot() bool {
 func (u *UserAgent) evalLinux(ua string, agentPlatform string) {
 
 	switch {
-	// Kindle Fire
-	case strings.Contains(ua, "kindle") || amazonFireFingerprint.MatchString(agentPlatform):
-		// get the version of Android if available, though we don't call this OSAndroid
-		u.OS.Platform = PlatformLinux
-		u.OS.Name = OSKindle
-		u.OS.Version.findVersionNumber(agentPlatform, "android ")
-
 	// Android, Kindle Fire
 	case strings.Contains(ua, "android") || strings.Contains(ua, "googletv"):
 		// Android
 		u.OS.Platform = PlatformLinux
 		u.OS.Name = OSAndroid
+		u.OS.Version.findVersionNumber(agentPlatform, "android ")
+
+	// Kindle Fire
+	case strings.Contains(ua, "kindle") || amazonFireFingerprint.MatchString(agentPlatform):
+		// get the version of Android if available, though we don't call this OSAndroid
+		u.OS.Platform = PlatformLinux
+		u.OS.Name = OSKindle
 		u.OS.Version.findVersionNumber(agentPlatform, "android ")
 
 	// ChromeOS
