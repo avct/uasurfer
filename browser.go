@@ -78,19 +78,8 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 	}
 
 notwebkit:
+	// search from more specific to less specific
 	switch {
-	case strings.Contains(ua, "msie") || strings.Contains(ua, "trident"):
-		u.Browser.Name = BrowserIE
-
-	case strings.Contains(ua, "gecko") && (strings.Contains(ua, "firefox") || strings.Contains(ua, "iceweasel") || strings.Contains(ua, "seamonkey") || strings.Contains(ua, "icecat")):
-		u.Browser.Name = BrowserFirefox
-
-	case strings.Contains(ua, "presto") || strings.Contains(ua, "opera"):
-		u.Browser.Name = BrowserOpera
-
-	case strings.Contains(ua, "ucbrowser"):
-		u.Browser.Name = BrowserUCBrowser
-
 	case strings.Contains(ua, "applebot"):
 		u.Browser.Name = BrowserAppleBot
 
@@ -115,7 +104,7 @@ notwebkit:
 	case strings.Contains(ua, "msnbot"):
 		u.Browser.Name = BrowserMsnBot
 
-	case strings.Contains(ua, "pingdom.com_bot"):
+	case strings.Contains(ua, "pingdom"):
 		u.Browser.Name = BrowserPingdomBot
 
 	case strings.Contains(ua, "twitterbot"):
@@ -129,6 +118,33 @@ notwebkit:
 
 	case strings.Contains(ua, "phantomjs"):
 		u.Browser.Name = BrowserBot
+
+	case strings.Contains(ua, "msie") || strings.Contains(ua, "trident"):
+		u.Browser.Name = BrowserIE
+
+	case strings.Contains(ua, "chrome"):
+		u.Browser.Name = BrowserChrome
+
+	case strings.Contains(ua, "firefox"):
+		u.Browser.Name = BrowserFirefox
+
+	case strings.Contains(ua, "safari"):
+		u.Browser.Name = BrowserSafari
+
+	case strings.Contains(ua, "gecko") && (strings.Contains(ua, "firefox") || strings.Contains(ua, "iceweasel") || strings.Contains(ua, "seamonkey") || strings.Contains(ua, "icecat")):
+		u.Browser.Name = BrowserFirefox
+
+	case strings.Contains(ua, "gecko"):
+		u.Browser.Name = BrowserFirefox
+
+	case strings.Contains(ua, "presto") || strings.Contains(ua, "opera"):
+		u.Browser.Name = BrowserOpera
+
+	case strings.Contains(ua, "ucbrowser"):
+		u.Browser.Name = BrowserUCBrowser
+
+	case strings.Contains(ua, "mozilla"):
+		u.Browser.Name = BrowserFirefox
 
 	default:
 		u.Browser.Name = BrowserUnknown
