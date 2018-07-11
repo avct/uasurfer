@@ -44,7 +44,10 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 		case strings.Contains(ua, "silk/"):
 			u.Browser.Name = BrowserSilk
 
-		case strings.Contains(ua, "edge/") || strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie "):
+		case strings.Contains(ua, "edge/"):
+			u.Browser.Name = BrowserEdge
+
+		case strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie "):
 			u.Browser.Name = BrowserIE
 
 		case strings.Contains(ua, "ucbrowser/") || strings.Contains(ua, "ucweb/"):
@@ -61,10 +64,6 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 		case strings.Contains(ua, "like gecko") && strings.Contains(ua, "mozilla/") && strings.Contains(ua, "safari/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") && !strings.Contains(ua, "browser/") && !strings.Contains(ua, "os/"):
 			u.Browser.Name = BrowserSafari
 
-		// if we got this far and the device is iPhone or iPad, assume safari. Some agents don't actually contain the word "safari"
-		case strings.Contains(ua, "iphone") || strings.Contains(ua, "ipad"):
-			u.Browser.Name = BrowserSafari
-
 		// Google's search app on iPhone, leverages native Safari rather than Chrome
 		case strings.Contains(ua, " gsa/"):
 			u.Browser.Name = BrowserSafari
@@ -75,6 +74,10 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 		case strings.Contains(ua, "android") && !strings.Contains(ua, "chrome/") && strings.Contains(ua, "version/") && !strings.Contains(ua, "like android"):
 			// Android WebView on Android >= 4.4 is purposefully being identified as Chrome above -- https://developer.chrome.com/multidevice/webview/overview
 			u.Browser.Name = BrowserAndroid
+
+			// if we got this far and the device is iPhone or iPad, assume Webkit
+		case strings.Contains(ua, "iphone") || strings.Contains(ua, "ipad"):
+			u.Browser.Name = BrowserWebkit
 
 		default:
 			goto notwebkit
@@ -176,8 +179,11 @@ func (u *UserAgent) evalBrowserVersion(ua string) {
 		// match both chrome and crios
 		_ = u.Browser.Version.findVersionNumber(ua, "chrome/") || u.Browser.Version.findVersionNumber(ua, "crios/") || u.Browser.Version.findVersionNumber(ua, "crmo/")
 
+	case BrowserEdge:
+		_ = u.Browser.Version.findVersionNumber(ua, "edge/")
+
 	case BrowserIE:
-		if u.Browser.Version.findVersionNumber(ua, "msie ") || u.Browser.Version.findVersionNumber(ua, "edge/") {
+		if u.Browser.Version.findVersionNumber(ua, "msie ") {
 			return
 		}
 
@@ -198,6 +204,9 @@ func (u *UserAgent) evalBrowserVersion(ua string) {
 		if (u.Browser.Version.Major <= 3) && (u.Browser.Version.Major >= 1) {
 			u.Browser.Version.Major++
 		}
+
+	case BrowserWebkit:
+		_ = u.Browser.Version.findVersionNumber(ua, "webkit/")
 
 	case BrowserUCBrowser:
 		_ = u.Browser.Version.findVersionNumber(ua, "ucbrowser/")

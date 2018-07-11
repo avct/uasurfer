@@ -33,6 +33,7 @@ const (
 	BrowserUnknown BrowserName = iota
 	BrowserChrome
 	BrowserIE
+	BrowserEdge
 	BrowserSafari
 	BrowserFirefox
 	BrowserAndroid
@@ -46,6 +47,7 @@ const (
 	BrowserMaxthon
 	BrowserSogouExplorer
 	BrowserSpotify
+	BrowserWebkit
 	BrowserBot // Bot list begins here
 	BrowserAppleBot
 	BrowserBaiduBot
