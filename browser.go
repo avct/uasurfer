@@ -183,16 +183,19 @@ func (u *UserAgent) evalBrowserVersion(ua string) {
 		_ = u.Browser.Version.findVersionNumber(ua, "edge/")
 
 	case BrowserIE:
-		if u.Browser.Version.findVersionNumber(ua, "msie ") {
-			return
-		}
-
 		// get MSIE version from trident version https://en.wikipedia.org/wiki/Trident_(layout_engine)
 		if u.Browser.Version.findVersionNumber(ua, "trident/") {
 			// convert trident versions 3-7 to MSIE version
 			if (u.Browser.Version.Major >= 3) && (u.Browser.Version.Major <= 7) {
 				u.Browser.Version.Major += 4
 			}
+
+			// check for IE7 compatibility mode
+			if u.Browser.Version.Major >= 8 && strings.Contains(ua, "msie 7.0") {
+				u.Browser.RenderVersion = Version{7, 0, 0}
+			}
+		} else if u.Browser.Version.findVersionNumber(ua, "msie ") {
+			return
 		}
 
 	case BrowserFirefox:

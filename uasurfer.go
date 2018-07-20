@@ -144,8 +144,9 @@ type UserAgent struct {
 }
 
 type Browser struct {
-	Name    BrowserName
-	Version Version
+	Name          BrowserName
+	Version       Version
+	RenderVersion Version
 }
 
 type OS struct {
