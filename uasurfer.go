@@ -48,6 +48,10 @@ const (
 	BrowserSogouExplorer
 	BrowserSpotify
 	BrowserWebkit
+	BrowserNintendo
+	BrowserSamsung
+	BrowserYandex
+	BrowserCocCoc
 	BrowserBot // Bot list begins here
 	BrowserAppleBot
 	BrowserBaiduBot
@@ -60,6 +64,7 @@ const (
 	BrowserPingdomBot
 	BrowserTwitterBot
 	BrowserYandexBot
+	BrowserCocCocBot
 	BrowserYahooBot // Bot list ends here
 )
 
