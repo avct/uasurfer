@@ -31,6 +31,9 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 		case strings.Contains(ua, "googlebot"):
 			u.Browser.Name = BrowserGoogleBot
 
+		case strings.Contains(ua, "qq/") || strings.Contains(ua, "qqbrowser/"):
+			u.Browser.Name = BrowserQQ
+
 		case strings.Contains(ua, "opr/") || strings.Contains(ua, "opios/"):
 			u.Browser.Name = BrowserOpera
 
@@ -94,6 +97,9 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 
 notwebkit:
 	switch {
+	case strings.Contains(ua, "qq/") || strings.Contains(ua, "qqbrowser/"):
+		u.Browser.Name = BrowserQQ
+
 	case strings.Contains(ua, "msie") || strings.Contains(ua, "trident"):
 		u.Browser.Name = BrowserIE
 
@@ -173,6 +179,11 @@ func (u *UserAgent) evalBrowserVersion(ua string) {
 		_ = u.Browser.Version.findVersionNumber(ua, "chrome/") || u.Browser.Version.findVersionNumber(ua, "crios/") || u.Browser.Version.findVersionNumber(ua, "crmo/")
 	case BrowserYandex:
 		_ = u.Browser.Version.findVersionNumber(ua, "yabrowser/")
+	case BrowserQQ:
+		if u.Browser.Version.findVersionNumber(ua, "qq/") {
+			return
+		}
+		_ = u.Browser.Version.findVersionNumber(ua, "qqbrowser/")
 	case BrowserIE:
 		if u.Browser.Version.findVersionNumber(ua, "msie ") || u.Browser.Version.findVersionNumber(ua, "edge/") {
 			return
