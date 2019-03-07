@@ -167,6 +167,7 @@ func (ua *UserAgent) Reset() {
 	ua.DeviceType = DeviceUnknown
 }
 
+// IsBot returns true if the UserAgent represent a bot
 func (ua *UserAgent) IsBot() bool {
 	if ua.Browser.Name >= BrowserBot && ua.Browser.Name <= BrowserYahooBot {
 		return true
