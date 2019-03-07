@@ -167,6 +167,19 @@ func (ua *UserAgent) Reset() {
 	ua.DeviceType = DeviceUnknown
 }
 
+func (ua *UserAgent) IsBot() bool {
+	if ua.Browser.Name >= BrowserBot && ua.Browser.Name <= BrowserYahooBot {
+		return true
+	}
+	if ua.OS.Name == OSBot {
+		return true
+	}
+	if ua.OS.Platform == PlatformBot {
+		return true
+	}
+	return false
+}
+
 // Parse accepts a raw user agent (string) and returns the UserAgent.
 func Parse(ua string) *UserAgent {
 	dest := new(UserAgent)
