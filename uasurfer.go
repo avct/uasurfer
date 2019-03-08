@@ -24,6 +24,11 @@ const (
 	DeviceTV
 )
 
+// StringTrimPrefix is like String() but trims the "Device" prefix
+func (d DeviceType) StringTrimPrefix() string {
+	return strings.TrimPrefix(d.String(), "Device")
+}
+
 // BrowserName (int) returns a constant.
 type BrowserName int
 
@@ -68,6 +73,11 @@ const (
 	BrowserYahooBot // Bot list ends here
 )
 
+// StringTrimPrefix is like String() but trims the "Browser" prefix
+func (b BrowserName) StringTrimPrefix() string {
+	return strings.TrimPrefix(b.String(), "Browser")
+}
+
 // OSName (int) returns a constant.
 type OSName int
 
@@ -93,6 +103,11 @@ const (
 	OSBot
 )
 
+// StringTrimPrefix is like String() but trims the "OS" prefix
+func (o OSName) StringTrimPrefix() string {
+	return strings.TrimPrefix(o.String(), "OS")
+}
+
 // Platform (int) returns a constant.
 type Platform int
 
@@ -115,6 +130,11 @@ const (
 	PlatformNintendo
 	PlatformBot
 )
+
+// StringTrimPrefix is like String() but trims the "Platform" prefix
+func (p Platform) StringTrimPrefix() string {
+	return strings.TrimPrefix(p.String(), "Platform")
+}
 
 type Version struct {
 	Major int

@@ -1087,3 +1087,36 @@ func BenchmarkParseSafariiPad(b *testing.B) {
 		Parse("Mozilla/5.0 (iPad; CPU OS 8_1_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B440 Safari/600.1.4")
 	}
 }
+
+func TestStringTrimPrefix(t *testing.T) {
+	testCases := []struct {
+		f        func() string
+		expected string
+	}{
+		{
+			f:        DeviceUnknown.StringTrimPrefix,
+			expected: "Unknown",
+		},
+		{
+			f:        BrowserUnknown.StringTrimPrefix,
+			expected: "Unknown",
+		},
+		{
+			f:        OSUnknown.StringTrimPrefix,
+			expected: "Unknown",
+		},
+		{
+			f:        PlatformUnknown.StringTrimPrefix,
+			expected: "Unknown",
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run("", func(t *testing.T) {
+			s := tc.f()
+			if tc.expected != s {
+				t.Fatalf("Expected %q, got %q", tc.expected, s)
+			}
+		})
+	}
+}
