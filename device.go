@@ -54,6 +54,9 @@ func (u *UserAgent) evalDevice(ua string) {
 	case u.OS.Name == OSLinux: // linux goes last since it's in so many other device types (tvs, wearables, android-based stuff)
 		u.DeviceType = DeviceComputer
 
+	case u.OS.Name == OSBot: // fallback for bots
+		u.DeviceType = DeviceComputer
+
 	default:
 		u.DeviceType = DeviceUnknown
 	}
