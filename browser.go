@@ -23,7 +23,7 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 	// Blackberry goes first because it reads as MSIE & Safari
 	if strings.Contains(ua, "blackberry") || strings.Contains(ua, "playbook") || strings.Contains(ua, "bb10") || strings.Contains(ua, "rim ") {
 		u.Browser.Name = BrowserBlackberry
-		return u.isBot()
+		return u.maybeBot()
 	}
 
 	if strings.Contains(ua, "applewebkit") {
@@ -37,6 +37,9 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 
 		case strings.Contains(ua, "googlebot"):
 			u.Browser.Name = BrowserGoogleBot
+
+		case strings.Contains(ua, "qq/") || strings.Contains(ua, "qqbrowser/"):
+			u.Browser.Name = BrowserQQ
 
 		case strings.Contains(ua, "opr/") || strings.Contains(ua, "opios/"):
 			u.Browser.Name = BrowserOpera
@@ -53,6 +56,18 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 		case strings.Contains(ua, "ucbrowser/") || strings.Contains(ua, "ucweb/"):
 			u.Browser.Name = BrowserUCBrowser
 
+		case strings.Contains(ua, "nintendobrowser/"):
+			u.Browser.Name = BrowserNintendo
+
+		case strings.Contains(ua, "samsungbrowser/"):
+			u.Browser.Name = BrowserSamsung
+
+		case strings.Contains(ua, "coc_coc_browser/"):
+			u.Browser.Name = BrowserCocCoc
+
+		case strings.Contains(ua, "yabrowser/"):
+			u.Browser.Name = BrowserYandex
+
 		// Edge, Silk and other chrome-identifying browsers must evaluate before chrome, unless we want to add more overhead
 		case strings.Contains(ua, "chrome/") || strings.Contains(ua, "crios/") || strings.Contains(ua, "chromium/") || strings.Contains(ua, "crmo/"):
 			u.Browser.Name = BrowserChrome
@@ -61,7 +76,7 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 			u.Browser.Name = BrowserFirefox
 
 		// presume it's safari unless an esoteric browser is being specified (webOSBrowser, SamsungBrowser, etc.)
-		case strings.Contains(ua, "like gecko") && strings.Contains(ua, "mozilla/") && strings.Contains(ua, "safari/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") && !strings.Contains(ua, "browser/") && !strings.Contains(ua, "os/"):
+		case strings.Contains(ua, "like gecko") && strings.Contains(ua, "mozilla/") && strings.Contains(ua, "safari/") && !strings.Contains(ua, "linux") && !strings.Contains(ua, "android") && !strings.Contains(ua, "browser/") && !strings.Contains(ua, "os/") && !strings.Contains(ua, "yabrowser/"):
 			u.Browser.Name = BrowserSafari
 
 		// Google's search app on iPhone, leverages native Safari rather than Chrome
@@ -83,12 +98,15 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 			goto notwebkit
 
 		}
-		return u.isBot()
+		return u.maybeBot()
 	}
 
 notwebkit:
 	// search from more specific to less specific
 	switch {
+	case strings.Contains(ua, "qq/") || strings.Contains(ua, "qqbrowser/"):
+		u.Browser.Name = BrowserQQ
+
 	case strings.Contains(ua, "applebot"):
 		u.Browser.Name = BrowserAppleBot
 
@@ -125,6 +143,9 @@ notwebkit:
 	case strings.Contains(ua, "yahoo"):
 		u.Browser.Name = BrowserYahooBot
 
+	case strings.Contains(ua, "coccocbot"):
+		u.Browser.Name = BrowserCocCocBot
+
 	case strings.Contains(ua, "phantomjs"):
 		u.Browser.Name = BrowserBot
 
@@ -160,7 +181,7 @@ notwebkit:
 
 	}
 
-	return u.isBot()
+	return u.maybeBot()
 }
 
 // Retrieve browser version
@@ -178,6 +199,15 @@ func (u *UserAgent) evalBrowserVersion(ua string) {
 	case BrowserChrome:
 		// match both chrome and crios
 		_ = u.Browser.Version.findVersionNumber(ua, "chrome/") || u.Browser.Version.findVersionNumber(ua, "crios/") || u.Browser.Version.findVersionNumber(ua, "crmo/")
+
+	case BrowserYandex:
+		_ = u.Browser.Version.findVersionNumber(ua, "yabrowser/")
+
+	case BrowserQQ:
+		if u.Browser.Version.findVersionNumber(ua, "qq/") {
+			return
+		}
+		_ = u.Browser.Version.findVersionNumber(ua, "qqbrowser/")
 
 	case BrowserEdge:
 		_ = u.Browser.Version.findVersionNumber(ua, "edge/")
@@ -225,5 +255,8 @@ func (u *UserAgent) evalBrowserVersion(ua string) {
 
 	case BrowserGoogleBot:
 		_ = u.Browser.Version.findVersionNumber(ua, "googlebot/")
+
+	case BrowserCocCoc:
+		_ = u.Browser.Version.findVersionNumber(ua, "coc_coc_browser/")
 	}
 }
