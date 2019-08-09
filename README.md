@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/avct/uasurfer.svg?branch=master)](https://travis-ci.org/avct/uasurfer)  [![GoDoc](https://godoc.org/github.com/avct/uasurfer?status.svg)](https://godoc.org/github.com/avct/uasurfer)  [![Go Report Card](https://goreportcard.com/badge/github.com/avct/uasurfer)](https://goreportcard.com/report/github.com/avct/uasurfer)
+[![GoDoc](https://godoc.org/github.com/pendo-io/uasurfer?status.svg)](https://godoc.org/github.com/pendo-io/uasurfer)  [![Go Report Card](https://goreportcard.com/badge/github.com/pendo-io/uasurfer)](https://goreportcard.com/report/github.com/pendo-io/uasurfer)
 
 # uasurfer
 
