@@ -8,7 +8,7 @@ import (
 	"sort"
 	"text/tabwriter"
 
-	"code.avct.io/uasurfer"
+	"github.com/avct/uasurfer"
 )
 
 func main() {
