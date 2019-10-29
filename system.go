@@ -101,16 +101,16 @@ func (u *UserAgent) evalOS(ua string) bool {
 		}
 	}
 
-	return u.maybeBot()
+	return u.maybeBot(ua)
 }
 
 // maybeBot checks if the UserAgent is a bot and sets
 // all bot related fields if it is
-func (u *UserAgent) maybeBot() bool {
+func (u *UserAgent) maybeBot(ua string) bool {
 	if u.IsBot() {
 		u.OS.Platform = PlatformBot
 		u.OS.Name = OSBot
-		u.DeviceType = DeviceComputer
+		u.evalDevice(ua)
 		return true
 	}
 	return false
