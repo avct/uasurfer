@@ -32,6 +32,9 @@ func (u *UserAgent) evalOS(ua string) bool {
 
 	//strict OS & version identification
 	switch {
+	case specs == "midp-2.0":
+		u.evalOracle(ua, agentPlatform)
+
 	case specs == "android":
 		u.evalLinux(ua, agentPlatform)
 
@@ -135,6 +138,11 @@ func (u *UserAgent) evalLinux(ua string, agentPlatform string) {
 		u.OS.Name = OSAndroid
 		u.OS.Version.findVersionNumber(agentPlatform, "android ")
 
+	case strings.Contains(ua, "adr "):
+		u.OS.Platform = PlatformLinux
+		u.OS.Name = OSAndroid
+		u.OS.Version.findVersionNumber(agentPlatform, "adr ")
+
 	// ChromeOS
 	case strings.Contains(ua, "cros"):
 		u.OS.Platform = PlatformLinux
@@ -146,7 +154,15 @@ func (u *UserAgent) evalLinux(ua string, agentPlatform string) {
 		u.OS.Name = OSWebOS
 
 	// Linux, "Linux-like"
-	case strings.Contains(ua, "x11") || strings.Contains(ua, "bsd") || strings.Contains(ua, "suse") || strings.Contains(ua, "debian") || strings.Contains(ua, "ubuntu"):
+	case strings.Contains(ua, "bsd") || strings.Contains(ua, "suse") || strings.Contains(ua, "debian") || strings.Contains(ua, "ubuntu"):
+		u.OS.Platform = PlatformLinux
+		u.OS.Name = OSLinux
+
+	case strings.Contains(ua, "x11"):
+		if strings.Contains(ua, "puffin") {
+			u.evalPuffin(ua, agentPlatform)
+			return
+		}
 		u.OS.Platform = PlatformLinux
 		u.OS.Name = OSLinux
 
@@ -182,6 +198,53 @@ func (u *UserAgent) evaliOS(uaPlatform string, agentPlatform string) {
 	default:
 		u.OS.Platform = PlatformiPad
 		u.OS.Name = OSUnknown
+	}
+}
+
+func (u *UserAgent) evalOracle(ua string, agentPlatform string) {
+
+	switch {
+	case strings.Contains(ua, "adr "):
+		u.OS.Platform = PlatformOracle
+		u.OS.Name = OSAndroid
+		u.OS.Version.findVersionNumber(agentPlatform, "adr ")
+
+	default:
+		u.OS.Platform = PlatformOracle
+		u.OS.Name = OSAndroid
+	}
+}
+
+// https://www.whatismybrowser.com/blog/view/2013-06-10-puffin-browsers-new-user-agent-format
+func (u *UserAgent) evalPuffin(ua string, agentPlatform string) {
+
+	i := strings.Index(ua, "puffin/")
+	ver := ua[i:]
+
+	switch {
+	case strings.Contains(ver, "at"):
+		u.OS.Platform = PlatformLinux
+		u.OS.Name = OSAndroid
+		u.DeviceType = DeviceTablet
+
+	case strings.Contains(ver, "ap"):
+		u.OS.Platform = PlatformLinux
+		u.OS.Name = OSAndroid
+		u.DeviceType = DevicePhone
+
+	case strings.Contains(ver, "it"):
+		u.OS.Platform = PlatformiPad
+		u.OS.Name = OSiOS
+		u.DeviceType = DeviceTablet
+
+	case strings.Contains(ver, "ip"):
+		u.OS.Platform = PlatformiPhone
+		u.OS.Name = OSiOS
+		u.DeviceType = DevicePhone
+
+	default:
+		u.OS.Platform = PlatformLinux
+		u.OS.Name = OSAndroid
 	}
 }
 

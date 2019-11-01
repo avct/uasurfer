@@ -55,6 +55,9 @@ const (
 	BrowserSamsung
 	BrowserYandex
 	BrowserCocCoc
+	BrowserOperaMini
+	BrowserPuffin
+	BrowserFBApp
 	BrowserBot // Bot list begins here
 	BrowserAppleBot
 	BrowserBaiduBot
@@ -126,6 +129,7 @@ const (
 	PlatformPlaystation
 	PlatformXbox
 	PlatformNintendo
+	PlatformOracle
 	PlatformBot
 )
 
@@ -263,4 +267,16 @@ func copyLower(b []byte, s string) bool {
 		b[j] = c
 	}
 	return true
+}
+
+func (b *Browser) FormattedName() string {
+	return strings.TrimPrefix(b.Name.String(), "Browser")
+}
+
+func (o *OS) FormattedName() string {
+	return strings.TrimPrefix(o.Name.String(), "OS")
+}
+
+func (ua *UserAgent) DeviceFormattedName() string {
+	return strings.TrimPrefix(ua.DeviceType.String(), "Device")
 }
