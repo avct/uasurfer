@@ -11,6 +11,7 @@ var (
 )
 
 func (u *UserAgent) evalOS(ua string) bool {
+
 	s := strings.IndexRune(ua, '(')
 	e := strings.IndexRune(ua, ')')
 	if s > e {
@@ -21,7 +22,7 @@ func (u *UserAgent) evalOS(ua string) bool {
 		e = len(ua)
 	}
 
-	agentPlatform := ua[s+1 : e]
+	agentPlatform := ua[s + 1: e]
 	specsEnd := strings.Index(agentPlatform, ";")
 	var specs string
 	if specsEnd != -1 {
@@ -31,24 +32,24 @@ func (u *UserAgent) evalOS(ua string) bool {
 	}
 
 	//strict OS & version identification
-	switch {
-	case specs == "midp-2.0":
+	switch specs {
+	case "midp-2.0":
 		u.evalOracle(ua, agentPlatform)
 
-	case specs == "android":
+	case "android":
 		u.evalLinux(ua, agentPlatform)
 
-	case specs == "bb10" || specs == "playbook":
+	case "bb10", "playbook":
 		u.OS.Platform = PlatformBlackberry
 		u.OS.Name = OSBlackberry
 
-	case specs == "x11" || specs == "linux":
+	case "x11", "linux":
 		u.evalLinux(ua, agentPlatform)
 
-	case strings.HasPrefix(specs, "ipad") || strings.HasPrefix(specs, "iphone") || strings.HasPrefix(specs, "ipod touch") || strings.HasPrefix(specs, "ipod"):
+	case "ipad", "iphone", "ipod touch", "ipod":
 		u.evaliOS(specs, agentPlatform)
 
-	case specs == "macintosh":
+	case "macintosh":
 		u.evalMacintosh(ua)
 
 	default:
@@ -63,7 +64,7 @@ func (u *UserAgent) evalOS(ua string) bool {
 			u.evalWindowsPhone(agentPlatform)
 
 		// Windows, Xbox
-		case strings.Contains(ua, "windows ") || strings.Contains(ua, "microsoft-cryptoapi"):
+		case strings.Contains(ua, "windows "):
 			u.evalWindows(ua)
 
 		// Kindle
@@ -94,28 +95,29 @@ func (u *UserAgent) evalOS(ua string) bool {
 		case strings.Contains(ua, "android"):
 			u.evalLinux(ua, agentPlatform)
 
-		// Apple CFNetwork
-		case strings.Contains(ua, "cfnetwork") && strings.Contains(ua, "darwin"):
-			u.evalMacintosh(ua)
-
 		default:
 			u.OS.Platform = PlatformUnknown
 			u.OS.Name = OSUnknown
 		}
 	}
 
-	return u.maybeBot()
+	return u.isBot()
 }
 
-// maybeBot checks if the UserAgent is a bot and sets
-// all bot related fields if it is
-func (u *UserAgent) maybeBot() bool {
-	if u.IsBot() {
+func (u *UserAgent) isBot() bool {
+
+	if u.OS.Platform == PlatformBot || u.OS.Name == OSBot {
+		u.DeviceType = DeviceComputer
+		return true
+	}
+
+	if u.Browser.Name == BrowserBot {
 		u.OS.Platform = PlatformBot
 		u.OS.Name = OSBot
 		u.DeviceType = DeviceComputer
 		return true
 	}
+
 	return false
 }
 
@@ -176,21 +178,21 @@ func (u *UserAgent) evalLinux(ua string, agentPlatform string) {
 // 'ipad' or 'iphone' listed as their platform.
 func (u *UserAgent) evaliOS(uaPlatform string, agentPlatform string) {
 
-	switch {
+	switch uaPlatform {
 	// iPhone
-	case strings.HasPrefix(uaPlatform, "iphone"):
+	case "iphone":
 		u.OS.Platform = PlatformiPhone
 		u.OS.Name = OSiOS
 		u.OS.getiOSVersion(agentPlatform)
 
 	// iPad
-	case strings.HasPrefix(uaPlatform, "ipad"):
+	case "ipad":
 		u.OS.Platform = PlatformiPad
 		u.OS.Name = OSiOS
 		u.OS.getiOSVersion(agentPlatform)
 
 	// iPod
-	case strings.HasPrefix(uaPlatform, "ipod touch") || strings.HasPrefix(uaPlatform, "ipod"):
+	case "ipod touch", "ipod":
 		u.OS.Platform = PlatformiPod
 		u.OS.Name = OSiOS
 		u.OS.getiOSVersion(agentPlatform)
@@ -298,7 +300,7 @@ func (u *UserAgent) evalMacintosh(uaPlatformGroup string) {
 	u.OS.Platform = PlatformMac
 	if i := strings.Index(uaPlatformGroup, "os x 10"); i != -1 {
 		u.OS.Name = OSMacOSX
-		u.OS.Version.parse(uaPlatformGroup[i+5:])
+		u.OS.Version.parse(uaPlatformGroup[i + 5:])
 
 		return
 	}
@@ -307,7 +309,7 @@ func (u *UserAgent) evalMacintosh(uaPlatformGroup string) {
 
 func (v *Version) findVersionNumber(s string, m string) bool {
 	if ind := strings.Index(s, m); ind != -1 {
-		return v.parse(s[ind+len(m):])
+		return v.parse(s[ind + len(m):])
 	}
 	return false
 }
@@ -316,12 +318,12 @@ func (v *Version) findVersionNumber(s string, m string) bool {
 // a Version.
 func (o *OS) getiOSVersion(uaPlatformGroup string) {
 	if i := strings.Index(uaPlatformGroup, "cpu iphone os "); i != -1 {
-		o.Version.parse(uaPlatformGroup[i+14:])
+		o.Version.parse(uaPlatformGroup[i + 14:])
 		return
 	}
 
 	if i := strings.Index(uaPlatformGroup, "cpu os "); i != -1 {
-		o.Version.parse(uaPlatformGroup[i+7:])
+		o.Version.parse(uaPlatformGroup[i + 7:])
 		return
 	}
 
@@ -374,7 +376,7 @@ func (v *Version) parse(str string) bool {
 				}
 				continue
 			}
-			str = str[k+1:]
+			str = str[k + 1:]
 			break
 		}
 
