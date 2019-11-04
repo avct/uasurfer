@@ -34,9 +34,6 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 		case strings.Contains(ua, "puffin"):
 			u.Browser.Name = BrowserPuffin
 
-		case strings.Contains(ua, "googlebot"):
-			u.Browser.Name = BrowserGoogleBot
-
 		case strings.Contains(ua, "qq/") || strings.Contains(ua, "qqbrowser/"):
 			u.Browser.Name = BrowserQQ
 
@@ -93,6 +90,9 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 		// Google's search app on iPhone, leverages native Safari rather than Chrome
 		case strings.Contains(ua, " gsa/"):
 			u.Browser.Name = BrowserSafari
+
+		case strings.Contains(ua, "googlebot"):
+			u.Browser.Name = BrowserGoogleBot
 
 		default:
 			goto notwebkit

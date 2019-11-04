@@ -111,9 +111,18 @@ func (u *UserAgent) evalOS(ua string) bool {
 // all bot related fields if it is
 func (u *UserAgent) maybeBot() bool {
 	if u.IsBot() {
-		u.OS.Platform = PlatformBot
-		u.OS.Name = OSBot
-		u.DeviceType = DeviceComputer
+		if u.OS.Platform == PlatformUnknown {
+			u.OS.Platform = PlatformBot
+		}
+		if u.OS.Name == OSUnknown {
+			u.OS.Name = OSBot
+		}
+		if u.DeviceType == DeviceUnknown {
+			u.DeviceType = DeviceComputer
+		}
+		// u.OS.Platform = PlatformBot
+		// u.OS.Name = OSBot
+		// u.DeviceType = DeviceComputer
 		return true
 	}
 	return false
