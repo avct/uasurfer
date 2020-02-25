@@ -47,7 +47,7 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 		case strings.Contains(ua, "silk/"):
 			u.Browser.Name = BrowserSilk
 
-		case strings.Contains(ua, "edge/"):
+		case strings.Contains(ua, "edg/") || strings.Contains(ua, "edgios/") || strings.Contains(ua, "edga/")|| strings.Contains(ua, "edge/") || strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie "):
 			u.Browser.Name = BrowserEdge
 
 		case strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie "):
@@ -210,7 +210,7 @@ func (u *UserAgent) evalBrowserVersion(ua string) {
 		_ = u.Browser.Version.findVersionNumber(ua, "qqbrowser/")
 
 	case BrowserEdge:
-		_ = u.Browser.Version.findVersionNumber(ua, "edge/")
+		_ = u.Browser.Version.findVersionNumber(ua, "edge/") || u.Browser.Version.findVersionNumber(ua, "edgios/") || u.Browser.Version.findVersionNumber(ua, "edga/") || u.Browser.Version.findVersionNumber(ua, "edg/")
 
 	case BrowserIE:
 		// get MSIE version from trident version https://en.wikipedia.org/wiki/Trident_(layout_engine)
