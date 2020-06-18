@@ -1,4 +1,4 @@
-module github.com/autopilot3/uasurfer
+module github.com/avct/uasurfer
 
 go 1.14
 
