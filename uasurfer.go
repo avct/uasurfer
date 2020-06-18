@@ -62,12 +62,16 @@ const (
 	BrowserDuckDuckGoBot
 	BrowserFacebookBot
 	BrowserGoogleBot
+	BrowserGoogleAdsBot
 	BrowserLinkedInBot
 	BrowserMsnBot
 	BrowserPingdomBot
 	BrowserTwitterBot
 	BrowserYandexBot
 	BrowserCocCocBot
+	BrowserPinterestBot
+	BrowserSlackBot
+	BrowserSeekportBot
 	BrowserYahooBot // Bot list ends here
 )
 

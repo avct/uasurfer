@@ -4,6 +4,19 @@ package uasurfer
 
 import "strconv"
 
+func _() {
+	// An "invalid array index" compiler error signifies that the constant values have changed.
+	// Re-run the stringer command to generate them again.
+	var x [1]struct{}
+	_ = x[DeviceUnknown-0]
+	_ = x[DeviceComputer-1]
+	_ = x[DeviceTablet-2]
+	_ = x[DevicePhone-3]
+	_ = x[DeviceConsole-4]
+	_ = x[DeviceWearable-5]
+	_ = x[DeviceTV-6]
+}
+
 const _DeviceType_name = "DeviceUnknownDeviceComputerDeviceTabletDevicePhoneDeviceConsoleDeviceWearableDeviceTV"
 
 var _DeviceType_index = [...]uint8{0, 13, 27, 39, 50, 63, 77, 85}
@@ -14,16 +27,79 @@ func (i DeviceType) String() string {
 	}
 	return _DeviceType_name[_DeviceType_index[i]:_DeviceType_index[i+1]]
 }
+func _() {
+	// An "invalid array index" compiler error signifies that the constant values have changed.
+	// Re-run the stringer command to generate them again.
+	var x [1]struct{}
+	_ = x[BrowserUnknown-0]
+	_ = x[BrowserChrome-1]
+	_ = x[BrowserIE-2]
+	_ = x[BrowserSafari-3]
+	_ = x[BrowserFirefox-4]
+	_ = x[BrowserAndroid-5]
+	_ = x[BrowserOpera-6]
+	_ = x[BrowserBlackberry-7]
+	_ = x[BrowserUCBrowser-8]
+	_ = x[BrowserSilk-9]
+	_ = x[BrowserNokia-10]
+	_ = x[BrowserNetFront-11]
+	_ = x[BrowserQQ-12]
+	_ = x[BrowserMaxthon-13]
+	_ = x[BrowserSogouExplorer-14]
+	_ = x[BrowserSpotify-15]
+	_ = x[BrowserNintendo-16]
+	_ = x[BrowserSamsung-17]
+	_ = x[BrowserYandex-18]
+	_ = x[BrowserCocCoc-19]
+	_ = x[BrowserBot-20]
+	_ = x[BrowserAppleBot-21]
+	_ = x[BrowserBaiduBot-22]
+	_ = x[BrowserBingBot-23]
+	_ = x[BrowserDuckDuckGoBot-24]
+	_ = x[BrowserFacebookBot-25]
+	_ = x[BrowserGoogleBot-26]
+	_ = x[BrowserGoogleAdsBot-27]
+	_ = x[BrowserLinkedInBot-28]
+	_ = x[BrowserMsnBot-29]
+	_ = x[BrowserPingdomBot-30]
+	_ = x[BrowserTwitterBot-31]
+	_ = x[BrowserYandexBot-32]
+	_ = x[BrowserCocCocBot-33]
+	_ = x[BrowserPinterestBot-34]
+	_ = x[BrowserSlackBot-35]
+	_ = x[BrowserSeekportBot-36]
+	_ = x[BrowserYahooBot-37]
+}
 
-const _BrowserName_name = "BrowserUnknownBrowserChromeBrowserIEBrowserSafariBrowserFirefoxBrowserAndroidBrowserOperaBrowserBlackberryBrowserUCBrowserBrowserSilkBrowserNokiaBrowserNetFrontBrowserQQBrowserMaxthonBrowserSogouExplorerBrowserSpotifyBrowserNintendoBrowserSamsungBrowserYandexBrowserCocCocBrowserBotBrowserAppleBotBrowserBaiduBotBrowserBingBotBrowserDuckDuckGoBotBrowserFacebookBotBrowserGoogleBotBrowserLinkedInBotBrowserMsnBotBrowserPingdomBotBrowserTwitterBotBrowserYandexBotBrowserCocCocBotBrowserYahooBot"
+const _BrowserName_name = "BrowserUnknownBrowserChromeBrowserIEBrowserSafariBrowserFirefoxBrowserAndroidBrowserOperaBrowserBlackberryBrowserUCBrowserBrowserSilkBrowserNokiaBrowserNetFrontBrowserQQBrowserMaxthonBrowserSogouExplorerBrowserSpotifyBrowserNintendoBrowserSamsungBrowserYandexBrowserCocCocBrowserBotBrowserAppleBotBrowserBaiduBotBrowserBingBotBrowserDuckDuckGoBotBrowserFacebookBotBrowserGoogleBotBrowserGoogleAdsBotBrowserLinkedInBotBrowserMsnBotBrowserPingdomBotBrowserTwitterBotBrowserYandexBotBrowserCocCocBotBrowserPinterestBotBrowserSlackBotBrowserSeekportBotBrowserYahooBot"
 
-var _BrowserName_index = [...]uint16{0, 14, 27, 36, 49, 63, 77, 89, 106, 122, 133, 145, 160, 169, 183, 203, 217, 232, 246, 259, 272, 282, 297, 312, 326, 346, 364, 380, 398, 411, 428, 445, 461, 477, 492}
+var _BrowserName_index = [...]uint16{0, 14, 27, 36, 49, 63, 77, 89, 106, 122, 133, 145, 160, 169, 183, 203, 217, 232, 246, 259, 272, 282, 297, 312, 326, 346, 364, 380, 399, 417, 430, 447, 464, 480, 496, 515, 530, 548, 563}
 
 func (i BrowserName) String() string {
 	if i < 0 || i >= BrowserName(len(_BrowserName_index)-1) {
 		return "BrowserName(" + strconv.FormatInt(int64(i), 10) + ")"
 	}
 	return _BrowserName_name[_BrowserName_index[i]:_BrowserName_index[i+1]]
+}
+func _() {
+	// An "invalid array index" compiler error signifies that the constant values have changed.
+	// Re-run the stringer command to generate them again.
+	var x [1]struct{}
+	_ = x[OSUnknown-0]
+	_ = x[OSWindowsPhone-1]
+	_ = x[OSWindows-2]
+	_ = x[OSMacOSX-3]
+	_ = x[OSiOS-4]
+	_ = x[OSAndroid-5]
+	_ = x[OSBlackberry-6]
+	_ = x[OSChromeOS-7]
+	_ = x[OSKindle-8]
+	_ = x[OSWebOS-9]
+	_ = x[OSLinux-10]
+	_ = x[OSPlaystation-11]
+	_ = x[OSXbox-12]
+	_ = x[OSNintendo-13]
+	_ = x[OSBot-14]
 }
 
 const _OSName_name = "OSUnknownOSWindowsPhoneOSWindowsOSMacOSXOSiOSOSAndroidOSBlackberryOSChromeOSOSKindleOSWebOSOSLinuxOSPlaystationOSXboxOSNintendoOSBot"
@@ -35,6 +111,24 @@ func (i OSName) String() string {
 		return "OSName(" + strconv.FormatInt(int64(i), 10) + ")"
 	}
 	return _OSName_name[_OSName_index[i]:_OSName_index[i+1]]
+}
+func _() {
+	// An "invalid array index" compiler error signifies that the constant values have changed.
+	// Re-run the stringer command to generate them again.
+	var x [1]struct{}
+	_ = x[PlatformUnknown-0]
+	_ = x[PlatformWindows-1]
+	_ = x[PlatformMac-2]
+	_ = x[PlatformLinux-3]
+	_ = x[PlatformiPad-4]
+	_ = x[PlatformiPhone-5]
+	_ = x[PlatformiPod-6]
+	_ = x[PlatformBlackberry-7]
+	_ = x[PlatformWindowsPhone-8]
+	_ = x[PlatformPlaystation-9]
+	_ = x[PlatformXbox-10]
+	_ = x[PlatformNintendo-11]
+	_ = x[PlatformBot-12]
 }
 
 const _Platform_name = "PlatformUnknownPlatformWindowsPlatformMacPlatformLinuxPlatformiPadPlatformiPhonePlatformiPodPlatformBlackberryPlatformWindowsPhonePlatformPlaystationPlatformXboxPlatformNintendoPlatformBot"
