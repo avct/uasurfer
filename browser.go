@@ -40,7 +40,7 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 		case strings.Contains(ua, "silk/"):
 			u.Browser.Name = BrowserSilk
 
-		case strings.Contains(ua, "edg/") || strings.Contains(ua, "edgios/") || strings.Contains(ua, "edga/")|| strings.Contains(ua, "edge/") || strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie "):
+		case strings.Contains(ua, "edg/") || strings.Contains(ua, "edgios/") || strings.Contains(ua, "edga/") || strings.Contains(ua, "edge/") || strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie "):
 			u.Browser.Name = BrowserIE
 
 		case strings.Contains(ua, "ucbrowser/") || strings.Contains(ua, "ucweb/"):
@@ -153,6 +153,18 @@ notwebkit:
 
 	case strings.Contains(ua, "phantomjs"):
 		u.Browser.Name = BrowserBot
+
+	case strings.Contains(ua, "pinterestbot"):
+		u.Browser.Name = BrowserPinterestBot
+
+	case strings.Contains(ua, "adsbot"):
+		u.Browser.Name = BrowserGoogleAdsBot
+
+	case strings.Contains(ua, "slackbot"):
+		u.Browser.Name = BrowserSlackBot
+
+	case strings.Contains(ua, "seekport"):
+		u.Browser.Name = BrowserSeekportBot
 
 	default:
 		u.Browser.Name = BrowserUnknown
