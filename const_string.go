@@ -129,11 +129,12 @@ func _() {
 	_ = x[PlatformXbox-10]
 	_ = x[PlatformNintendo-11]
 	_ = x[PlatformBot-12]
+	_ = x[PlatformAndroid-13]
 }
 
-const _Platform_name = "PlatformUnknownPlatformWindowsPlatformMacPlatformLinuxPlatformiPadPlatformiPhonePlatformiPodPlatformBlackberryPlatformWindowsPhonePlatformPlaystationPlatformXboxPlatformNintendoPlatformBot"
+const _Platform_name = "PlatformUnknownPlatformWindowsPlatformMacPlatformLinuxPlatformiPadPlatformiPhonePlatformiPodPlatformBlackberryPlatformWindowsPhonePlatformPlaystationPlatformXboxPlatformNintendoPlatformBotPlatformAndroid"
 
-var _Platform_index = [...]uint8{0, 15, 30, 41, 54, 66, 80, 92, 110, 130, 149, 161, 177, 188}
+var _Platform_index = [...]uint8{0, 15, 30, 41, 54, 66, 80, 92, 110, 130, 149, 161, 177, 188, 203}
 
 func (i Platform) String() string {
 	if i < 0 || i >= Platform(len(_Platform_index)-1) {

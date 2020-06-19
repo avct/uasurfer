@@ -131,6 +131,7 @@ const (
 	PlatformXbox
 	PlatformNintendo
 	PlatformBot
+	PlatformAndroid
 )
 
 // StringTrimPrefix is like String() but trims the "Platform" prefix

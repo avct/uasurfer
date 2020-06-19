@@ -59,7 +59,7 @@ var testUAVars = []struct {
 
 	{"Mozilla/5.0 (Linux; Android 6.0; Nexus 5X Build/MDB08L) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36",
 		UserAgent{
-			Browser{BrowserChrome, Version{46, 0, 2490}}, OS{PlatformLinux, OSAndroid, Version{6, 0, 0}}, DevicePhone}},
+			Browser{BrowserChrome, Version{46, 0, 2490}}, OS{PlatformAndroid, OSAndroid, Version{6, 0, 0}}, DevicePhone}},
 
 	// Chromium (Chrome)
 	{"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.19 (KHTML, like Gecko) Ubuntu/11.10 Chromium/18.0.1025.142 Chrome/18.0.1025.142 Safari/535.19",
@@ -95,11 +95,11 @@ var testUAVars = []struct {
 
 	{"Mozilla/5.0 (Android 4.4; Tablet; rv:41.0) Gecko/41.0 Firefox/41.0",
 		UserAgent{
-			Browser{BrowserFirefox, Version{41, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{4, 4, 0}}, DeviceTablet}},
+			Browser{BrowserFirefox, Version{41, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{4, 4, 0}}, DeviceTablet}},
 
 	{"Mozilla/5.0 (Android; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0",
 		UserAgent{
-			Browser{BrowserFirefox, Version{40, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{0, 0, 0}}, DevicePhone}},
+			Browser{BrowserFirefox, Version{40, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{0, 0, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0",
 		UserAgent{
@@ -108,11 +108,11 @@ var testUAVars = []struct {
 	// Silk
 	{"Mozilla/5.0 (Linux; U; Android 4.4.3; de-de; KFTHWI Build/KTU84M) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.47 like Chrome/37.0.2026.117 Safari/537.36",
 		UserAgent{
-			Browser{BrowserSilk, Version{3, 47, 0}}, OS{PlatformLinux, OSKindle, Version{4, 4, 3}}, DeviceTablet}},
+			Browser{BrowserSilk, Version{3, 47, 0}}, OS{PlatformAndroid, OSKindle, Version{4, 4, 3}}, DeviceTablet}},
 
 	{"Mozilla/5.0 (Linux; U; en-us; KFJWI Build/IMM76D) AppleWebKit/535.19 (KHTML like Gecko) Silk/2.4 Safari/535.19 Silk-Acceleratedtrue",
 		UserAgent{
-			Browser{BrowserSilk, Version{2, 4, 0}}, OS{PlatformLinux, OSKindle, Version{0, 0, 0}}, DeviceTablet}},
+			Browser{BrowserSilk, Version{2, 4, 0}}, OS{PlatformAndroid, OSKindle, Version{0, 0, 0}}, DeviceTablet}},
 
 	// Opera
 	{"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36 OPR/18.0.1284.68",
@@ -136,7 +136,7 @@ var testUAVars = []struct {
 		UserAgent{
 			Browser{BrowserIE, Version{11, 0, 0}}, OS{PlatformWindows, OSWindows, Version{6, 3, 0}}, DeviceComputer}},
 
-    {"Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 EdgiOS/44.3.5 Mobile/15E148 Safari/605.1.15",
+	{"Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 EdgiOS/44.3.5 Mobile/15E148 Safari/605.1.15",
 		UserAgent{
 			Browser{BrowserIE, Version{12, 0, 0}}, OS{PlatformiPhone, OSiOS, Version{12, 3, 1}}, DevicePhone}},
 
@@ -146,7 +146,7 @@ var testUAVars = []struct {
 
 	{"Mozilla/5.0 (Linux; Android 9; motorola one) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.90 Mobile Safari/537.36 EdgA/42.0.2.3728",
 		UserAgent{
-			Browser{BrowserIE, Version{42, 0, 2}}, OS{PlatformLinux, OSAndroid, Version{9, 0, 0}}, DevicePhone}},
+			Browser{BrowserIE, Version{42, 0, 2}}, OS{PlatformAndroid, OSAndroid, Version{9, 0, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3800.0 Safari/537.36 Edg/76.0.172.0",
 		UserAgent{
@@ -179,11 +179,11 @@ var testUAVars = []struct {
 	// UC Browser
 	{"Mozilla/5.0 (Linux; U; Android 2.3.4; en-US; MT11i Build/4.0.2.A.0.62) AppleWebKit/534.31 (KHTML, like Gecko) UCBrowser/9.0.1.275 U3/0.8.0 Mobile Safari/534.31",
 		UserAgent{
-			Browser{BrowserUCBrowser, Version{9, 0, 1}}, OS{PlatformLinux, OSAndroid, Version{2, 3, 4}}, DevicePhone}},
+			Browser{BrowserUCBrowser, Version{9, 0, 1}}, OS{PlatformAndroid, OSAndroid, Version{2, 3, 4}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 4.0.4; en-US; Micromax P255 Build/IMM76D) AppleWebKit/534.31 (KHTML, like Gecko) UCBrowser/9.2.0.308 U3/0.8.0 Mobile Safari/534.31",
 		UserAgent{
-			Browser{BrowserUCBrowser, Version{9, 2, 0}}, OS{PlatformLinux, OSAndroid, Version{4, 0, 4}}, DevicePhone}},
+			Browser{BrowserUCBrowser, Version{9, 2, 0}}, OS{PlatformAndroid, OSAndroid, Version{4, 0, 4}}, DevicePhone}},
 
 	{"UCWEB/2.0 (Java; U; MIDP-2.0; en-US; MicromaxQ5) U2/1.0.0 UCBrowser/9.4.0.342 U2/1.0.0 Mobile",
 		UserAgent{
@@ -227,11 +227,11 @@ var testUAVars = []struct {
 	// Android WebView (Android <= 4.3)
 	{"Mozilla/5.0 (Linux; U; Android 2.2; en-us; DROID2 GLOBAL Build/S273) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{2, 2, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{2, 2, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 4.0.3; de-ch; HTC Sensation Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari53/4.30",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{4, 0, 3}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{4, 0, 3}}, DevicePhone}},
 
 	// BlackBerry
 	{"Mozilla/5.0 (PlayBook; U; RIM Tablet OS 2.1.0; en-US) AppleWebKit/536.2+ (KHTML, like Gecko) Version/7.2.1.0 Safari/536.2+",
@@ -258,28 +258,28 @@ var testUAVars = []struct {
 	// Kindle eReader
 	{"Mozilla/5.0 (Linux; U; en-US) AppleWebKit/528.5+ (KHTML, like Gecko, Safari/528.5+) Version/4.0 Kindle/3.0 (screen 600×800; rotate)",
 		UserAgent{
-			Browser{BrowserUnknown, Version{4, 0, 0}}, OS{PlatformLinux, OSKindle, Version{0, 0, 0}}, DeviceTablet}},
+			Browser{BrowserUnknown, Version{4, 0, 0}}, OS{PlatformAndroid, OSKindle, Version{0, 0, 0}}, DeviceTablet}},
 
 	{"Mozilla/5.0 (X11; U; Linux armv7l like Android; en-us) AppleWebKit/531.2+ (KHTML, like Gecko) Version/5.0 Safari/533.2+ Kindle/3.0+",
 		UserAgent{
-			Browser{BrowserUnknown, Version{5, 0, 0}}, OS{PlatformLinux, OSKindle, Version{0, 0, 0}}, DeviceTablet}},
+			Browser{BrowserUnknown, Version{5, 0, 0}}, OS{PlatformAndroid, OSKindle, Version{0, 0, 0}}, DeviceTablet}},
 
 	// Amazon Fire
 	{"Mozilla/5.0 (Linux; U; Android 4.4.3; de-de; KFTHWI Build/KTU84M) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.67 like Chrome/39.0.2171.93 Safari/537.36",
 		UserAgent{
-			Browser{BrowserSilk, Version{3, 67, 0}}, OS{PlatformLinux, OSKindle, Version{4, 4, 3}}, DeviceTablet}}, // Fire tablet
+			Browser{BrowserSilk, Version{3, 67, 0}}, OS{PlatformAndroid, OSKindle, Version{4, 4, 3}}, DeviceTablet}}, // Fire tablet
 
 	{"Mozilla/5.0 (Linux; U; Android 4.2.2; en­us; KFTHWI Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.22 like Chrome/34.0.1847.137 Mobile Safari/537.36",
 		UserAgent{
-			Browser{BrowserSilk, Version{3, 22, 0}}, OS{PlatformLinux, OSKindle, Version{4, 2, 2}}, DeviceTablet}}, // Fire tablet, but with "Mobile"
+			Browser{BrowserSilk, Version{3, 22, 0}}, OS{PlatformAndroid, OSKindle, Version{4, 2, 2}}, DeviceTablet}}, // Fire tablet, but with "Mobile"
 
 	{"Mozilla/5.0 (Linux; Android 4.4.4; SD4930UR Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/34.0.0.0 Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/35.0.0.48.273;]",
 		UserAgent{
-			Browser{BrowserChrome, Version{34, 0, 0}}, OS{PlatformLinux, OSKindle, Version{4, 4, 4}}, DevicePhone}}, // Facebook app on Fire Phone
+			Browser{BrowserChrome, Version{34, 0, 0}}, OS{PlatformAndroid, OSKindle, Version{4, 4, 4}}, DevicePhone}}, // Facebook app on Fire Phone
 
 	{"mozilla/5.0 (linux; android 4.4.3; kfthwi build/ktu84m) applewebkit/537.36 (khtml, like gecko) version/4.0 chrome/34.0.0.0 safari/537.36 [pinterest/android]",
 		UserAgent{
-			Browser{BrowserChrome, Version{34, 0, 0}}, OS{PlatformLinux, OSKindle, Version{4, 4, 3}}, DeviceTablet}}, // Fire tablet running pinterest
+			Browser{BrowserChrome, Version{34, 0, 0}}, OS{PlatformAndroid, OSKindle, Version{4, 4, 3}}, DeviceTablet}}, // Fire tablet running pinterest
 
 	// extra logic to identify phone when using silk has not been added
 	// {"Mozilla/5.0 (Linux; Android 4.4.4; SD4930UR Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.67 like Chrome/39.0.2171.93 Mobile Safari/537.36",
@@ -316,15 +316,15 @@ var testUAVars = []struct {
 
 	{"Mozilla/5.0 (Linux; GoogleTV 3.2; VAP430 Build/MASTER) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.77 Safari/534.24", // Google TV
 		UserAgent{
-			Browser{BrowserChrome, Version{11, 0, 696}}, OS{PlatformLinux, OSAndroid, Version{0, 0, 0}}, DeviceTV}},
+			Browser{BrowserChrome, Version{11, 0, 696}}, OS{PlatformAndroid, OSAndroid, Version{0, 0, 0}}, DeviceTV}},
 
 	{"Mozilla/5.0 (Linux; Android 5.0; ADT-1 Build/LPX13D) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.89 Mobile Safari/537.36", // Android TV
 		UserAgent{
-			Browser{BrowserChrome, Version{40, 0, 2214}}, OS{PlatformLinux, OSAndroid, Version{5, 0, 0}}, DeviceTV}},
+			Browser{BrowserChrome, Version{40, 0, 2214}}, OS{PlatformAndroid, OSAndroid, Version{5, 0, 0}}, DeviceTV}},
 
 	{"Mozilla/5.0 (Linux; Android 4.2.2; AFTB Build/JDQ39) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.173 Mobile Safari/537.22", // Amazon Fire
 		UserAgent{
-			Browser{BrowserChrome, Version{25, 0, 1364}}, OS{PlatformLinux, OSAndroid, Version{4, 2, 2}}, DeviceTV}},
+			Browser{BrowserChrome, Version{25, 0, 1364}}, OS{PlatformAndroid, OSAndroid, Version{4, 2, 2}}, DeviceTV}},
 
 	{"Mozilla/5.0 (Unknown; Linux armv7l) AppleWebKit/537.1+ (KHTML, like Gecko) Safari/537.1+ LG Browser/6.00.00(+mouse+3D+SCREEN+TUNER; LGE; GLOBAL-PLAT5; 03.07.01; 0x00000001;); LG NetCast.TV-2013/03.17.01 (LG, GLOBAL-PLAT4, wired)", // LG TV
 		UserAgent{
@@ -477,35 +477,35 @@ var testUAVars = []struct {
 
 	{"Mozilla/5.0 (Linux; U; Android 1.0; en-us; dream) AppleWebKit/525.10+ (KHTML,like Gecko) Version/3.0.4 Mobile Safari/523.12.2",
 		UserAgent{
-			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformLinux, OSAndroid, Version{1, 0, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformAndroid, OSAndroid, Version{1, 0, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 1.0; en-us; generic) AppleWebKit/525.10 (KHTML, like Gecko) Version/3.0.4 Mobile Safari/523.12.2",
 		UserAgent{
-			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformLinux, OSAndroid, Version{1, 0, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformAndroid, OSAndroid, Version{1, 0, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 1.0.3; de-de; A80KSC Build/ECLAIR) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{1, 0, 3}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{1, 0, 3}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 1.5; en-gb; T-Mobile G1 Build/CRC1) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1",
 		UserAgent{
-			Browser{BrowserAndroid, Version{3, 1, 2}}, OS{PlatformLinux, OSAndroid, Version{1, 5, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{3, 1, 2}}, OS{PlatformAndroid, OSAndroid, Version{1, 5, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 1.5; es-; FBW1_4 Build/MASTER) AppleWebKit/525.10+ (KHTML, like Gecko) Version/3.0.4 Mobile Safari/523.12.2",
 		UserAgent{
-			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformLinux, OSAndroid, Version{1, 5, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformAndroid, OSAndroid, Version{1, 5, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux U; Android 1.5 en-us hero) AppleWebKit/525.10+ (KHTML, like Gecko) Version/3.0.4 Mobile Safari/523.12.2",
 		UserAgent{
-			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformLinux, OSAndroid, Version{1, 5, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformAndroid, OSAndroid, Version{1, 5, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 1.5; en-us; Opus One Build/RBE.00.00) AppleWebKit/528.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile Safari/525.20.1",
 		UserAgent{
-			Browser{BrowserAndroid, Version{3, 1, 1}}, OS{PlatformLinux, OSAndroid, Version{1, 5, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{3, 1, 1}}, OS{PlatformAndroid, OSAndroid, Version{1, 5, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 1.6; ar-us; SonyEricssonX10i Build/R2BA026) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1",
 		UserAgent{
-			Browser{BrowserAndroid, Version{3, 1, 2}}, OS{PlatformLinux, OSAndroid, Version{1, 6, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{3, 1, 2}}, OS{PlatformAndroid, OSAndroid, Version{1, 6, 0}}, DevicePhone}},
 
 	// TODO: support names of Android OS?
 	//{"Mozilla/5.0 (Linux; U; Android Donut; de-de; HTC Tattoo 1.52.161.1 Build/Donut) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1",
@@ -514,61 +514,61 @@ var testUAVars = []struct {
 
 	{"Mozilla/5.0 (Linux; U; Android 1.6; en-gb; HTC Tattoo Build/DRC79) AppleWebKit/525.10+ (KHTML, like Gecko) Version/3.0.4 Mobile Safari/523.12.2",
 		UserAgent{
-			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformLinux, OSAndroid, Version{1, 6, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformAndroid, OSAndroid, Version{1, 6, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 1.6; ja-jp; Docomo HT-03A Build/DRD08) AppleWebKit/525.10 (KHTML, like Gecko) Version/3.0.4 Mobile Safari/523.12.2",
 		UserAgent{
-			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformLinux, OSAndroid, Version{1, 6, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformAndroid, OSAndroid, Version{1, 6, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 2.1; en-us; Nexus One Build/ERD62) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{2, 1, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{2, 1, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 2.1-update1; en-au; HTC_Desire_A8183 V1.16.841.1 Build/ERE27) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{2, 1, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{2, 1, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 2.1; en-us; generic) AppleWebKit/525.10+ (KHTML, like Gecko) Version/3.0.4 Mobile Safari/523.12.2",
 		UserAgent{
-			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformLinux, OSAndroid, Version{2, 1, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformAndroid, OSAndroid, Version{2, 1, 0}}, DevicePhone}},
 
 	// TODO support named versions of Android?
 	{"Mozilla/5.0 (Linux; U; Android Eclair; en-us; sholes) AppleWebKit/525.10+ (KHTML, like Gecko) Version/3.0.4 Mobile Safari/523.12.2",
 		UserAgent{
-			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformLinux, OSAndroid, Version{0, 0, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{3, 0, 4}}, OS{PlatformAndroid, OSAndroid, Version{0, 0, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 2.2; en-sa; HTC_DesireHD_A9191 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{2, 2, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{2, 2, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 2.2.1; en-gb; HTC_DesireZ_A7272 Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{2, 2, 1}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{2, 2, 1}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 2.3.3; en-us; Sensation_4G Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/5.0 Safari/533.16",
 		UserAgent{
-			Browser{BrowserAndroid, Version{5, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{2, 3, 3}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{5, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{2, 3, 3}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 2.3.5; ko-kr; SHW-M250S Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{2, 3, 5}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{2, 3, 5}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 2.3.7; ja-jp; L-02D Build/GWK74) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{2, 3, 7}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{2, 3, 7}}, DevicePhone}},
 
 	// TODO: is tablet, not phone
 	{"Mozilla/5.0 (Linux; U; Android 3.0; xx-xx; Transformer TF101 Build/HRI66) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{3, 0, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{3, 0, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 3.0; en-us; Xoom Build/HRI39) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{3, 0, 0}}, DeviceTablet}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{3, 0, 0}}, DeviceTablet}},
 
 	{"Mozilla/5.0 (Linux; U; Android 4.0.1; en-us; sdk Build/ICS_MR0) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{4, 0, 1}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{4, 0, 1}}, DevicePhone}},
 
 	// TODO support "android-" version prefix
 	// However, can't find reference to this naming scheme in real-world UA gathering
@@ -578,51 +578,51 @@ var testUAVars = []struct {
 
 	{"Mozilla/5.0 (Linux; U; Android 4.1.1; en-us; Nexus S Build/JRO03E) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{4, 1, 1}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{4, 1, 1}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 4.1; en-gb; Build/JRN84D) AppleWebKit/534.30 (KHTML like Gecko) Version/4.0 Mobile Safari/534.30",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{4, 1, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{4, 1, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 4.1.1; el-gr; MB525 Build/JRO03H; CyanogenMod-10) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{4, 1, 1}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{4, 1, 1}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 4.1.1; fr-fr; MB525 Build/JRO03H; CyanogenMod-10) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{4, 1, 1}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{4, 1, 1}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; U; Android 4.2; en-us; Nexus 10 Build/JVP15I) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{4, 2, 0}}, DeviceTablet}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{4, 2, 0}}, DeviceTablet}},
 
 	{"Mozilla/5.0 (Linux; U; Android 4.2; ro-ro; LT18i Build/4.1.B.0.431) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
 		UserAgent{
-			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{4, 2, 0}}, DevicePhone}},
+			Browser{BrowserAndroid, Version{4, 0, 0}}, OS{PlatformAndroid, OSAndroid, Version{4, 2, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; Android 4.3; Nexus 7 Build/JWR66D) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.111 Safari/537.36",
 		UserAgent{
-			Browser{BrowserChrome, Version{27, 0, 1453}}, OS{PlatformLinux, OSAndroid, Version{4, 3, 0}}, DeviceTablet}},
+			Browser{BrowserChrome, Version{27, 0, 1453}}, OS{PlatformAndroid, OSAndroid, Version{4, 3, 0}}, DeviceTablet}},
 
 	{"Mozilla/5.0 (Linux; Android 4.4; Nexus 7 Build/KOT24) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.105 Safari/537.36",
 		UserAgent{
-			Browser{BrowserChrome, Version{30, 0, 1599}}, OS{PlatformLinux, OSAndroid, Version{4, 4, 0}}, DeviceTablet}},
+			Browser{BrowserChrome, Version{30, 0, 1599}}, OS{PlatformAndroid, OSAndroid, Version{4, 4, 0}}, DeviceTablet}},
 
 	{"Mozilla/5.0 (Linux; Android 4.4; Nexus 4 Build/KRT16E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.105 Mobile Safari",
 		UserAgent{
-			Browser{BrowserChrome, Version{30, 0, 1599}}, OS{PlatformLinux, OSAndroid, Version{4, 4, 0}}, DevicePhone}},
+			Browser{BrowserChrome, Version{30, 0, 1599}}, OS{PlatformAndroid, OSAndroid, Version{4, 4, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; Android 6.0.1; SM-G930V Build/MMB29M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36",
 		UserAgent{
-			Browser{BrowserChrome, Version{52, 0, 2743}}, OS{PlatformLinux, OSAndroid, Version{6, 0, 1}}, DevicePhone}},
+			Browser{BrowserChrome, Version{52, 0, 2743}}, OS{PlatformAndroid, OSAndroid, Version{6, 0, 1}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; Android 7.0; Nexus 5X Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36",
 		UserAgent{
-			Browser{BrowserChrome, Version{52, 0, 2743}}, OS{PlatformLinux, OSAndroid, Version{7, 0, 0}}, DevicePhone}},
+			Browser{BrowserChrome, Version{52, 0, 2743}}, OS{PlatformAndroid, OSAndroid, Version{7, 0, 0}}, DevicePhone}},
 
 	{"Mozilla/5.0 (Linux; Android 7.0; Nexus 6P Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/52.0.2743.98 Mobile Safari/537.36",
 		UserAgent{
-			Browser{BrowserChrome, Version{52, 0, 2743}}, OS{PlatformLinux, OSAndroid, Version{7, 0, 0}}, DevicePhone}},
+			Browser{BrowserChrome, Version{52, 0, 2743}}, OS{PlatformAndroid, OSAndroid, Version{7, 0, 0}}, DevicePhone}},
 
 	// BLACKBERRY TESTS
 
@@ -965,16 +965,16 @@ var testUAVars = []struct {
 
 	{"Mozilla/5.0 (Linux; Android 4.4.4; SM-T560 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.111 Safari/537.36",
 		UserAgent{
-			Browser{BrowserChrome, Version{63, 0, 3239}}, OS{PlatformLinux, OSAndroid, Version{4, 4, 4}}, DeviceTablet}},
+			Browser{BrowserChrome, Version{63, 0, 3239}}, OS{PlatformAndroid, OSAndroid, Version{4, 4, 4}}, DeviceTablet}},
 	{"Mozilla/5.0 (Linux; Android 5.1.1; KFSUWI) AppleWebKit/537.36 (KHTML, like Gecko) Silk/70.4.2 like Chrome/70.0.3538.80 Safari/537.36",
 		UserAgent{
-			Browser{BrowserSilk, Version{70, 4, 2}}, OS{PlatformLinux, OSAndroid, Version{5, 1, 1}}, DeviceTablet}},
+			Browser{BrowserSilk, Version{70, 4, 2}}, OS{PlatformAndroid, OSAndroid, Version{5, 1, 1}}, DeviceTablet}},
 	{"Mozilla/5.0 (Linux; Android 4.4.2; T1-701u Build/HuaweiMediaPad) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.123 Safari/537.36",
 		UserAgent{
-			Browser{BrowserChrome, Version{64, 0, 3282}}, OS{PlatformLinux, OSAndroid, Version{4, 4, 2}}, DeviceTablet}},
+			Browser{BrowserChrome, Version{64, 0, 3282}}, OS{PlatformAndroid, OSAndroid, Version{4, 4, 2}}, DeviceTablet}},
 	{"Mozilla/5.0 (Linux; Android 4.4.2; Lenovo TAB 2 A7-30F Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.84 Safari/537.36",
 		UserAgent{
-			Browser{BrowserChrome, Version{45, 0, 2454}}, OS{PlatformLinux, OSAndroid, Version{4, 4, 2}}, DeviceTablet}},
+			Browser{BrowserChrome, Version{45, 0, 2454}}, OS{PlatformAndroid, OSAndroid, Version{4, 4, 2}}, DeviceTablet}},
 }
 
 func TestAgentSurfer(t *testing.T) {
