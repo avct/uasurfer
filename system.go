@@ -65,7 +65,7 @@ func (u *UserAgent) evalOS(ua string) bool {
 
 		// Kindle
 		case strings.Contains(ua, "kindle/") || amazonFireFingerprint.MatchString(agentPlatform):
-			u.OS.Platform = PlatformLinux
+			u.OS.Platform = PlatformAndroid
 			u.OS.Name = OSKindle
 
 		// Linux (broader attempt)
@@ -124,14 +124,14 @@ func (u *UserAgent) evalLinux(ua string, agentPlatform string) {
 	// Kindle Fire
 	case strings.Contains(ua, "kindle") || amazonFireFingerprint.MatchString(agentPlatform):
 		// get the version of Android if available, though we don't call this OSAndroid
-		u.OS.Platform = PlatformLinux
+		u.OS.Platform = PlatformAndroid
 		u.OS.Name = OSKindle
 		u.OS.Version.findVersionNumber(agentPlatform, "android ")
 
 	// Android, Kindle Fire
 	case strings.Contains(ua, "android") || strings.Contains(ua, "googletv"):
 		// Android
-		u.OS.Platform = PlatformLinux
+		u.OS.Platform = PlatformAndroid
 		u.OS.Name = OSAndroid
 		u.OS.Version.findVersionNumber(agentPlatform, "android ")
 

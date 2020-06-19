@@ -122,6 +122,7 @@ const (
 	PlatformWindows
 	PlatformMac
 	PlatformLinux
+	PlatformAndroid
 	PlatformiPad
 	PlatformiPhone
 	PlatformiPod
