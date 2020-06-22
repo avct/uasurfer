@@ -15,9 +15,9 @@ func main() {
 	var count int
 	ua := &uasurfer.UserAgent{}
 	stats := stats{
-		BrowserNames: make(map[uasurfer.BrowserName]int),
-		OSNames:      make(map[uasurfer.OSName]int),
-		DeviceTypes:  make(map[uasurfer.DeviceType]int),
+		BrowserIDs: make(map[uasurfer.BrowserID]int),
+		OSIDs:      make(map[uasurfer.OSID]int),
+		DeviceIDs:  make(map[uasurfer.DeviceID]int),
 	}
 
 	scanner := bufio.NewScanner(os.Stdin)
@@ -25,9 +25,9 @@ func main() {
 		count++
 		ua.Reset()
 		uasurfer.ParseUserAgent(scanner.Text(), ua)
-		stats.BrowserNames[ua.Browser.Name]++
-		stats.OSNames[ua.OS.Name]++
-		stats.DeviceTypes[ua.DeviceType]++
+		stats.BrowserIDs[ua.Browser.ID]++
+		stats.OSIDs[ua.OS.Name]++
+		stats.DeviceIDs[ua.DeviceID]++
 	}
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintln(os.Stderr, "reading standard input:", err)
@@ -38,14 +38,14 @@ func main() {
 }
 
 type stats struct {
-	OSNames      map[uasurfer.OSName]int
-	BrowserNames map[uasurfer.BrowserName]int
-	DeviceTypes  map[uasurfer.DeviceType]int
+	OSIDs      map[uasurfer.OSID]int
+	BrowserIDs map[uasurfer.BrowserID]int
+	DeviceIDs  map[uasurfer.DeviceID]int
 }
 
 func (s *stats) Summary(total int, dest io.Writer) {
-	browserCounts := make([]stringCount, 0, len(s.BrowserNames))
-	for k, v := range s.BrowserNames {
+	browserCounts := make([]stringCount, 0, len(s.BrowserIDs))
+	for k, v := range s.BrowserIDs {
 		browserCounts = append(browserCounts, stringCount{name: k.String(), count: v})
 	}
 	sort.Slice(browserCounts, func(i, j int) bool { return browserCounts[j].count < browserCounts[i].count }) // by count reversed
@@ -57,8 +57,8 @@ func (s *stats) Summary(total int, dest io.Writer) {
 	}
 
 	fmt.Fprintln(dest)
-	osCounts := make([]stringCount, 0, len(s.OSNames))
-	for k, v := range s.OSNames {
+	osCounts := make([]stringCount, 0, len(s.OSIDs))
+	for k, v := range s.OSIDs {
 		osCounts = append(osCounts, stringCount{name: k.String(), count: v})
 	}
 	sort.Slice(osCounts, func(i, j int) bool { return osCounts[j].count < osCounts[i].count }) // by count reversed
@@ -70,8 +70,8 @@ func (s *stats) Summary(total int, dest io.Writer) {
 	}
 
 	fmt.Fprintln(dest)
-	deviceCounts := make([]stringCount, 0, len(s.DeviceTypes))
-	for k, v := range s.DeviceTypes {
+	deviceCounts := make([]stringCount, 0, len(s.DeviceIDs))
+	for k, v := range s.DeviceIDs {
 		deviceCounts = append(deviceCounts, stringCount{name: k.String(), count: v})
 	}
 	sort.Slice(deviceCounts, func(i, j int) bool { return deviceCounts[j].count < deviceCounts[i].count }) // by count reversed

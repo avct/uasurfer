@@ -7,136 +7,180 @@ package uasurfer
 
 import "strings"
 
-//go:generate stringer -type=DeviceType,BrowserName,OSName,Platform -output=const_string.go
+//go:generate stringer -type=DeviceID,BrowserID,OSID,Platform -output=const_string.go
 
-// DeviceType (int) returns a constant.
-type DeviceType int
+// DeviceID (uint8) returns a constant.
+type DeviceID int8
 
 // A complete list of supported devices in the
 // form of constants.
 const (
-	DeviceUnknown DeviceType = iota
-	DeviceComputer
-	DeviceTablet
-	DevicePhone
-	DeviceConsole
-	DeviceWearable
-	DeviceTV
+	DeviceUnknown  DeviceID = 0
+	DeviceComputer DeviceID = 1
+	DeviceTablet   DeviceID = 2
+	DevicePhone    DeviceID = 3
+	DeviceConsole  DeviceID = 4
+	DeviceWearable DeviceID = 5
+	DeviceTV       DeviceID = 6
 )
 
-// StringTrimPrefix is like String() but trims the "Device" prefix
-func (d DeviceType) StringTrimPrefix() string {
-	return strings.TrimPrefix(d.String(), "Device")
+var deviceNames = map[DeviceID]string{
+	DeviceUnknown:  "Unknown",
+	DeviceComputer: "Computer",
+	DeviceTablet:   "Tablet",
+	DevicePhone:    "Mobile",
+	DeviceConsole:  "Console",
+	DeviceWearable: "Wearable",
+	DeviceTV:       "TV",
 }
 
-// BrowserName (int) returns a constant.
-type BrowserName int
+func (d DeviceID) String() string {
+	return deviceNames[d]
+}
+
+// BrowserID (uint8) returns a constant.
+type BrowserID uint8
 
 // A complete list of supported web browsers in the
 // form of constants.
 const (
-	BrowserUnknown BrowserName = iota
-	BrowserChrome
-	BrowserIE
-	BrowserSafari
-	BrowserFirefox
-	BrowserAndroid
-	BrowserOpera
-	BrowserBlackberry
-	BrowserUCBrowser
-	BrowserSilk
-	BrowserNokia
-	BrowserNetFront
-	BrowserQQ
-	BrowserMaxthon
-	BrowserSogouExplorer
-	BrowserSpotify
-	BrowserNintendo
-	BrowserSamsung
-	BrowserYandex
-	BrowserCocCoc
-	BrowserBot // Bot list begins here
-	BrowserAppleBot
-	BrowserBaiduBot
-	BrowserBingBot
-	BrowserDuckDuckGoBot
-	BrowserFacebookBot
-	BrowserGoogleBot
-	BrowserGoogleAdsBot
-	BrowserLinkedInBot
-	BrowserMsnBot
-	BrowserPingdomBot
-	BrowserTwitterBot
-	BrowserYandexBot
-	BrowserCocCocBot
-	BrowserPinterestBot
-	BrowserSlackBot
-	BrowserSeekportBot
-	BrowserYahooBot // Bot list ends here
+	BrowserUnknown       BrowserID = 0
+	BrowserChrome        BrowserID = 1
+	BrowserIE            BrowserID = 3
+	BrowserSafari        BrowserID = 4
+	BrowserFirefox       BrowserID = 5
+	BrowserAndroid       BrowserID = 6
+	BrowserOpera         BrowserID = 7
+	BrowserBlackberry    BrowserID = 8
+	BrowserUCBrowser     BrowserID = 9
+	BrowserSilk          BrowserID = 10
+	BrowserNokia         BrowserID = 11
+	BrowserNetFront      BrowserID = 12
+	BrowserQQ            BrowserID = 13
+	BrowserMaxthon       BrowserID = 14
+	BrowserSogouExplorer BrowserID = 15
+	BrowserSpotify       BrowserID = 16
+	BrowserNintendo      BrowserID = 17
+	BrowserSamsung       BrowserID = 18
+	BrowserYandex        BrowserID = 19
+	BrowserCocCoc        BrowserID = 20
+	BrowserBot           BrowserID = 21 // Bot list begins here
 )
 
-// StringTrimPrefix is like String() but trims the "Browser" prefix
-func (b BrowserName) StringTrimPrefix() string {
-	return strings.TrimPrefix(b.String(), "Browser")
+var browserIDs = map[BrowserID]string{
+	BrowserUnknown:       "Unknown",
+	BrowserChrome:        "Chrome",
+	BrowserIE:            "IE",
+	BrowserSafari:        "Safari",
+	BrowserFirefox:       "Firefox",
+	BrowserAndroid:       "Android",
+	BrowserOpera:         "Opera",
+	BrowserBlackberry:    "Blackberry",
+	BrowserUCBrowser:     "UCBrowser",
+	BrowserSilk:          "Silk",
+	BrowserNokia:         "Nokia",
+	BrowserNetFront:      "NetFront",
+	BrowserQQ:            "QQ",
+	BrowserMaxthon:       "Maxthon",
+	BrowserSogouExplorer: "SogouExplorer",
+	BrowserSpotify:       "Spotify",
+	BrowserNintendo:      "Nintendo",
+	BrowserSamsung:       "Samsung",
+	BrowserYandex:        "Yandex",
+	BrowserCocCoc:        "CocCoc",
+	BrowserBot:           "Bot",
 }
 
-// OSName (int) returns a constant.
-type OSName int
+func (b BrowserID) String() string {
+	return browserIDs[b]
+}
+
+// OSID (int) returns a constant.
+type OSID uint8
 
 // A complete list of supported OSes in the
 // form of constants. For handling particular versions
 // of operating systems (e.g. Windows 2000), see
 // the README.md file.
 const (
-	OSUnknown OSName = iota
-	OSWindowsPhone
-	OSWindows
-	OSMacOSX
-	OSiOS
-	OSAndroid
-	OSBlackberry
-	OSChromeOS
-	OSKindle
-	OSWebOS
-	OSLinux
-	OSPlaystation
-	OSXbox
-	OSNintendo
-	OSBot
+	OSUnknown      OSID = 0
+	OSWindowsPhone OSID = 1
+	OSWindows      OSID = 2
+	OSMacOSX       OSID = 3
+	OSiOS          OSID = 4
+	OSAndroid      OSID = 5
+	OSBlackberry   OSID = 6
+	OSChromeOS     OSID = 7
+	OSKindle       OSID = 8
+	OSWebOS        OSID = 9
+	OSLinux        OSID = 10
+	OSPlaystation  OSID = 11
+	OSXbox         OSID = 12
+	OSNintendo     OSID = 13
 )
 
-// StringTrimPrefix is like String() but trims the "OS" prefix
-func (o OSName) StringTrimPrefix() string {
-	return strings.TrimPrefix(o.String(), "OS")
+var osNames = map[OSID]string{
+	OSUnknown:      "Unknown",
+	OSWindowsPhone: "WindowsPhone",
+	OSWindows:      "Windows",
+	OSMacOSX:       "MacOSX",
+	OSiOS:          "iOS",
+	OSAndroid:      "Android",
+	OSBlackberry:   "Blackberry",
+	OSChromeOS:     "ChromeOS",
+	OSKindle:       "Kindle",
+	OSWebOS:        "WebOS",
+	OSLinux:        "Linux",
+	OSPlaystation:  "Playstation",
+	OSXbox:         "Xbox",
+	OSNintendo:     "Nintendo",
+}
+
+func (o OSID) String() string {
+	return osNames[o]
 }
 
 // Platform (int) returns a constant.
-type Platform int
+type PlatformID uint8
 
 // A complete list of supported platforms in the
 // form of constants. Many OSes report their
 // true platform, such as Android OS being Linux
 // platform.
 const (
-	PlatformUnknown Platform = iota
-	PlatformWindows
-	PlatformMac
-	PlatformLinux
-	PlatformiPad
-	PlatformiPhone
-	PlatformiPod
-	PlatformBlackberry
-	PlatformWindowsPhone
-	PlatformPlaystation
-	PlatformXbox
-	PlatformNintendo
-	PlatformBot
-	PlatformAndroid
+	PlatformUnknown      PlatformID = 0
+	PlatformWindows      PlatformID = 1
+	PlatformMac          PlatformID = 2
+	PlatformLinux        PlatformID = 3
+	PlatformiPad         PlatformID = 4
+	PlatformiPhone       PlatformID = 5
+	PlatformiPod         PlatformID = 6
+	PlatformBlackberry   PlatformID = 7
+	PlatformWindowsPhone PlatformID = 8
+	PlatformPlaystation  PlatformID = 9
+	PlatformXbox         PlatformID = 10
+	PlatformNintendo     PlatformID = 11
+	PlatformAndroid      PlatformID = 13
 )
 
-// StringTrimPrefix is like String() but trims the "Platform" prefix
-func (p Platform) StringTrimPrefix() string {
-	return strings.TrimPrefix(p.String(), "Platform")
+var platformNames = map[PlatformID]string{
+	PlatformUnknown:      "Unknown",
+	PlatformWindows:      "Windows",
+	PlatformMac:          "Mac",
+	PlatformAndroid:      "Android",
+	PlatformLinux:        "Linux",
+	PlatformiPad:         "iPad",
+	PlatformiPhone:       "iPhone",
+	PlatformiPod:         "iPod",
+	PlatformBlackberry:   "Blackberry",
+	PlatformWindowsPhone: "WindowsPhone",
+	PlatformPlaystation:  "Playstation",
+	PlatformXbox:         "Xbox",
+	PlatformNintendo:     "Nintendo",
+}
+
+func (b PlatformID) String() string {
+	return platformNames[b]
 }
 
 type Version struct {
@@ -166,19 +210,19 @@ func (v Version) Less(c Version) bool {
 }
 
 type UserAgent struct {
-	Browser    Browser
-	OS         OS
-	DeviceType DeviceType
+	Browser  Browser
+	OS       OS
+	DeviceID DeviceID
 }
 
 type Browser struct {
-	Name    BrowserName
+	ID      BrowserID
 	Version Version
 }
 
 type OS struct {
-	Platform Platform
-	Name     OSName
+	Platform PlatformID
+	Name     OSID
 	Version  Version
 }
 
@@ -186,18 +230,12 @@ type OS struct {
 func (ua *UserAgent) Reset() {
 	ua.Browser = Browser{}
 	ua.OS = OS{}
-	ua.DeviceType = DeviceUnknown
+	ua.DeviceID = DeviceUnknown
 }
 
 // IsBot returns true if the UserAgent represent a bot
 func (ua *UserAgent) IsBot() bool {
-	if ua.Browser.Name >= BrowserBot && ua.Browser.Name <= BrowserYahooBot {
-		return true
-	}
-	if ua.OS.Name == OSBot {
-		return true
-	}
-	if ua.OS.Platform == PlatformBot {
+	if ua.Browser.ID == BrowserBot {
 		return true
 	}
 	return false
@@ -223,12 +261,12 @@ func parse(ua string, dest *UserAgent) {
 	case len(ua) == 0:
 		dest.OS.Platform = PlatformUnknown
 		dest.OS.Name = OSUnknown
-		dest.Browser.Name = BrowserUnknown
-		dest.DeviceType = DeviceUnknown
+		dest.Browser.ID = BrowserUnknown
+		dest.DeviceID = DeviceUnknown
 
 	// stop on on first case returning true
 	case dest.evalOS(ua):
-	case dest.evalBrowserName(ua):
+	case dest.evalBrowserID(ua):
 	default:
 		dest.evalBrowserVersion(ua)
 		dest.evalDevice(ua)

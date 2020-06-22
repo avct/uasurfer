@@ -25,7 +25,7 @@ Coverage is estimated from a random sample of real UA strings collected across t
 
 ### Parse(ua string) Function
 
-The `Parse()` function accepts a user agent `string` and returns UserAgent struct with named constants and integers for versions (minor, major and patch separately), and the full UA string that was parsed (lowercase). A string can be retrieved by adding `.String()` to a variable, such as `uasurfer.BrowserName.String()`.
+The `Parse()` function accepts a user agent `string` and returns UserAgent struct with named constants and integers for versions (minor, major and patch separately), and the full UA string that was parsed (lowercase). A string can be retrieved by adding `.String()` to a variable, such as `uasurfer.BrowserID.String()`.
 
 ```
 // Define a user agent string
@@ -39,7 +39,7 @@ where example UserAgent is:
 ```
 {
     Browser {
-        BrowserName: BrowserChrome,
+        BrowserID: BrowserChrome,
         Version: {
             Major: 45,
             Minor: 0,
@@ -55,7 +55,7 @@ where example UserAgent is:
             Patch: 5,
         },
     },
-    DeviceType: DeviceComputer,
+    DeviceID: DeviceComputer,
 }
 ```
 
@@ -136,8 +136,8 @@ Here are some examples across the platform, os.name, and os.version:
 
 Windows 95, 98, and ME represent 0.01% of traffic worldwide and are not available through this package at this time.
 
-#### DeviceType
-DeviceType is typically quite accurate, though determining between phones and tablets on Android is not always possible due to how some vendors design their UA strings. A mobile Android device without tablet indicator defaults to being classified as a phone. DeviceTV supports major brands such as Philips, Sharp, Vizio and steaming boxes such as Apple, Google, Roku, Amazon.
+#### DeviceID
+DeviceID is typically quite accurate, though determining between phones and tablets on Android is not always possible due to how some vendors design their UA strings. A mobile Android device without tablet indicator defaults to being classified as a phone. DeviceTV supports major brands such as Philips, Sharp, Vizio and steaming boxes such as Apple, Google, Roku, Amazon.
 
 * `DeviceComputer`
 * `DevicePhone`
