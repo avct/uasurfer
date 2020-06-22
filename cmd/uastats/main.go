@@ -25,7 +25,7 @@ func main() {
 		count++
 		ua.Reset()
 		uasurfer.ParseUserAgent(scanner.Text(), ua)
-		stats.BrowserIDs[ua.Browser.Name]++
+		stats.BrowserIDs[ua.Browser.ID]++
 		stats.OSIDs[ua.OS.Name]++
 		stats.DeviceIDs[ua.DeviceID]++
 	}

@@ -65,26 +65,9 @@ const (
 	BrowserYandex        BrowserID = 19
 	BrowserCocCoc        BrowserID = 20
 	BrowserBot           BrowserID = 21 // Bot list begins here
-	BrowserAppleBot      BrowserID = 22
-	BrowserBaiduBot      BrowserID = 23
-	BrowserBingBot       BrowserID = 24
-	BrowserDuckDuckGoBot BrowserID = 25
-	BrowserFacebookBot   BrowserID = 26
-	BrowserGoogleBot     BrowserID = 27
-	BrowserGoogleAdsBot  BrowserID = 28
-	BrowserLinkedInBot   BrowserID = 29
-	BrowserMsnBot        BrowserID = 30
-	BrowserPingdomBot    BrowserID = 31
-	BrowserTwitterBot    BrowserID = 32
-	BrowserYandexBot     BrowserID = 33
-	BrowserCocCocBot     BrowserID = 34
-	BrowserPinterestBot  BrowserID = 35
-	BrowserSlackBot      BrowserID = 36
-	BrowserSeekportBot   BrowserID = 37
-	BrowserYahooBot      BrowserID = 38 // Bot list ends here
 )
 
-var browserNames = map[BrowserID]string{
+var browserIDs = map[BrowserID]string{
 	BrowserUnknown:       "Unknown",
 	BrowserChrome:        "Chrome",
 	BrowserIE:            "IE",
@@ -106,27 +89,10 @@ var browserNames = map[BrowserID]string{
 	BrowserYandex:        "Yandex",
 	BrowserCocCoc:        "CocCoc",
 	BrowserBot:           "Bot",
-	BrowserAppleBot:      "AppleBot",
-	BrowserBaiduBot:      "BaiduBot",
-	BrowserBingBot:       "BingBot",
-	BrowserDuckDuckGoBot: "DuckDuckGoBot",
-	BrowserFacebookBot:   "FacebookBot",
-	BrowserGoogleBot:     "GoogleBot",
-	BrowserGoogleAdsBot:  "GoogleAdsBot",
-	BrowserLinkedInBot:   "LinkedInBot",
-	BrowserMsnBot:        "MsnBot",
-	BrowserPingdomBot:    "PingdomBot",
-	BrowserTwitterBot:    "TwitterBot",
-	BrowserYandexBot:     "YandexBot",
-	BrowserCocCocBot:     "CocCocBot",
-	BrowserPinterestBot:  "PinterestBot",
-	BrowserSlackBot:      "SlackBot",
-	BrowserSeekportBot:   "SeekportBot",
-	BrowserYahooBot:      "YahooBot",
 }
 
 func (b BrowserID) String() string {
-	return browserNames[b]
+	return browserIDs[b]
 }
 
 // OSID (int) returns a constant.
@@ -253,7 +219,7 @@ type UserAgent struct {
 }
 
 type Browser struct {
-	Name    BrowserID
+	ID      BrowserID
 	Version Version
 }
 
@@ -272,7 +238,7 @@ func (ua *UserAgent) Reset() {
 
 // IsBot returns true if the UserAgent represent a bot
 func (ua *UserAgent) IsBot() bool {
-	if ua.Browser.Name >= BrowserBot && ua.Browser.Name <= BrowserYahooBot {
+	if ua.Browser.ID == BrowserBot {
 		return true
 	}
 	if ua.OS.Name == OSBot {
@@ -304,7 +270,7 @@ func parse(ua string, dest *UserAgent) {
 	case len(ua) == 0:
 		dest.OS.Platform = PlatformUnknown
 		dest.OS.Name = OSUnknown
-		dest.Browser.Name = BrowserUnknown
+		dest.Browser.ID = BrowserUnknown
 		dest.DeviceID = DeviceUnknown
 
 	// stop on on first case returning true

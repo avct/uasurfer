@@ -46,7 +46,7 @@ func (u *UserAgent) evalDevice(ua string) {
 		u.DeviceID = DeviceWearable
 
 	// specifically above "mobile" string check as Kindle Fire tablets report as "mobile"
-	case u.Browser.Name == BrowserSilk || u.OS.Name == OSKindle && !strings.Contains(ua, "sd4930ur"):
+	case u.Browser.ID == BrowserSilk || u.OS.Name == OSKindle && !strings.Contains(ua, "sd4930ur"):
 		u.DeviceID = DeviceTablet
 
 	case strings.Contains(ua, "mobile") || strings.Contains(ua, "touch") || strings.Contains(ua, " mobi") || strings.Contains(ua, "webos"): //anything "mobile"/"touch" that didn't get captured as tablet, console or wearable is presumed a phone
