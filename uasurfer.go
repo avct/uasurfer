@@ -117,7 +117,6 @@ const (
 	OSPlaystation  OSID = 11
 	OSXbox         OSID = 12
 	OSNintendo     OSID = 13
-	OSBot          OSID = 14
 )
 
 var osNames = map[OSID]string{
@@ -135,7 +134,6 @@ var osNames = map[OSID]string{
 	OSPlaystation:  "Playstation",
 	OSXbox:         "Xbox",
 	OSNintendo:     "Nintendo",
-	OSBot:          "Bot",
 }
 
 func (o OSID) String() string {
@@ -162,7 +160,6 @@ const (
 	PlatformPlaystation  PlatformID = 9
 	PlatformXbox         PlatformID = 10
 	PlatformNintendo     PlatformID = 11
-	PlatformBot          PlatformID = 12
 	PlatformAndroid      PlatformID = 13
 )
 
@@ -239,12 +236,6 @@ func (ua *UserAgent) Reset() {
 // IsBot returns true if the UserAgent represent a bot
 func (ua *UserAgent) IsBot() bool {
 	if ua.Browser.ID == BrowserBot {
-		return true
-	}
-	if ua.OS.Name == OSBot {
-		return true
-	}
-	if ua.OS.Platform == PlatformBot {
 		return true
 	}
 	return false
