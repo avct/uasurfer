@@ -427,7 +427,7 @@ var testUAVars = []struct {
 		UserAgent{
 			Browser{BrowserYahooBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{0, 0, 0}}, DeviceComputer}},
 
-	{"{UA:Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)}, ua: &{Browser:{Name:BrowserGoogleBot Version:{Major:0 Minor:0 Patch:0}} OS:{Platform:PlatformBot Name:OSBot Version:{Major:6 Minor:0 Patch:1}} DeviceType:DeviceComputer}",
+	{"{UA:Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)}, ua: &{Browser:{Name:BrowserGoogleBot Version:{Major:0 Minor:0 Patch:0}} OS:{Platform:PlatformBot Name:OSBot Version:{Major:6 Minor:0 Patch:1}} DeviceID:DeviceComputer}",
 		UserAgent{
 			Browser{BrowserGoogleBot, Version{0, 0, 0}}, OS{PlatformBot, OSBot, Version{6, 0, 1}}, DeviceComputer}},
 
@@ -1017,8 +1017,8 @@ func TestAgentSurfer(t *testing.T) {
 					t.Logf("agent: %s", determined.UA)
 				}
 
-				if ua.DeviceType != determined.DeviceType {
-					t.Errorf("device type: got %v, wanted %v", ua.DeviceType, determined.DeviceType)
+				if ua.DeviceID != determined.DeviceID {
+					t.Errorf("device type: got %v, wanted %v", ua.DeviceID, determined.DeviceID)
 					t.Logf("agent: %s", determined.UA)
 				}
 			}
@@ -1053,12 +1053,12 @@ func BenchmarkEvalSystem(b *testing.B) {
 	}
 }
 
-func BenchmarkEvalBrowserName(b *testing.B) {
+func BenchmarkEvalBrowserID(b *testing.B) {
 	num := len(testUAVars)
 	v := UserAgent{}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		v.evalBrowserName(testUAVars[i%num].UA)
+		v.evalBrowserID(testUAVars[i%num].UA)
 	}
 }
 
@@ -1125,25 +1125,25 @@ func BenchmarkParseSafariiPad(b *testing.B) {
 	}
 }
 
-func TestStringTrimPrefix(t *testing.T) {
+func TestString(t *testing.T) {
 	testCases := []struct {
 		f        func() string
 		expected string
 	}{
 		{
-			f:        DeviceUnknown.StringTrimPrefix,
+			f:        DeviceUnknown.String,
 			expected: "Unknown",
 		},
 		{
-			f:        BrowserUnknown.StringTrimPrefix,
+			f:        BrowserUnknown.String,
 			expected: "Unknown",
 		},
 		{
-			f:        OSUnknown.StringTrimPrefix,
+			f:        OSUnknown.String,
 			expected: "Unknown",
 		},
 		{
-			f:        PlatformUnknown.StringTrimPrefix,
+			f:        PlatformUnknown.String,
 			expected: "Unknown",
 		},
 	}

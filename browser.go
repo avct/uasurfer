@@ -10,7 +10,7 @@ import (
 // (CriOS/43.0) would both return as "chrome" (name) and 43.0 (version). Similarly
 // Internet Explorer 11 and Edge 12 would return as "ie" and "11" or "12", respectively.
 // type Browser struct {
-// 		Name    BrowserName
+// 		Name    BrowserID
 // 		Version struct {
 // 				Major int
 // 			Minor int
@@ -19,7 +19,7 @@ import (
 // }
 
 // Retrieve browser name from UA strings
-func (u *UserAgent) evalBrowserName(ua string) bool {
+func (u *UserAgent) evalBrowserID(ua string) bool {
 	// Blackberry goes first because it reads as MSIE & Safari
 	if strings.Contains(ua, "blackberry") || strings.Contains(ua, "playbook") || strings.Contains(ua, "bb10") || strings.Contains(ua, "rim ") {
 		u.Browser.Name = BrowserBlackberry

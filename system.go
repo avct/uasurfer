@@ -110,13 +110,13 @@ func (u *UserAgent) maybeBot() bool {
 	if u.IsBot() {
 		u.OS.Platform = PlatformBot
 		u.OS.Name = OSBot
-		u.DeviceType = DeviceComputer
+		u.DeviceID = DeviceComputer
 		return true
 	}
 	return false
 }
 
-// evalLinux returns the `Platform`, `OSName` and Version of UAs with
+// evalLinux returns the `Platform`, `OSID` and Version of UAs with
 // 'linux' listed as their platform.
 func (u *UserAgent) evalLinux(ua string, agentPlatform string) {
 
@@ -156,7 +156,7 @@ func (u *UserAgent) evalLinux(ua string, agentPlatform string) {
 	}
 }
 
-// evaliOS returns the `Platform`, `OSName` and Version of UAs with
+// evaliOS returns the `Platform`, `OSID` and Version of UAs with
 // 'ipad' or 'iphone' listed as their platform.
 func (u *UserAgent) evaliOS(uaPlatform string, agentPlatform string) {
 
