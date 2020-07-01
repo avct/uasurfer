@@ -26,7 +26,7 @@ const (
 
 var deviceNames = map[DeviceID]string{
 	DeviceUnknown:  "Unknown",
-	DeviceComputer: "Computer",
+	DeviceComputer: "Desktop",
 	DeviceTablet:   "Tablet",
 	DevicePhone:    "Mobile",
 	DeviceConsole:  "Console",
