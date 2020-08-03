@@ -113,7 +113,7 @@ func (u *UserAgent) maybeBot(ua string) bool {
 		// Bots now can also identify as MOBILE device !!
 		u.DeviceType = DeviceComputer
 		if strings.Contains(ua, "mobile") {
-  			u.DeviceType = DeviceMobile
+  			u.DeviceType = DevicePhone
 		}
 		return true
 	}
