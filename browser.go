@@ -20,7 +20,7 @@ import (
 
 // Retrieve browser name from UA strings
 func (u *UserAgent) evalBrowserID(ua string) bool {
-	if strings.EqualFold(ua, "autopilot") || strings.Contains(ua, "googleimageproxy") {
+	if strings.EqualFold(ua, "autopilot") {
 		u.Browser.ID = BrowserBot
 		return u.maybeBot()
 	}
