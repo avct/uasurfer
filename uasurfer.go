@@ -5,7 +5,9 @@
 // strings.
 package uasurfer
 
-import "strings"
+import (
+	"strings"
+)
 
 //go:generate stringer -type=DeviceID,BrowserID,OSID,Platform -output=const_string.go
 
