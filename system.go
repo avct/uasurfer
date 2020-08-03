@@ -101,7 +101,7 @@ func (u *UserAgent) evalOS(ua string) bool {
 		}
 	}
 
-	return u.maybeBot(ua string)
+	return u.maybeBot(ua)
 }
 
 // maybeBot checks if the UserAgent is a bot and sets
