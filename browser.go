@@ -40,8 +40,11 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 		case strings.Contains(ua, "silk/"):
 			u.Browser.Name = BrowserSilk
 
-		case strings.Contains(ua, "edg/") || strings.Contains(ua, "edgios/") || strings.Contains(ua, "edga/")|| strings.Contains(ua, "edge/") || strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie "):
+		case strings.Contains(ua, "msie") || strings.Contains(ua, "wow64") || strings.Contains(ua, "iemobile/"):
 			u.Browser.Name = BrowserIE
+
+		case strings.Contains(ua, "edg/") || strings.Contains(ua, "edgios/") || strings.Contains(ua, "edga/")|| strings.Contains(ua, "edge/") :
+			u.Browser.Name = BrowserEdge
 
 		case strings.Contains(ua, "ucbrowser/") || strings.Contains(ua, "ucweb/"):
 			u.Browser.Name = BrowserUCBrowser
@@ -154,6 +157,9 @@ notwebkit:
 	case strings.Contains(ua, "phantomjs"):
 		u.Browser.Name = BrowserBot
 
+	case strings.Contains(ua, "edge") || strings.Contains(ua, "edga") || strings.Contains(ua, "edgios"):
+		u.Browser.Name = BrowserEdge
+
 	default:
 		u.Browser.Name = BrowserUnknown
 
@@ -186,6 +192,19 @@ func (u *UserAgent) evalBrowserVersion(ua string) {
 		_ = u.Browser.Version.findVersionNumber(ua, "qqbrowser/")
 	case BrowserIE:
 		if u.Browser.Version.findVersionNumber(ua, "msie ") || u.Browser.Version.findVersionNumber(ua, "edge/") || u.Browser.Version.findVersionNumber(ua, "edgios/") || u.Browser.Version.findVersionNumber(ua, "edga/") || u.Browser.Version.findVersionNumber(ua, "edg/") {
+			return
+		}
+
+		// get MSIE version from trident version https://en.wikipedia.org/wiki/Trident_(layout_engine)
+		if u.Browser.Version.findVersionNumber(ua, "trident/") {
+			// convert trident versions 3-7 to MSIE version
+			if (u.Browser.Version.Major >= 3) && (u.Browser.Version.Major <= 7) {
+				u.Browser.Version.Major += 4
+			}
+		}
+
+	case BrowserEdge:
+		if u.Browser.Version.findVersionNumber(ua, "edge/") || u.Browser.Version.findVersionNumber(ua, "edgios/") || u.Browser.Version.findVersionNumber(ua, "edga/") || u.Browser.Version.findVersionNumber(ua, "edg/") {
 			return
 		}
 

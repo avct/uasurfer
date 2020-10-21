@@ -68,7 +68,8 @@ const (
 	BrowserTwitterBot
 	BrowserYandexBot
 	BrowserCocCocBot
-	BrowserYahooBot // Bot list ends here
+	BrowserYahooBot
+	BrowserEdge // Bot list ends here. Split ie from Edge, to differentiate one from another
 )
 
 // StringTrimPrefix is like String() but trims the "Browser" prefix
