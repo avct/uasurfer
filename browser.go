@@ -157,6 +157,9 @@ notwebkit:
 	case strings.Contains(ua, "phantomjs"):
 		u.Browser.Name = BrowserBot
 
+	case strings.Contains(ua, "edge") || strings.Contains(ua, "edga") || strings.Contains(ua, "edgios"):
+		u.Browser.Name = BrowserEdge
+
 	default:
 		u.Browser.Name = BrowserUnknown
 
