@@ -53,6 +53,10 @@ var testUAVars = []struct {
 		UserAgent{
 			Browser{BrowserChrome, Version{43, 0, 2357}}, OS{PlatformMac, OSMacOSX, Version{10, 10, 4}}, DeviceComputer}},
 
+	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36", // macOS Big Sur
+		UserAgent{
+			Browser{BrowserChrome, Version{87, 0, 4280}}, OS{PlatformMac, OSMacOSX, Version{11, 1, 0}}, DeviceComputer}},
+
 	{"Mozilla/5.0 (iPhone; U; CPU iPhone OS 5_1_1 like Mac OS X; en) AppleWebKit/534.46.0 (KHTML, like Gecko) CriOS/19.0.1084.60 Mobile/9B206 Safari/534.48.3",
 		UserAgent{
 			Browser{BrowserChrome, Version{19, 0, 1084}}, OS{PlatformiPhone, OSiOS, Version{5, 1, 1}}, DevicePhone}},
@@ -136,7 +140,7 @@ var testUAVars = []struct {
 		UserAgent{
 			Browser{BrowserIE, Version{11, 0, 0}}, OS{PlatformWindows, OSWindows, Version{6, 3, 0}}, DeviceComputer}},
 
-    {"Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 EdgiOS/44.3.5 Mobile/15E148 Safari/605.1.15",
+	{"Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 EdgiOS/44.3.5 Mobile/15E148 Safari/605.1.15",
 		UserAgent{
 			Browser{BrowserIE, Version{12, 0, 0}}, OS{PlatformiPhone, OSiOS, Version{12, 3, 1}}, DevicePhone}},
 
