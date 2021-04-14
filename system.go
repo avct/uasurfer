@@ -233,7 +233,7 @@ func (u *UserAgent) evalWindows(ua string) {
 
 func (u *UserAgent) evalMacintosh(uaPlatformGroup string) {
 	u.OS.Platform = PlatformMac
-	if i := strings.Index(uaPlatformGroup, "os x 10"); i != -1 {
+	if i := strings.Index(uaPlatformGroup, "os x "); i != -1 {
 		u.OS.Name = OSMacOSX
 		u.OS.Version.parse(uaPlatformGroup[i+5:])
 

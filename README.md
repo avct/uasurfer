@@ -114,7 +114,9 @@ Unknown version is returned as `0`.
 
 #### OS Version
 
-OS X major version is alway 10 with consecutive minor versions indicating release releases (10 - Yosemite, 11 - El Capitain, 12 Sierra, etc). Windows version is NT version. `Version{0, 0, 0}` indicated version is unknown or not evaluated.
+OS X major version is always 10 or 11 with consecutive minor versions indicating release releases (10.10 - Yosemite
+, 10.11 - El Capitain, 10.12 Sierra, 11.1 Big Sur etc). Windows version is NT version. `Version{0, 0, 0}` indicated
+ version is unknown or not evaluated.
 Versions can be compared using `Less` function: `if ver1.Less(ver2) {}`
 
 Here are some examples across the platform, os.name, and os.version:
