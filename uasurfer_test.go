@@ -439,6 +439,21 @@ var testUAVars = []struct {
 		UserAgent{
 			Browser{BrowserBot, Version{0, 0, 0}}, OS{PlatformUnknown, OSUnknown, Version{0, 0, 0}}, DeviceComputer}},
 
+	{"Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)",
+		UserAgent{
+			Browser{BrowserBot, Version{}},
+			OS{},
+			DeviceComputer,
+		},
+	},
+	{"lua-resty-http/0.10 (Lua) ngx_lua/10019",
+		UserAgent{
+			Browser{BrowserBot, Version{}},
+			OS{},
+			DeviceComputer,
+		},
+	},
+
 	// Unknown or partially handled
 	{"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.1b3pre) Gecko/20090223 SeaMonkey/2.0a3", //Seamonkey (~FF)
 		UserAgent{
@@ -975,6 +990,29 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (Linux; Android 4.4.2; Lenovo TAB 2 A7-30F Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.84 Safari/537.36",
 		UserAgent{
 			Browser{BrowserChrome, Version{45, 0, 2454}}, OS{PlatformAndroid, OSAndroid, Version{4, 4, 2}}, DeviceTablet}},
+
+	// email clients
+	{"Microsoft Office/16.0 (Microsoft Outlook 16.0.13426; Pro), Mozilla/4.0 (compatible; ms-office; MSOffice 16))",
+		UserAgent{
+			Browser{BrowserMSOutlook, Version{16, 0, 13426}},
+			OS{},
+			DeviceUnknown,
+		},
+	},
+	{"Mozilla/4.0 (compatible; ms-office; MSOffice 16)",
+		UserAgent{
+			Browser{BrowserMSOutlook, Version{16, 0, 0}},
+			OS{},
+			DeviceUnknown,
+		},
+	},
+	{"Superhuman",
+		UserAgent{
+			Browser{BrowserSuperHuman, Version{}},
+			OS{},
+			DeviceUnknown,
+		},
+	},
 }
 
 func TestAgentSurfer(t *testing.T) {

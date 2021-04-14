@@ -67,6 +67,8 @@ const (
 	BrowserYandex        BrowserID = 19
 	BrowserCocCoc        BrowserID = 20
 	BrowserBot           BrowserID = 21 // Bot list begins here
+	BrowserMSOutlook     BrowserID = 22
+	BrowserSuperHuman    BrowserID = 23
 )
 
 var browserIDs = map[BrowserID]string{
@@ -91,6 +93,8 @@ var browserIDs = map[BrowserID]string{
 	BrowserYandex:        "Yandex",
 	BrowserCocCoc:        "CocCoc",
 	BrowserBot:           "Bot",
+	BrowserMSOutlook:     "MS Outlook",
+	BrowserSuperHuman:    "SuperHuman",
 }
 
 func (b BrowserID) String() string {

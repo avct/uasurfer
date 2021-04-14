@@ -173,6 +173,18 @@ notwebkit:
 	case strings.Contains(ua, "seekport"):
 		u.Browser.ID = BrowserBot
 
+	case strings.Contains(ua, "ahrefsbot"):
+		u.Browser.ID = BrowserBot
+
+	case strings.Contains(ua, "lua-resty-http"):
+		u.Browser.ID = BrowserBot
+
+	case strings.Contains(ua, "ms-office"):
+		u.Browser.ID = BrowserMSOutlook
+
+	case strings.Contains(ua, "superhuman"):
+		u.Browser.ID = BrowserSuperHuman
+
 	default:
 		u.Browser.ID = BrowserUnknown
 
@@ -240,5 +252,8 @@ func (u *UserAgent) evalBrowserVersion(ua string) {
 
 	case BrowserCocCoc:
 		_ = u.Browser.Version.findVersionNumber(ua, "coc_coc_browser/")
+
+	case BrowserMSOutlook:
+		_ = u.Browser.Version.findVersionNumber(ua, "microsoft outlook ") || u.Browser.Version.findVersionNumber(ua, "msoffice ")
 	}
 }
