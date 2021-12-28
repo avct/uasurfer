@@ -168,7 +168,7 @@ func (u *UserAgent) evalLinux(ua string, agentPlatform string) {
 		u.OS.Name = OSLinux
 
 	case strings.Contains(ua, "x11"):
-		if strings.Contains(ua, "puffin") {
+		if strings.Contains(ua, "puffin/") {
 			u.evalPuffin(ua, agentPlatform)
 			return
 		}

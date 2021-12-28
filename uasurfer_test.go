@@ -1016,6 +1016,9 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (X11; U; Linux x86_64; tr-TR) AppleWebKit/537.36 (KHTML, like Gecko)  Chrome/30.0.1599.114 Safari/537.36 Puffin/5.2.0IP",
 		UserAgent{
 			Browser{BrowserPuffin, Version{5, 2, 0}}, OS{PlatformiPhone, OSiOS, Version{0, 0, 0}}, DevicePhone}},
+	{"Mozilla/5.0 (X11; U; Linux x86_64; tr-TR) AppleWebKit/537.36 (KHTML, like Gecko)  Chrome/30.0.1599.114 Safari/537.36 Puffin",
+		UserAgent{
+			Browser{BrowserPuffin, Version{0, 0, 0}}, OS{PlatformLinux, OSLinux, Version{0, 0, 0}}, DeviceUnknown}},
 
 	{"Mozilla/5.0 (Windows NT 6.2; ARM; Trident/7.0; Touch; rv:11.0; WPDesktop; Lumia 830) like Gecko",
 		UserAgent{
