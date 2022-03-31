@@ -7,6 +7,9 @@ import (
 func (u *UserAgent) evalDevice(ua string) {
 	switch {
 
+	case u.OS.Platform == PlatformPlaystation || u.OS.Platform == PlatformXbox || u.OS.Platform == PlatformNintendo || strings.Contains(ua, "nintendo") || strings.Contains(ua, "xbox") || strings.Contains(ua, "playstation"):
+		u.DeviceType = DeviceConsole
+
 	case u.OS.Platform == PlatformWindows || u.OS.Platform == PlatformMac || u.OS.Name == OSChromeOS:
 		if strings.Contains(ua, "mobile") || strings.Contains(ua, "touch") {
 			u.DeviceType = DeviceTablet // windows rt, linux haxor tablets
@@ -21,7 +24,7 @@ func (u *UserAgent) evalDevice(ua string) {
 		u.DeviceType = DevicePhone
 
 	// long list of smarttv and tv dongle identifiers
-	case strings.Contains(ua, "tv") || strings.Contains(ua, "crkey") || strings.Contains(ua, "googletv") || strings.Contains(ua, "aftb") || strings.Contains(ua, "aftt") || strings.Contains(ua, "aftm") || strings.Contains(ua, "adt-") || strings.Contains(ua, "roku") || strings.Contains(ua, "viera") || strings.Contains(ua, "aquos") || strings.Contains(ua, "dtv") || strings.Contains(ua, "appletv") || strings.Contains(ua, "smarttv") || strings.Contains(ua, "tuner") || strings.Contains(ua, "smart-tv") || strings.Contains(ua, "hbbtv") || strings.Contains(ua, "netcast") || strings.Contains(ua, "vizio") || strings.Contains(ua, "x88"):
+	case strings.Contains(ua, "tv") || strings.Contains(ua, "crkey") || strings.Contains(ua, "googletv") || strings.Contains(ua, "aftb") || strings.Contains(ua, "aftt") || strings.Contains(ua, "aftm") || strings.Contains(ua, "adt-") || strings.Contains(ua, "roku") || strings.Contains(ua, "viera") || strings.Contains(ua, "aquos") || strings.Contains(ua, "dtv") || strings.Contains(ua, "appletv") || strings.Contains(ua, "smarttv") || strings.Contains(ua, "tuner") || strings.Contains(ua, "smart-tv") || strings.Contains(ua, "hbbtv") || strings.Contains(ua, "netcast") || strings.Contains(ua, "vizio") || strings.Contains(ua, "x88") || strings.Contains(ua, "neo-x5") || strings.Contains(ua, "afts build") || strings.Contains(ua, "nexus player build") || strings.Contains(ua, "bravia"):
 		u.DeviceType = DeviceTV
 
 	case u.OS.Name == OSAndroid:
@@ -38,9 +41,6 @@ func (u *UserAgent) evalDevice(ua string) {
 		}
 
 		u.DeviceType = DevicePhone // default to phone
-
-	case u.OS.Platform == PlatformPlaystation || u.OS.Platform == PlatformXbox || u.OS.Platform == PlatformNintendo:
-		u.DeviceType = DeviceConsole
 
 	case strings.Contains(ua, "glass") || strings.Contains(ua, "watch") || strings.Contains(ua, "sm-v"):
 		u.DeviceType = DeviceWearable
