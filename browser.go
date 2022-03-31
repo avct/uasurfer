@@ -40,7 +40,7 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 		case strings.Contains(ua, "silk/"):
 			u.Browser.Name = BrowserSilk
 
-		case strings.Contains(ua, "edg/") || strings.Contains(ua, "edgios/") || strings.Contains(ua, "edga/")|| strings.Contains(ua, "edge/") || strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie "):
+		case strings.Contains(ua, "edg/") || strings.Contains(ua, "edgios/") || strings.Contains(ua, "edga/") || strings.Contains(ua, "edge/") || strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie "):
 			u.Browser.Name = BrowserIE
 
 		case strings.Contains(ua, "ucbrowser/") || strings.Contains(ua, "ucweb/"):
@@ -97,6 +97,10 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 
 notwebkit:
 	switch {
+	case strings.Contains(ua, "nintendo 3ds") &&
+		!strings.Contains(ua, "nintendobrowser/"):
+		u.Browser.Name = BrowserNetFront
+
 	case strings.Contains(ua, "qq/") || strings.Contains(ua, "qqbrowser/"):
 		u.Browser.Name = BrowserQQ
 
@@ -221,5 +225,9 @@ func (u *UserAgent) evalBrowserVersion(ua string) {
 
 	case BrowserCocCoc:
 		_ = u.Browser.Version.findVersionNumber(ua, "coc_coc_browser/")
+
+	case BrowserNintendo:
+		_ = u.Browser.Version.findVersionNumber(ua, "nintendobrowser/")
 	}
+
 }
