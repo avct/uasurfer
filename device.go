@@ -4,6 +4,37 @@ import (
 	"strings"
 )
 
+var smartTvPatterns = []string{
+	"tv",
+	"crkey",
+	"googletv",
+	"aftb",
+	"aftt",
+	"aftm",
+	"adt-",
+	"roku",
+	"viera",
+	"aquos",
+	"dtv",
+	"appletv",
+	"smarttv",
+	"tuner",
+	"smart-tv",
+	"hbbtv",
+	"netcast",
+	"vizio",
+	"x88",
+}
+
+func isSmartTv(ua string) bool {
+	for _, p := range smartTvPatterns {
+		if strings.Contains(ua, p) {
+			return true
+		}
+	}
+	return false
+}
+
 func (u *UserAgent) evalDevice(ua string) {
 	switch {
 
@@ -21,7 +52,7 @@ func (u *UserAgent) evalDevice(ua string) {
 		u.DeviceType = DevicePhone
 
 	// long list of smarttv and tv dongle identifiers
-	case strings.Contains(ua, "tv") || strings.Contains(ua, "crkey") || strings.Contains(ua, "googletv") || strings.Contains(ua, "aftb") || strings.Contains(ua, "aftt") || strings.Contains(ua, "aftm") || strings.Contains(ua, "adt-") || strings.Contains(ua, "roku") || strings.Contains(ua, "viera") || strings.Contains(ua, "aquos") || strings.Contains(ua, "dtv") || strings.Contains(ua, "appletv") || strings.Contains(ua, "smarttv") || strings.Contains(ua, "tuner") || strings.Contains(ua, "smart-tv") || strings.Contains(ua, "hbbtv") || strings.Contains(ua, "netcast") || strings.Contains(ua, "vizio") || strings.Contains(ua, "x88"):
+	case isSmartTv(ua):
 		u.DeviceType = DeviceTV
 
 	case u.OS.Name == OSAndroid:
