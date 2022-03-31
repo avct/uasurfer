@@ -38,6 +38,9 @@ func isSmartTv(ua string) bool {
 func (u *UserAgent) evalDevice(ua string) {
 	switch {
 
+	case u.OS.Platform == PlatformPlaystation || u.OS.Platform == PlatformXbox || u.OS.Platform == PlatformNintendo || strings.Contains(ua, "nintendo") || strings.Contains(ua, "xbox") || strings.Contains(ua, "playstation"):
+		u.DeviceType = DeviceConsole
+
 	case u.OS.Platform == PlatformWindows || u.OS.Platform == PlatformMac || u.OS.Name == OSChromeOS:
 		if strings.Contains(ua, "mobile") || strings.Contains(ua, "touch") {
 			u.DeviceType = DeviceTablet // windows rt, linux haxor tablets
@@ -69,9 +72,6 @@ func (u *UserAgent) evalDevice(ua string) {
 		}
 
 		u.DeviceType = DevicePhone // default to phone
-
-	case u.OS.Platform == PlatformPlaystation || u.OS.Platform == PlatformXbox || u.OS.Platform == PlatformNintendo:
-		u.DeviceType = DeviceConsole
 
 	case strings.Contains(ua, "glass") || strings.Contains(ua, "watch") || strings.Contains(ua, "sm-v"):
 		u.DeviceType = DeviceWearable

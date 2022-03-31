@@ -312,6 +312,14 @@ var testUAVars = []struct {
 		UserAgent{
 			Browser{BrowserIE, Version{9, 0, 0}}, OS{PlatformXbox, OSXbox, Version{6, 1, 0}}, DeviceConsole}},
 
+	{"Mozilla/5.0 (Windows NT 10.0; Win64; x64; XBOX_ONE_ED) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393", // Xbox One S
+		UserAgent{
+			Browser{BrowserIE, Version{14, 14393, 0}}, OS{PlatformXbox, OSXbox, Version{10, 0, 0}}, DeviceConsole}},
+
+	{"Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; Xbox; Xbox One) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Mobile Safari/537.36 Edge/13.10586", // Xbox One
+		UserAgent{
+			Browser{BrowserIE, Version{13, 10586, 0}}, OS{PlatformXbox, OSXbox, Version{10, 0, 0}}, DeviceConsole}},
+
 	// Playstation
 	{"Mozilla/5.0 (PlayStation 4 4.50) AppleWebKit/601.2 (KHTML, like Gecko)",
 		UserAgent{

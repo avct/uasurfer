@@ -56,7 +56,8 @@ func (u *UserAgent) evalOS(ua string) bool {
 			u.OS.Name = OSBlackberry
 
 		// Windows Phone
-		case strings.Contains(agentPlatform, "windows phone "):
+		case strings.Contains(agentPlatform, "windows phone ") &&
+			!strings.Contains(agentPlatform, "xbox"): // Xbox one user agents have 'windows phone'
 			u.evalWindowsPhone(agentPlatform)
 
 		// Windows, Xbox
@@ -199,13 +200,15 @@ func (u *UserAgent) evalWindows(ua string) {
 
 	switch {
 	//Xbox -- it reads just like Windows
-	case strings.Contains(ua, "xbox"):
+	case strings.Contains(ua, "xbox") || strings.Contains(ua, "Xbox One"):
 		u.OS.Platform = PlatformXbox
 		u.OS.Name = OSXbox
-		if !u.OS.Version.findVersionNumber(ua, "windows nt ") {
-			u.OS.Version.Major = 6
-			u.OS.Version.Minor = 0
-			u.OS.Version.Patch = 0
+		if !u.OS.Version.findVersionNumber(ua, "windows phone ") {
+			if !u.OS.Version.findVersionNumber(ua, "windows nt ") {
+				u.OS.Version.Major = 6
+				u.OS.Version.Minor = 0
+				u.OS.Version.Patch = 0
+			}
 		}
 
 	// No windows version
