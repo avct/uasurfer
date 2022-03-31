@@ -70,7 +70,7 @@ func (u *UserAgent) evalOS(ua string) bool {
 			u.OS.Name = OSKindle
 
 		// Linux (broader attempt)
-		case strings.Contains(ua, "linux"):
+		case strings.Contains(ua, "linux") || strings.Contains(ua, "crkey"):
 			u.evalLinux(ua, agentPlatform)
 
 		// WebOS (non-linux flagged)
@@ -130,7 +130,9 @@ func (u *UserAgent) evalLinux(ua string, agentPlatform string) {
 		u.OS.Version.findVersionNumber(agentPlatform, "android ")
 
 	// Android, Kindle Fire
-	case strings.Contains(ua, "android") || strings.Contains(ua, "googletv"):
+	case strings.Contains(ua, "android") ||
+		strings.Contains(ua, "googletv") ||
+		strings.Contains(ua, "crkey"):
 		// Android
 		u.OS.Platform = PlatformLinux
 		u.OS.Name = OSAndroid

@@ -336,7 +336,7 @@ var testUAVars = []struct {
 
 	{"Mozilla/5.0 (CrKey armv7l 1.4.15250) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.0 Safari/537.36", // Chromecast
 		UserAgent{
-			Browser{BrowserChrome, Version{31, 0, 1650}}, OS{PlatformUnknown, OSUnknown, Version{0, 0, 0}}, DeviceTV}},
+			Browser{BrowserChrome, Version{31, 0, 1650}}, OS{PlatformLinux, OSAndroid, Version{0, 0, 0}}, DeviceTV}},
 
 	{"Mozilla/5.0 (Linux; GoogleTV 3.2; VAP430 Build/MASTER) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.77 Safari/534.24", // Google TV
 		UserAgent{
