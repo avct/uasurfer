@@ -297,7 +297,15 @@ var testUAVars = []struct {
 
 	{"Mozilla/5.0 (Nintendo WiiU) AppleWebKit/534.52 (KHTML, like Gecko) NX/2.1.0.8.21 NintendoBrowser/1.0.0.7494.US",
 		UserAgent{
-			Browser{BrowserNintendo, Version{0, 0, 0}}, OS{PlatformNintendo, OSNintendo, Version{0, 0, 0}}, DeviceConsole}},
+			Browser{BrowserNintendo, Version{1, 0, 0}}, OS{PlatformNintendo, OSNintendo, Version{0, 0, 0}}, DeviceConsole}},
+
+	{"Mozilla/5.0 (Nintendo WiiU) AppleWebKit/536.30 (KHTML, like Gecko) NX/3.0.4.2.12 NintendoBrowser/4.3.1.11264.US",
+		UserAgent{
+			Browser{BrowserNintendo, Version{4, 3, 1}}, OS{PlatformNintendo, OSNintendo, Version{0, 0, 0}}, DeviceConsole}},
+
+	{"Mozilla/5.0 (Nintendo 3DS; U; ; en) Version/1.7412.EU",
+		UserAgent{
+			Browser{BrowserNetFront, Version{1, 7412, 0}}, OS{PlatformNintendo, OSNintendo, Version{0, 0, 0}}, DeviceConsole}},
 
 	// Xbox
 	{"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; Xbox)", //Xbox 360
@@ -839,14 +847,6 @@ var testUAVars = []struct {
 	{"Opera/9.30 (Nintendo Wii; U; ; 2047-7; fr)",
 		UserAgent{
 			Browser{BrowserOpera, Version{9, 30, 0}}, OS{PlatformNintendo, OSNintendo, Version{0, 0, 0}}, DeviceConsole}},
-
-	{"Mozilla/5.0 (Nintendo WiiU) AppleWebKit/534.52 (KHTML, like Gecko) NX/2.1.0.8.21 NintendoBrowser/1.0.0.7494.US",
-		UserAgent{
-			Browser{BrowserNintendo, Version{0, 0, 0}}, OS{PlatformNintendo, OSNintendo, Version{0, 0, 0}}, DeviceConsole}},
-
-	{"Mozilla/5.0 (Nintendo WiiU) AppleWebKit/536.28 (KHTML, like Gecko) NX/3.0.3.12.6 NintendoBrowser/2.0.0.9362.US",
-		UserAgent{
-			Browser{BrowserNintendo, Version{0, 0, 0}}, OS{PlatformNintendo, OSNintendo, Version{0, 0, 0}}, DeviceConsole}},
 
 	// TODO fails to get opera first -- but is this a real UA string or an uncommon spoof?
 	// {"Mozilla/4.0 (compatible; MSIE 5.0; Windows 2000) Opera 6.0 [en]",
