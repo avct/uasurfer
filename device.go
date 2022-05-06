@@ -90,6 +90,12 @@ func (u *UserAgent) evalDevice(ua string) {
 		u.DeviceType = DevicePhone
 
 	case u.OS.Name == OSLinux: // linux goes last since it's in so many other device types (tvs, wearables, android-based stuff)
+
+		// https://developers.whatismybrowser.com/useragents/explore/operating_platform/bravia-4k/
+		if strings.Contains(ua, "bravia") {
+			u.DeviceType = DeviceTV
+			return
+		}
 		u.DeviceType = DeviceComputer
 
 	default:

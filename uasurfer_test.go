@@ -2754,6 +2754,149 @@ var testUAVars = []struct {
 			DeviceConsole,
 		},
 	},
+	{
+		"Opera/9.80 (Linux armv7l; HbbTV/1.2.1 (; Philips; 40HFL5010T12; ; PHILIPSTV; CE-HTML/1.0 NETTV/4.4.1 SmartTvA/3.0.0 Firmware/004.002.036.135 (PhilipsTV, 3.1.1,)en) ) Presto/2.12.407 Version/12.50",
+		UserAgent{
+			Browser{
+				Name:    6,
+				Version: Version{Major: 12, Minor: 50, Patch: 0},
+			},
+			OS{
+				PlatformLinux, OSLinux, Version{0, 0, 0},
+			},
+			DeviceTV,
+		},
+	},
+	{
+		"Mozilla/5.0 (Linux; U; Linux; ja-jp; DTV; TSBNetTV/T3E01CD.0203.DDD) AppleWebKit/536(KHTML, like Gecko) NX/3.0 (DTV; HTML; R1.0;) DTVNetBrowser/2.2 (000039;T3E01CD;0203;DDD) InettvBrowser/2.2 (000039;T3E01CD;0203;DDD)",
+		UserAgent{
+			Browser{
+				Name:    0,
+				Version: Version{Major: 0, Minor: 0, Patch: 0},
+			},
+			OS{
+				PlatformLinux, OSLinux, Version{0, 0, 0},
+			},
+			DeviceTV,
+		},
+	},
+	{
+		"Opera/9.80 (Linux armv7l; Opera TV Store/6222) Presto/2.12.407 Version/12.50 Model/Sony-KJ-48W700C SonyCEBrowser/1.0 (KJ-48W700C; CTV/PKG2.401JPA; JPN)",
+		UserAgent{
+			Browser{
+				Name:    6,
+				Version: Version{Major: 12, Minor: 50, Patch: 0},
+			},
+			OS{
+				PlatformLinux, OSLinux, Version{0, 0, 0},
+			},
+			DeviceTV,
+		},
+	},
+	{
+		"Mozilla/5.0 (Linux; BRAVIA 4K 2015 Build/LMY48E.S265) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36 OPR/28.0.1754.0",
+		UserAgent{
+			Browser{
+				Name:    6,
+				Version: Version{Major: 28, Minor: 0, Patch: 1754},
+			},
+			OS{
+				PlatformLinux, OSLinux, Version{0, 0, 0},
+			},
+			DeviceTV,
+		},
+	},
+	{
+		"Mozilla/5.0 (Web0S; Linux/SmartTV) AppleWebKit/538.2 (KHTML, like Gecko) Large Screen Safari/538.2 LG Browser/7.00.00(LGE; 65LF6300-UA; 04.00.30; 1; DTV_W15M); webOS.TV-2015; LG NetCast.TV-2013 Compatible (LGE, 65LF6300-UA, wireless)",
+		UserAgent{
+			Browser{
+				Name:    0,
+				Version: Version{Major: 0, Minor: 0, Patch: 0},
+			},
+			OS{
+				PlatformLinux, OSWebOS, Version{0, 0, 0},
+			},
+			DeviceTV,
+		},
+	},
+	{
+		"Mozilla/5.0 (Web0S; Linux/SmartTV) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.2.1 Chr0me/38.0.2125.122 Safari/537.36 LG Browser/8.00.00(LGE; 60UH6550-UB; 03.00.15; 1; DTV_W16N); webOS.TV-2016; LG NetCast.TV-2013 Compatible (LGE, 60UH6550-UB, wireless)",
+		UserAgent{
+			Browser{
+				Name:    0,
+				Version: Version{Major: 0, Minor: 0, Patch: 0},
+			},
+			OS{
+				PlatformLinux, OSWebOS, Version{0, 0, 0},
+			},
+			DeviceTV,
+		},
+	},
+	{
+		"Mozilla/5.0 (Web0S; Linux/SmartTV) AppleWebKit/538.2 (KHTML, like Gecko) Large Screen Safari/538.2 LG Browser/7.00.00(LGE; 24LF4820-BU; 03.20.14; 1; DTV_W15L); webOS.TV-2015; LG NetCast.TV-2013 Compatible (LGE, 24LF4820-BU, wireless)",
+		UserAgent{
+			Browser{
+				Name:    0,
+				Version: Version{Major: 0, Minor: 0, Patch: 0},
+			},
+			OS{
+				PlatformLinux, OSWebOS, Version{0, 0, 0},
+			},
+			DeviceTV,
+		},
+	},
+	{
+		"Mozilla/5.0 (Linux; Tizen 2.3; SmartHub; SMART-TV; SmartTV; U; Maple2012) AppleWebKit/538.1+ (KHTML, like Gecko) TV Safari/538.1+",
+		UserAgent{
+			Browser{
+				Name:    0,
+				Version: Version{Major: 0, Minor: 0, Patch: 0},
+			},
+			OS{
+				PlatformLinux, OSLinux, Version{0, 0, 0},
+			},
+			DeviceTV,
+		},
+	},
+	{
+		"Mozilla/5.0 (Linux; Tizen 2.3) AppleWebKit/538.1 (KHTML, like Gecko)Version/2.3 TV Safari/538.1",
+		UserAgent{
+			Browser{
+				Name:    0,
+				Version: Version{Major: 2, Minor: 3, Patch: 0},
+			},
+			OS{
+				PlatformLinux, OSLinux, Version{0, 0, 0},
+			},
+			DeviceTV,
+		},
+	},
+	{
+		"AppleTV5,3/9.1.1",
+		UserAgent{
+			Browser{
+				Name:    0,
+				Version: Version{Major: 0, Minor: 0, Patch: 0},
+			},
+			OS{
+				PlatformUnknown, OSUnknown, Version{0, 0, 0},
+			},
+			DeviceTV,
+		},
+	},
+	{
+		"AppleTV6,2/11.1",
+		UserAgent{
+			Browser{
+				Name:    0,
+				Version: Version{Major: 0, Minor: 0, Patch: 0},
+			},
+			OS{
+				PlatformUnknown, OSUnknown, Version{0, 0, 0},
+			},
+			DeviceTV,
+		},
+	},
 }
 
 func TestAgentSurfer(t *testing.T) {
