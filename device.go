@@ -6,13 +6,11 @@ import (
 
 var smartTvPatterns = []string{
 	"tv",
-	"crkey",
 	"googletv",
 	"aftb",
 	"aftt",
 	"aftm",
 	"adt-",
-	"roku",
 	"viera",
 	"aquos",
 	"dtv",
@@ -58,6 +56,9 @@ func (u *UserAgent) evalDevice(ua string) {
 	case isSmartTv(ua):
 		u.DeviceType = DeviceTV
 
+	case strings.Contains(ua, "crkey"):
+		u.DeviceType = DeviceMediaHub
+
 	case u.OS.Name == OSAndroid:
 		// android phones report as "mobile", android tablets should not but often do -- http://android-developers.blogspot.com/2010/12/android-browser-user-agent-issues.html
 		if strings.Contains(ua, "mobile") {
@@ -74,6 +75,11 @@ func (u *UserAgent) evalDevice(ua string) {
 		// The Nexus Player is a set-top-box / console
 		if strings.Contains(ua, "nexus player") {
 			u.DeviceType = DeviceConsole
+			return
+		}
+
+		if strings.Contains(ua, "neo-x") || strings.Contains(ua, "roku") {
+			u.DeviceType = DeviceMediaHub
 			return
 		}
 
@@ -99,6 +105,10 @@ func (u *UserAgent) evalDevice(ua string) {
 		u.DeviceType = DeviceComputer
 
 	default:
+		if strings.Contains(ua, "neo-x") || strings.Contains(ua, "roku") {
+			u.DeviceType = DeviceMediaHub
+			return
+		}
 		u.DeviceType = DeviceUnknown
 	}
 }

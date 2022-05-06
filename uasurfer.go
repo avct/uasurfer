@@ -22,6 +22,7 @@ const (
 	DeviceConsole
 	DeviceWearable
 	DeviceTV
+	DeviceMediaHub
 )
 
 // StringTrimPrefix is like String() but trims the "Device" prefix

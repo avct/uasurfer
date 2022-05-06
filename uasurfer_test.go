@@ -835,7 +835,7 @@ var testUAVars = []struct {
 			OS{
 				PlatformLinux, OSAndroid, Version{0, 0, 0},
 			},
-			DeviceTV,
+			DeviceMediaHub,
 		},
 	},
 	{
@@ -911,7 +911,7 @@ var testUAVars = []struct {
 			OS{
 				PlatformUnknown, OSUnknown, Version{0, 0, 0},
 			},
-			DeviceTV,
+			DeviceMediaHub,
 		},
 	},
 	{
@@ -2895,6 +2895,58 @@ var testUAVars = []struct {
 				PlatformUnknown, OSUnknown, Version{0, 0, 0},
 			},
 			DeviceTV,
+		},
+	},
+	{
+		"Mozilla/5.0 (Linux; U; Android 4.2.2; he-il; NEO-X5-116A Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30",
+		UserAgent{
+			Browser{
+				Name:    5,
+				Version: Version{Major: 4, Minor: 0, Patch: 0},
+			},
+			OS{
+				PlatformLinux, OSAndroid, Version{4, 2, 2},
+			},
+			DeviceMediaHub,
+		},
+	},
+	{
+		"Roku4640X/DVP-7.70 (297.70E04154A)",
+		UserAgent{
+			Browser{
+				Name:    0,
+				Version: Version{Major: 0, Minor: 0, Patch: 0},
+			},
+			OS{
+				PlatformUnknown, OSUnknown, Version{0, 0, 0},
+			},
+			DeviceMediaHub,
+		},
+	},
+	{
+		"Mozilla/5.0 (CrKey armv7l 1.5.16041) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.0 Safari/537.36",
+		UserAgent{
+			Browser{
+				Name:    1,
+				Version: Version{Major: 31, Minor: 0, Patch: 1650},
+			},
+			OS{
+				PlatformLinux, OSAndroid, Version{0, 0, 0},
+			},
+			DeviceMediaHub,
+		},
+	},
+	{
+		"Mozilla/5.0 (Nintendo WiiU) AppleWebKit/536.30 (KHTML, like Gecko) NX/3.0.4.2.12 NintendoBrowser/4.3.1.11264.US",
+		UserAgent{
+			Browser{
+				Name:    16,
+				Version: Version{Major: 4, Minor: 3, Patch: 1},
+			},
+			OS{
+				PlatformNintendo, OSNintendo, Version{0, 0, 0},
+			},
+			DeviceConsole,
 		},
 	},
 }
