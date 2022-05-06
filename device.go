@@ -71,6 +71,12 @@ func (u *UserAgent) evalDevice(ua string) {
 			return
 		}
 
+		// The Nexus Player is a set-top-box / console
+		if strings.Contains(ua, "nexus player") {
+			u.DeviceType = DeviceConsole
+			return
+		}
+
 		u.DeviceType = DevicePhone // default to phone
 
 	case strings.Contains(ua, "glass") || strings.Contains(ua, "watch") || strings.Contains(ua, "sm-v"):
@@ -80,7 +86,7 @@ func (u *UserAgent) evalDevice(ua string) {
 	case u.Browser.Name == BrowserSilk || u.OS.Name == OSKindle && !strings.Contains(ua, "sd4930ur"):
 		u.DeviceType = DeviceTablet
 
-	case strings.Contains(ua, "mobile") || strings.Contains(ua, "touch") || strings.Contains(ua, " mobi") || strings.Contains(ua, "webos"): //anything "mobile"/"touch" that didn't get captured as tablet, console or wearable is presumed a phone
+	case strings.Contains(ua, "mobile") || strings.Contains(ua, "touch") || strings.Contains(ua, " mobi") || strings.Contains(ua, "webos"): // anything "mobile"/"touch" that didn't get captured as tablet, console or wearable is presumed a phone
 		u.DeviceType = DevicePhone
 
 	case u.OS.Name == OSLinux: // linux goes last since it's in so many other device types (tvs, wearables, android-based stuff)

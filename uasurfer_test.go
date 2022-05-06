@@ -2741,6 +2741,19 @@ var testUAVars = []struct {
 			DeviceConsole,
 		},
 	},
+	{
+		"Dalvik/2.1.0 (Linux; U; Android 6.0.1; Nexus Player Build/MMB29T)",
+		UserAgent{
+			Browser{
+				Name:    0,
+				Version: Version{Major: 0, Minor: 0, Patch: 0},
+			},
+			OS{
+				PlatformLinux, OSAndroid, Version{6, 0, 1},
+			},
+			DeviceConsole,
+		},
+	},
 }
 
 func TestAgentSurfer(t *testing.T) {
