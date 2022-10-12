@@ -1303,6 +1303,18 @@ var testUAVars = []struct {
 	},
 	// ANDROID TESTS
 	{
+		"Dalvik/2.1.0 (Linux; U; Android 11; SM-A115M Build/RP1A.200720.012)",
+		UserAgent{
+			Browser{
+				BrowserAndroid, Version{2, 1, 0},
+			},
+			OS{
+				PlatformLinux, OSAndroid, Version{11, 0, 0},
+			},
+			DevicePhone,
+		},
+	},
+	{
 		"Mozilla/5.0 (Linux; U; Android 1.0; en-us; dream) AppleWebKit/525.10+ (KHTML,like Gecko) Version/3.0.4 Mobile Safari/523.12.2",
 		UserAgent{
 			Browser{
@@ -2745,8 +2757,8 @@ var testUAVars = []struct {
 		"Dalvik/2.1.0 (Linux; U; Android 6.0.1; Nexus Player Build/MMB29T)",
 		UserAgent{
 			Browser{
-				Name:    0,
-				Version: Version{Major: 0, Minor: 0, Patch: 0},
+				Name:    BrowserAndroid,
+				Version: Version{Major: 2, Minor: 1, Patch: 0},
 			},
 			OS{
 				PlatformLinux, OSAndroid, Version{6, 0, 1},

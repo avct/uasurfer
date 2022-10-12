@@ -26,6 +26,12 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 		return u.maybeBot()
 	}
 
+	// https://user-agents.net/applications/dalvik
+	if strings.Contains(ua, "dalvik/") {
+		u.Browser.Name = BrowserAndroid
+		return u.maybeBot()
+	}
+
 	if strings.Contains(ua, "applewebkit") {
 		switch {
 		case strings.Contains(ua, "googlebot"):
@@ -178,6 +184,8 @@ func (u *UserAgent) evalBrowserVersion(ua string) {
 	}
 
 	switch u.Browser.Name {
+	case BrowserAndroid:
+		_ = u.Browser.Version.findVersionNumber(ua, "dalvik/")
 	case BrowserChrome:
 		// match both chrome and crios
 		_ = u.Browser.Version.findVersionNumber(ua, "chrome/") || u.Browser.Version.findVersionNumber(ua, "crios/") || u.Browser.Version.findVersionNumber(ua, "crmo/")
