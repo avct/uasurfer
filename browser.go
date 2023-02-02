@@ -47,7 +47,7 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 		case strings.Contains(ua, "silk/"):
 			u.Browser.Name = BrowserSilk
 
-		case strings.Contains(ua, "edg/") || strings.Contains(ua, "edgios/") || strings.Contains(ua, "edga/")|| strings.Contains(ua, "edge/") || strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie "):
+		case strings.Contains(ua, "edg/") || strings.Contains(ua, "edgios/") || strings.Contains(ua, "edga/") || strings.Contains(ua, "edge/") || strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie "):
 			u.Browser.Name = BrowserEdge
 
 		case strings.Contains(ua, "iemobile/") || strings.Contains(ua, "msie "):
@@ -91,7 +91,7 @@ func (u *UserAgent) evalBrowserName(ua string) bool {
 			u.Browser.Name = BrowserAndroid
 
 			// if we got this far and the device is iPhone or iPad, assume Webkit
-		case strings.Contains(ua, "iphone") || strings.Contains(ua, "ipad"):
+		case strings.Contains(ua, "iphone") || strings.Contains(ua, "ipad") || strings.Contains(ua, "webkit"):
 			u.Browser.Name = BrowserWebkit
 
 		default:
