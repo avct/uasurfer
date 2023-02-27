@@ -136,7 +136,7 @@ var testUAVars = []struct {
 		UserAgent{
 			Browser{BrowserIE, Version{11, 0, 0}}, OS{PlatformWindows, OSWindows, Version{6, 3, 0}}, DeviceComputer}},
 
-    {"Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 EdgiOS/44.3.5 Mobile/15E148 Safari/605.1.15",
+	{"Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 EdgiOS/44.3.5 Mobile/15E148 Safari/605.1.15",
 		UserAgent{
 			Browser{BrowserIE, Version{12, 0, 0}}, OS{PlatformiPhone, OSiOS, Version{12, 3, 1}}, DevicePhone}},
 
@@ -337,10 +337,6 @@ var testUAVars = []struct {
 	// TODO: not catching "browser/" and reporting as safari -- ua string not being fully checked?
 	// {"Mozilla/5.0 (DTV) AppleWebKit/531.2+ (KHTML, like Gecko) Espial/6.1.5 AQUOSBrowser/2.0 (US01DTV;V;0001;0001)", // Sharp Aquos
 	// 	BrowserUnknown, Version{0,0,0}}, OS{PlatformUnknown, OSUnknown, Version{0,0,0}}, DeviceTV}},
-
-	{"Roku/DVP-5.2 (025.02E03197A)", // Roku
-		UserAgent{
-			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformUnknown, OSUnknown, Version{0, 0, 0}}, DeviceTV}},
 
 	{"mozilla/5.0 (smart-tv; linux; tizen 2.3) applewebkit/538.1 (khtml, like gecko) samsungbrowser/1.0 tv safari/538.1", // Samsung SmartTV
 		UserAgent{
@@ -975,6 +971,21 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (Linux; Android 4.4.2; Lenovo TAB 2 A7-30F Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.84 Safari/537.36",
 		UserAgent{
 			Browser{BrowserChrome, Version{45, 0, 2454}}, OS{PlatformLinux, OSAndroid, Version{4, 4, 2}}, DeviceTablet}},
+	{"AppleCoreMedia/1.0.0.12B466 (Apple TV; U; CPU OS 8_1_3 like Mac OS X; en_us)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformtvOS, OStvOS, Version{0, 0, 0}}, DeviceTV}},
+	{"AppleTV5,3/13.2",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformtvOS, OStvOS, Version{0, 0, 0}}, DeviceTV}},
+	{"AppleTV/tvOS/9.1.1",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformtvOS, OStvOS, Version{0, 0, 0}}, DeviceTV}},
+	{"Roku/DVP-11.5 (11.5.0.4235-AM)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformRokuTV, OSRokuOS, Version{0, 0, 0}}, DeviceTV}},
+	{"Dalvik/2.1.0 (Linux; U; Android 6.0.1; MIBOX3 Build/MHC19J)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{6, 0, 1}}, DeviceTV}},
 }
 
 func TestAgentSurfer(t *testing.T) {

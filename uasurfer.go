@@ -99,6 +99,8 @@ const (
 	OSXbox
 	OSNintendo
 	OSBot
+	OStvOS
+	OSRokuOS
 )
 
 // StringTrimPrefix is like String() but trims the "OS" prefix
@@ -127,6 +129,8 @@ const (
 	PlatformXbox
 	PlatformNintendo
 	PlatformBot
+	PlatformtvOS
+	PlatformRokuTV
 )
 
 // StringTrimPrefix is like String() but trims the "Platform" prefix
