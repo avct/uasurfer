@@ -997,7 +997,7 @@ var testUAVars = []struct {
 			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformtvOS, OStvOS, Version{0, 0, 0}}, DeviceTV}},
 	{"Lavf/58.22.100",
 		UserAgent{
-			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{0, 0, 0}}, DeviceUnknown}},
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{0, 0, 0}}, DevicePhone}},
 }
 
 func TestAgentSurfer(t *testing.T) {
