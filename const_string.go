@@ -98,11 +98,12 @@ func _() {
 	_ = x[OSBot-14]
 	_ = x[OStvOS-15]
 	_ = x[OSRokuOS-16]
+	_ = x[OSTizen-17]
 }
 
-const _OSName_name = "OSUnknownOSWindowsPhoneOSWindowsOSMacOSXOSiOSOSAndroidOSBlackberryOSChromeOSOSKindleOSWebOSOSLinuxOSPlaystationOSXboxOSNintendoOSBotOStvOSOSRokuOS"
+const _OSName_name = "OSUnknownOSWindowsPhoneOSWindowsOSMacOSXOSiOSOSAndroidOSBlackberryOSChromeOSOSKindleOSWebOSOSLinuxOSPlaystationOSXboxOSNintendoOSBotOStvOSOSRokuOSOSTizen"
 
-var _OSName_index = [...]uint8{0, 9, 23, 32, 40, 45, 54, 66, 76, 84, 91, 98, 111, 117, 127, 132, 138, 146}
+var _OSName_index = [...]uint8{0, 9, 23, 32, 40, 45, 54, 66, 76, 84, 91, 98, 111, 117, 127, 132, 138, 146, 153}
 
 func (i OSName) String() string {
 	if i < 0 || i >= OSName(len(_OSName_index)-1) {

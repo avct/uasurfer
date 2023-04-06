@@ -986,6 +986,18 @@ var testUAVars = []struct {
 	{"Dalvik/2.1.0 (Linux; U; Android 6.0.1; MIBOX3 Build/MHC19J)",
 		UserAgent{
 			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{6, 0, 1}}, DeviceTV}},
+	{"Opera/9.80 (Tizen; Opera Mini/7.7.18/174.55; U; en) Presto/2.12.423 Version/12.16",
+		UserAgent{
+			Browser{BrowserOpera, Version{12, 16, 0}}, OS{PlatformLinux, OSTizen, Version{0, 0, 0}}, DevicePhone}},
+	{"Mozilla/5.0 (QSP; Apple TV 4K; AP; 5.4.14.116)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformtvOS, OStvOS, Version{0, 0, 0}}, DeviceTV}},
+	{"IMAtvOS/t.3.8.0 tvOS/13.4",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformtvOS, OStvOS, Version{0, 0, 0}}, DeviceTV}},
+	{"Lavf/58.22.100",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{0, 0, 0}}, DeviceUnknown}},
 }
 
 func TestAgentSurfer(t *testing.T) {

@@ -101,6 +101,7 @@ const (
 	OSBot
 	OStvOS
 	OSRokuOS
+	OSTizen
 )
 
 // StringTrimPrefix is like String() but trims the "OS" prefix
