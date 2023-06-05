@@ -21,7 +21,41 @@ func (u *UserAgent) evalDevice(ua string) {
 		u.DeviceType = DevicePhone
 
 	// long list of smarttv and tv dongle identifiers
-	case strings.Contains(ua, "tv") || strings.Contains(ua, "crkey") || strings.Contains(ua, "googletv") || strings.Contains(ua, "aftb") || strings.Contains(ua, "aftt") || strings.Contains(ua, "aftm") || strings.Contains(ua, "afts") || strings.Contains(ua, "adt-") || strings.Contains(ua, "roku") || strings.Contains(ua, "viera") || strings.Contains(ua, "aquos") || strings.Contains(ua, "dtv") || strings.Contains(ua, "appletv") || strings.Contains(ua, "smarttv") || strings.Contains(ua, "tuner") || strings.Contains(ua, "smart-tv") || strings.Contains(ua, "hbbtv") || strings.Contains(ua, "netcast") || strings.Contains(ua, "vizio") || strings.Contains(ua, "mibox"):
+	// Amazon TV Devices --
+	// https://developer.amazon.com/docs/fire-tv/identify-amazon-fire-tv-devices.html
+	case strings.Contains(ua, "tv") ||
+		strings.Contains(ua, "crkey") ||
+		strings.Contains(ua, "googletv") ||
+		strings.Contains(ua, "aeoh") ||
+		strings.Contains(ua, "afta") ||
+		strings.Contains(ua, "aftb") ||
+		strings.Contains(ua, "aftd") ||
+		strings.Contains(ua, "afte") ||
+		strings.Contains(ua, "aftg") ||
+		strings.Contains(ua, "afth") ||
+		strings.Contains(ua, "aftj") ||
+		strings.Contains(ua, "aftk") ||
+		strings.Contains(ua, "aftl") ||
+		strings.Contains(ua, "aftm") ||
+		strings.Contains(ua, "aftn") ||
+		strings.Contains(ua, "aftp") ||
+		strings.Contains(ua, "aftr") ||
+		strings.Contains(ua, "afts") ||
+		strings.Contains(ua, "aftt") ||
+		strings.Contains(ua, "aftw") ||
+		strings.Contains(ua, "adt-") ||
+		strings.Contains(ua, "roku") ||
+		strings.Contains(ua, "viera") ||
+		strings.Contains(ua, "aquos") ||
+		strings.Contains(ua, "dtv") ||
+		strings.Contains(ua, "appletv") ||
+		strings.Contains(ua, "smarttv") ||
+		strings.Contains(ua, "tuner") ||
+		strings.Contains(ua, "smart-tv") ||
+		strings.Contains(ua, "hbbtv") ||
+		strings.Contains(ua, "netcast") ||
+		strings.Contains(ua, "vizio") ||
+		strings.Contains(ua, "mibox"):
 		u.DeviceType = DeviceTV
 
 	case u.OS.Name == OSAndroid:
