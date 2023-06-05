@@ -269,7 +269,7 @@ var testUAVars = []struct {
 		UserAgent{
 			Browser{BrowserSilk, Version{3, 67, 0}}, OS{PlatformLinux, OSKindle, Version{4, 4, 3}}, DeviceTablet}}, // Fire tablet
 
-	{"Mozilla/5.0 (Linux; U; Android 4.2.2; en­us; KFTHWI Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.22 like Chrome/34.0.1847.137 Mobile Safari/537.36",
+	{"Mozilla/5.0 (Linux; U; Android 4.2.2; enus; KFTHWI Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.22 like Chrome/34.0.1847.137 Mobile Safari/537.36",
 		UserAgent{
 			Browser{BrowserSilk, Version{3, 22, 0}}, OS{PlatformLinux, OSKindle, Version{4, 2, 2}}, DeviceTablet}}, // Fire tablet, but with "Mobile"
 
@@ -998,6 +998,14 @@ var testUAVars = []struct {
 	{"Lavf/58.22.100",
 		UserAgent{
 			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{0, 0, 0}}, DevicePhone}},
+
+	{"Dalvik/2.1.0 (Linux; U; Android 7.1.2; AFTMM Build/NS6296) gbnewsAmazon 1.3 (5540051)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{7, 1, 2}}, DeviceTV}},
+
+	{"Dalvik/2.1.0 (Linux; U; Android 9; AFTSS Build/PS7633.3445N) gbnewsAmazon 1.3 (5540051)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{9, 0, 0}}, DeviceTV}},
 }
 
 func TestAgentSurfer(t *testing.T) {
