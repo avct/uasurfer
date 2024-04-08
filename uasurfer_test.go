@@ -254,6 +254,11 @@ var testUAVars = []struct {
 		UserAgent{
 			Browser{BrowserIE, Version{9, 0, 0}, Version{9, 0, 0}}, OS{PlatformWindowsPhone, OSWindowsPhone, Version{7, 5, 0}}, DevicePhone}},
 
+	// Motorola Phone
+	{"Mozilla/5.0 (Linux; Android 13; motorola razr 2023 Build/T2TVS33.45-83-2-3; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/122.0.6261.119 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{122, 0, 6261}, Version{122, 0, 6261}}, OS{PlatformLinux, OSAndroid, Version{13, 0, 0}}, DevicePhone}},
+
 	// Kindle eReader
 	{"Mozilla/5.0 (Linux; U; en-US) AppleWebKit/528.5+ (KHTML, like Gecko, Safari/528.5+) Version/4.0 Kindle/3.0 (screen 600×800; rotate)",
 		UserAgent{
