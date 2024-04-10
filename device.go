@@ -17,7 +17,7 @@ func (u *UserAgent) evalDevice(ua string) {
 	case u.OS.Platform == PlatformiPad || u.OS.Platform == PlatformiPod || strings.Contains(ua, "tablet") || strings.Contains(ua, "kindle/") || strings.Contains(ua, "playbook"):
 		u.DeviceType = DeviceTablet
 
-	case u.OS.Platform == PlatformiPhone || u.OS.Platform == PlatformBlackberry || strings.Contains(ua, "phone"):
+	case u.OS.Platform == PlatformiPhone || u.OS.Platform == PlatformBlackberry || strings.Contains(ua, "phone") || strings.Contains(ua, "motorola razr"):
 		u.DeviceType = DevicePhone
 
 	// long list of smarttv and tv dongle identifiers
