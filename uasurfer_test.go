@@ -136,7 +136,7 @@ var testUAVars = []struct {
 		UserAgent{
 			Browser{BrowserIE, Version{11, 0, 0}}, OS{PlatformWindows, OSWindows, Version{6, 3, 0}}, DeviceComputer}},
 
-    {"Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 EdgiOS/44.3.5 Mobile/15E148 Safari/605.1.15",
+	{"Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 EdgiOS/44.3.5 Mobile/15E148 Safari/605.1.15",
 		UserAgent{
 			Browser{BrowserIE, Version{12, 0, 0}}, OS{PlatformiPhone, OSiOS, Version{12, 3, 1}}, DevicePhone}},
 
@@ -975,6 +975,48 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (Linux; Android 4.4.2; Lenovo TAB 2 A7-30F Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.84 Safari/537.36",
 		UserAgent{
 			Browser{BrowserChrome, Version{45, 0, 2454}}, OS{PlatformLinux, OSAndroid, Version{4, 4, 2}}, DeviceTablet}},
+	{"Mozilla/5.0 (X11; Linux armv7l) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.9.7 Chrome/56.0.2924.122 Safari/537.36 Sky_STB_BC7445_2018/1.0.0 (Sky, ES140UK, )",
+		UserAgent{
+			Browser{BrowserChrome, Version{56, 0, 2924}}, OS{PlatformLinux, OSLinux, Version{0, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (ARRIS_Foxtel_STB_DGX7000NF; Linux mipsel) AppleWebKit/605.1.15 (KHTML, like Gecko) WPE ARRIS_Foxtel_STB_DGX7000NF /1.21.3.9 (Foxtel,DGX7000NF)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSLinux, Version{0, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux armv7l) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0. 3865.120 Safari/537.36 OPR/46.0.2207.0 OMI/4.20.5.80.Catcher3.128 Model/Hisense-MT9602 VIDAA/4.0(Hisense;SmartTV;32A35EUV_0002;MTK9602/V0000.01.00K.M0713;HD)",
+		UserAgent{
+			Browser{BrowserOpera, Version{46, 0, 2207}}, OS{PlatformLinux, OSLinux, Version{0, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Web0S; Linux/SmartTV) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.34 Safari/537.36 WebAppManager",
+		UserAgent{
+			Browser{BrowserChrome, Version{53, 0, 2785}}, OS{PlatformLinux, OSLinux, Version{0, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (PlayStation 4 WebMAF) AppleWebKit/601.2 (KHTML, like Gecko) WebMAF/v3.0.2-0-g0f0b69bc SDK: (0x09508001u), Built: Aug 17 2022 20:04:00",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformPlaystation, OSPlaystation, Version{0, 0, 0}}, DeviceConsole}},
+	{"Mozilla/5.0 (PlayStation; PlayStation 5/6.00) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Safari/605.1.15",
+		UserAgent{
+			Browser{BrowserSafari, Version{15, 4, 0}}, OS{PlatformPlaystation, OSPlaystation, Version{0, 0, 0}}, DeviceConsole}},
+	{"Mozilla/5.0 (Linux; Tizen 2.3; SmartHub; SMART-TV; SmartTV; U; Maple2012) AppleWebKit/538.1+ (KHTML, like Gecko) TV Safari/538.1+",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSLinux, Version{0, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Andr0id 12; IP2300) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.198 Safari/537.36 OPR/46.0.2207.0 OMI/4.24.0.81.CRON5.4 Model/Swisscom-IP2300",
+		UserAgent{
+			Browser{BrowserOpera, Version{46, 0, 2207}}, OS{PlatformLinux, OSLinux, Version{0, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.128 Safari/537.36 OPR/46.0.2207.0 OMI/4.23.2.96.LIMA2.71 Model/Vestel-MB180 VSTVB MB100 FVC/8.0 (OEM; MB180; ) HbbTV/1.6.1 (+DRM; OEM; MB180; 0.20.0.0; ; _TV_G31_2023;) TiVoOS/1.0.0 (Vestel MB180 OEM) SmartTvA/3.0.0",
+		UserAgent{
+			Browser{BrowserOpera, Version{46, 0, 2207}}, OS{PlatformLinux, OSLinux, Version{0, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux armv7l) AppleWebKit/602.1.28+ (KHTML, like Gecko) Version/9.1 Safari/601.5.17 WPE/2.22.1, VirginMediaSTB/VIP5002W-mon-web-00.01-148-ae-AL-20220707135023-na001 (Arris_liberty,VIP5002W-PRD,Wireless) HZN/4.43 (MN=VIP5002W-PRD;PC=APLSTB;FV=VIP5002W-mon-web-00.01-148-ae-AL-20220707135023-na001;)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{9, 1, 0}}, OS{PlatformLinux, OSLinux, Version{0, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (X11; Linux armv7l) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36 CrKey/1.0.999999 VIZIO SmartCast(Conjure/SX7A-4.6.419.12 FW/11.0.120.1-1 Model/M55-E0)",
+		UserAgent{
+			Browser{BrowserChrome, Version{72, 0, 3626}}, OS{PlatformLinux, OSLinux, Version{0, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0, AppleWebKit/537.36, Chrome/92.0.4515.159, Safari/537.36, OPR/46.0.2207.0, OMI/4.22.1, VODAFONE_STB/7.2.A102.99ba.ngbd BCM7271/7.2.A102.99ba.ngbd/DCIW387/HIGH (Sagemcom_Broadband_SAS, DCIW387_UHD_VF_DE, Wired)",
+		UserAgent{
+			Browser{BrowserOpera, Version{46, 0, 2207}}, OS{PlatformUnknown, OSUnknown, Version{0, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Windows NT 10.0; Win64; x64; Xbox; Xbox One) AppleWebKit/537.36 (KHTML; like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19041",
+		UserAgent{
+			Browser{BrowserIE, Version{18, 19041, 0}}, OS{PlatformXbox, OSXbox, Version{10, 0, 0}}, DeviceConsole}},
+	{"YouViewHTML/1.0 AppleWebKit/605.1.15 (Sagemcom; RTIW387; RTIW387.002.P; CDS/0.6.216; API/4.0.0; PS/4.14.4) (+DVR+HTML+IPCMC+UHD+DASH+DRM)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformUnknown, OSUnknown, Version{0, 0, 0}}, DeviceTV}},
 }
 
 func TestAgentSurfer(t *testing.T) {
