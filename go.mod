@@ -1,4 +1,4 @@
-module uasurfer
+module github.com/avct/uasurfer
 
 go 1.21.5
 
