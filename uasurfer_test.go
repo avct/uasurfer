@@ -60,6 +60,12 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (Linux; Android 6.0; Nexus 5X Build/MDB08L) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36",
 		UserAgent{
 			Browser{BrowserChrome, Version{46, 0, 2490}}, OS{PlatformLinux, OSAndroid, Version{6, 0, 0}}, DevicePhone}},
+	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{124, 0, 0}}, OS{PlatformMac, OSMacOSX, Version{14, 4, 1}}, DeviceComputer}},
+	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36", // macOS Big Sur
+		UserAgent{
+			Browser{BrowserChrome, Version{87, 0, 4280}}, OS{PlatformMac, OSMacOSX, Version{11, 1, 0}}, DeviceComputer}},
 
 	// Chromium (Chrome)
 	{"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.19 (KHTML, like Gecko) Ubuntu/11.10 Chromium/18.0.1025.142 Chrome/18.0.1025.142 Safari/535.19",
@@ -87,10 +93,9 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12) AppleWebKit/602.1.32 (KHTML, like Gecko) Version/10.0 Safari/602.1.32", // macOS Sierra dev beta
 		UserAgent{
 			Browser{BrowserSafari, Version{10, 0, 0}}, OS{PlatformMac, OSMacOSX, Version{10, 12, 0}}, DeviceComputer}},
-
-	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36", // macOS Big Sur
+	{"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Mobile/15E148 Safari/604.1",
 		UserAgent{
-			Browser{BrowserChrome, Version{87, 0, 4280}}, OS{PlatformMac, OSMacOSX, Version{11, 1, 0}}, DeviceComputer}},
+			Browser{BrowserSafari, Version{17, 4, 1}}, OS{PlatformiPhone, OSiOS, Version{17, 4, 1}}, DevicePhone}},
 
 	// Firefox
 	{"Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) FxiOS/1.0 Mobile/12F69 Safari/600.1.4",
@@ -108,6 +113,12 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0",
 		UserAgent{
 			Browser{BrowserFirefox, Version{38, 0, 0}}, OS{PlatformLinux, OSLinux, Version{0, 0, 0}}, DeviceComputer}},
+	{"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0",
+		UserAgent{
+			Browser{BrowserFirefox, Version{125, 0, 0}}, OS{PlatformWindows, OSWindows, Version{10, 0, 0}}, DeviceComputer}},
+	{"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/125.0 Mobile/15E148 Safari/605.1.15",
+		UserAgent{
+			Browser{BrowserFirefox, Version{125, 0, 0}}, OS{PlatformiPhone, OSiOS, Version{17, 4, 1}}, DevicePhone}},
 
 	// Silk
 	{"Mozilla/5.0 (Linux; U; Android 4.4.3; de-de; KFTHWI Build/KTU84M) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.47 like Chrome/37.0.2026.117 Safari/537.36",
@@ -209,6 +220,9 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (X11; U; CrOS i686 9.10.0; en-US) AppleWebKit/532.5 (KHTML, like Gecko) Chrome/4.0.253.0 Safari/532.5",
 		UserAgent{
 			Browser{BrowserChrome, Version{4, 0, 253}}, OS{PlatformLinux, OSChromeOS, Version{0, 0, 0}}, DeviceComputer}},
+	{"Mozilla/5.0 (X11; CrOS x86_64 15633.69.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.212 Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{119, 0, 6045}}, OS{PlatformLinux, OSChromeOS, Version{0, 0, 0}}, DeviceComputer}},
 
 	// iPod, iPod Touch
 	{"mozilla/5.0 (ipod touch; cpu iphone os 9_3_3 like mac os x) applewebkit/601.1.46 (khtml, like gecko) version/9.0 mobile/13g34 safari/601.1",
@@ -1021,6 +1035,9 @@ var testUAVars = []struct {
 	{"YouViewHTML/1.0 AppleWebKit/605.1.15 (Sagemcom; RTIW387; RTIW387.002.P; CDS/0.6.216; API/4.0.0; PS/4.14.4) (+DVR+HTML+IPCMC+UHD+DASH+DRM)",
 		UserAgent{
 			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformUnknown, OSUnknown, Version{0, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.2478.67",
+		UserAgent{
+			Browser{BrowserIE, Version{124, 0, 2478}}, OS{PlatformMac, OSMacOSX, Version{14, 4, 1}}, DeviceComputer}},
 }
 
 func TestAgentSurfer(t *testing.T) {
