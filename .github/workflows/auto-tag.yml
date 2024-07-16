@@ -1,0 +1,35 @@
+name: Automatic Tag
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - closed
+    branches:
+      - master
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Fetch all history for all tags and branches
+
+      - name: Bump version and push tag
+        id: tag_version
+        uses: anothrNick/github-tag-action@1.70.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch  # Default to 'patch' if no keywords found
+          WITH_V: true  # Prefix the tag with 'v', set to false to omit
+          RELEASE_BRANCHES: master
+          # Custom configurations:
+          MAJOR_WORDS: 'BREAKING CHANGE, major'
+          MINOR_WORDS: 'feat, minor'
+          PATCH_WORDS: 'fix, patch, chore, refactor, style, docs'
