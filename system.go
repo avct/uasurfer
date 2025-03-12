@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+// Also test comment
+
 var (
 	amazonFireFingerprint = regexp.MustCompile("\\s(k[a-z]{3,5}|sd\\d{4}ur)\\s") //tablet or phone
 )

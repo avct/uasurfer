@@ -2,6 +2,8 @@ package uasurfer
 
 import "testing"
 
+// Test comment
+
 var testUAVars = []struct {
 	UA string
 	UserAgent
