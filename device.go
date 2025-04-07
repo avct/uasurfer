@@ -37,15 +37,15 @@ func (u *UserAgent) evalDevice(ua string) {
 	case u.OS.Platform == PlatformiPad || strings.Contains(ua, "nook") || strings.Contains(ua, "bntv") || strings.Contains(ua, "tablet") || strings.Contains(ua, "kindle/") || strings.Contains(ua, "playbook"):
 		u.DeviceType = DeviceTablet
 
-	// long list of smarttv and tv dongle identifiers - above "phone" check to prevent TVs from being detected as phones
-	case strings.Contains(ua, "tv") || strings.Contains(ua, "crkey") || strings.Contains(ua, "googletv") || strings.Contains(ua, "aftb") || strings.Contains(ua, "aftt") || strings.Contains(ua, "aftm") || strings.Contains(ua, "adt-") || strings.Contains(ua, "roku") || strings.Contains(ua, "viera") || strings.Contains(ua, "aquos") || strings.Contains(ua, "dtv") || strings.Contains(ua, "appletv") || strings.Contains(ua, "smarttv") || strings.Contains(ua, "tuner") || strings.Contains(ua, "smart-tv") || strings.Contains(ua, "hbbtv") || strings.Contains(ua, "netcast") || strings.Contains(ua, "vizio") || strings.Contains(ua, "stb") || strings.Contains(ua, "swisscom-ip") || strings.Contains(ua, "youview"):
-		u.DeviceType = DeviceTV
-
 	case u.OS.Platform == PlatformiPhone || u.OS.Platform == PlatformBlackberry || strings.Contains(ua, "phone"):
 		u.DeviceType = DevicePhone
 
 	case strings.Contains(ua, " letv"):
 		u.DeviceType = DevicePhone
+
+	// long list of smarttv and tv dongle identifiers
+	case strings.Contains(ua, "tv") || strings.Contains(ua, "crkey") || strings.Contains(ua, "googletv") || strings.Contains(ua, "aftb") || strings.Contains(ua, "aftt") || strings.Contains(ua, "aftm") || strings.Contains(ua, "adt-") || strings.Contains(ua, "roku") || strings.Contains(ua, "viera") || strings.Contains(ua, "aquos") || strings.Contains(ua, "dtv") || strings.Contains(ua, "appletv") || strings.Contains(ua, "smarttv") || strings.Contains(ua, "tuner") || strings.Contains(ua, "smart-tv") || strings.Contains(ua, "hbbtv") || strings.Contains(ua, "netcast") || strings.Contains(ua, "vizio") || strings.Contains(ua, "stb") || strings.Contains(ua, "swisscom-ip") || strings.Contains(ua, "youview"):
+		u.DeviceType = DeviceTV
 
 	case u.OS.Name == OSAndroid:
 		if strings.Contains(ua, "tablet") || strings.Contains(ua, "nexus 7") || strings.Contains(ua, "nexus 9") || strings.Contains(ua, "nexus 10") || strings.Contains(ua, "xoom") ||
