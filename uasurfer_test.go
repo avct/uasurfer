@@ -1038,6 +1038,50 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.2478.67",
 		UserAgent{
 			Browser{BrowserIE, Version{124, 0, 2478}}, OS{PlatformMac, OSMacOSX, Version{14, 4, 1}}, DeviceComputer}},
+
+	// Additional TV user agents
+	{"Mozilla/5.0 (Linux; Android 11; AFTKRT Build/RS8133.2817N; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/130.0.6723.170 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{130, 0, 6723}}, OS{PlatformLinux, OSAndroid, Version{11, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 9; AFTSSS Build/PS7690.4719N; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/130.0.6723.170 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{130, 0, 6723}}, OS{PlatformLinux, OSAndroid, Version{9, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 10; BRAVIA 4K UR3 Build/QTG3.200305.006.S73; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/135.0.7049.38 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{135, 0, 7049}}, OS{PlatformLinux, OSAndroid, Version{10, 0, 0}}, DeviceTV}},
+	{"Dalvik/2.1.0 (Linux; U; Android 9; MIBOX4 Build/PI)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{9, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 12; Chromecast Build/STTL.241013.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/135.0.7049.38 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{135, 0, 7049}}, OS{PlatformLinux, OSAndroid, Version{12, 0, 0}}, DeviceTV}},
+	{"Dalvik/2.1.0 (Linux; U; Android 8.0.0; IP100 Build/OPR5.170623.014; Sky) OTTera/14.957 Motorvision",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{8, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 12; OTT-G1 Build/ST; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/130.0.6723.108 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{130, 0, 6723}}, OS{PlatformLinux, OSAndroid, Version{12, 0, 0}}, DeviceTV}},
+	{"Dalvik/2.1.0 (Linux; U; Android 12; Chromecast HD Build/STTL.240812.006)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{12, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 10; BRAVIA 4K VH21 Build/QTG3.200305.006.S416; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/134.0.6998.135 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{134, 0, 6998}}, OS{PlatformLinux, OSAndroid, Version{10, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 11; TPM191E Build/RTT2.211108.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/135.0.7049.38 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{135, 0, 7049}}, OS{PlatformLinux, OSAndroid, Version{11, 0, 0}}, DeviceTV}},
+	{"Dalvik/2.1.0 (Linux; U; Android 11; BRAVIA TL Build/RTM2.210929.098)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{11, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 12; Nokia Streaming Box 8000 Build/SC; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/135.0.7049.37 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{135, 0, 7049}}, OS{PlatformLinux, OSAndroid, Version{12, 0, 0}}, DeviceTV}},
+	{"waipu/2025.1.0-49c4c93e14 (Tablet; Google; MBOX; waipu; Android 10)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{10, 0, 0}}, DeviceTV}},
+	{"waipu/2025.5.0-16b788cf99 (Tablet; RockChip; X88Pro13.smartTV.skw.F1010_1.0.0; o2; Android 13)",
+		UserAgent{
+			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{13, 0, 0}}, DeviceTV}},
 }
 
 func TestAgentSurfer(t *testing.T) {
