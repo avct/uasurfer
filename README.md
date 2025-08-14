@@ -171,3 +171,11 @@ DeviceType is typically quite accurate, though determining between phones and ta
  * "opera/9.64 (macintosh; ppc mac os x; u; en) presto/2.1.1"
 * old Windows
  * "mozilla/5.0 (windows nt 4.0; wow64) applewebkit/537.36 (khtml, like gecko) chrome/37.0.2049.0 safari/537.36"
+
+## Adding new user agents
+
+1. Source user agent strings which identify a device type, system or a browser you want to add
+2. Identify a unique part of the user agent string which identifies a device
+3. Add a condition to a switch statement inside `browser.go`, `device.go` or `system.go`
+
+For example, to identify a Google TV user agent as device type TV, we identify that all user agents contain "googletv" string and we add `strings.Contains(ua, "googletv")` to the `device.go` switch condition for identifying TVs.
