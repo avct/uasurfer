@@ -23,7 +23,7 @@ func (u *UserAgent) evalDevice(ua string) {
 		strings.Contains(ua, "aftgazl") || strings.Contains(ua, "aftanna") || strings.Contains(ua, "aftkauk") ||
 		strings.Contains(ua, "bravia") || strings.Contains(ua, "mibox") || strings.Contains(ua, "chromecast") || strings.Contains(ua, "ott-g1") || strings.Contains(ua, "ottera") ||
 		strings.Contains(ua, "tpm191e") || strings.Contains(ua, "nokia streaming box") ||
-		strings.Contains(ua, "tv box") || (strings.Contains(ua, "mbox") && !strings.Contains(ua, "xbox")):
+		strings.Contains(ua, "tv box") || (strings.Contains(ua, "mbox") && !strings.Contains(ua, "xbox")) || (strings.Contains(ua, "stableavb_telly")):
 		u.DeviceType = DeviceTV
 
 	case u.OS.Platform == PlatformiPad || u.OS.Platform == PlatformiPod || strings.Contains(ua, "tablet") || strings.Contains(ua, "kindle/") || strings.Contains(ua, "playbook"):

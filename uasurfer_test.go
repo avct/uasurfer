@@ -1082,6 +1082,9 @@ var testUAVars = []struct {
 	{"waipu/2025.5.0-16b788cf99 (Tablet; RockChip; X88Pro13.smartTV.skw.F1010_1.0.0; o2; Android 13)",
 		UserAgent{
 			Browser{BrowserUnknown, Version{0, 0, 0}}, OS{PlatformLinux, OSAndroid, Version{13, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 11; TY55_1 Build/Oldsmobile-ota-1.5.4-8654-f2098ffa2a-TY55_1KM-user-25122; wv) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.6533.120 Safari/537.36 OMI/4.25.1.92.StableAVB_Telly)",
+		UserAgent{
+			Browser{BrowserChrome, Version{127, 0, 6533}}, OS{PlatformLinux, OSAndroid, Version{11, 0, 0}}, DeviceTV}},
 }
 
 func TestAgentSurfer(t *testing.T) {
