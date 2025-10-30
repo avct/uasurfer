@@ -280,3 +280,55 @@ func (o *OS) FormattedName() string {
 func (ua *UserAgent) DeviceFormattedName() string {
 	return strings.TrimPrefix(ua.DeviceType.String(), "Device")
 }
+
+func (ua *UserAgent) DetectMake() string {
+	switch ua.OS.Name {
+	case OSiOS:
+		return "Apple"
+	case OSAndroid:
+		return "Android"
+	case OSWindows:
+		return "Microsoft"
+	case OSMacOSX:
+		return "Apple"
+	case OSLinux:
+		return "Linux"
+	default:
+		return ""
+	}
+}
+
+func (ua *UserAgent) DetectModel(uaString string) string {
+	// For Apple, we can confidently use "iPhone" or "iPad"
+	if ua.OS.Name == OSiOS {
+		if ua.DeviceType == DeviceTablet {
+			return "iPad"
+		}
+		return "iPhone"
+	}
+
+	// For Android, try crude substring detection
+	if ua.OS.Name == OSAndroid {
+		// Optional: Try to extract a brand/model hint
+		if strings.Contains(uaString, "Pixel") {
+			return "Pixel"
+		} else if strings.Contains(uaString, "Samsung") {
+			return "Samsung"
+		} else if strings.Contains(uaString, "OnePlus") {
+			return "OnePlus"
+		} else if strings.Contains(uaString, "Mi") || strings.Contains(uaString, "Redmi") {
+			return "Xiaomi"
+		}
+		// Generic fallback
+		return "Android"
+	}
+
+	// For computers
+	if ua.OS.Name == OSWindows {
+		return "Windows PC"
+	} else if ua.OS.Name == OSMacOSX {
+		return "Mac"
+	}
+
+	return ""
+}
