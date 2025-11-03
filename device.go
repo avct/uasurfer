@@ -22,8 +22,11 @@ func (u *UserAgent) evalDevice(ua string) {
 		strings.Contains(ua, "aftkrt") || strings.Contains(ua, "aftsss") || strings.Contains(ua, "aftss") || strings.Contains(ua, "aftka") || strings.Contains(ua, "aftr") ||
 		strings.Contains(ua, "aftgazl") || strings.Contains(ua, "aftanna") || strings.Contains(ua, "aftkauk") ||
 		strings.Contains(ua, "bravia") || strings.Contains(ua, "mibox") || strings.Contains(ua, "chromecast") || strings.Contains(ua, "ott-g1") || strings.Contains(ua, "ottera") ||
-		strings.Contains(ua, "tpm191e") || strings.Contains(ua, "nokia streaming box") ||
-		strings.Contains(ua, "tv box") || (strings.Contains(ua, "mbox") && !strings.Contains(ua, "xbox")) || (strings.Contains(ua, "stableavb_telly")):
+		strings.Contains(ua, "tpm191e") || strings.Contains(ua, "nokia streaming box") || (strings.Contains(ua, "stableavb_telly")) || strings.Contains(ua, "lxbox51") ||
+		strings.Contains(ua, "x96max") || strings.Contains(ua, "x96q_max_pro") || strings.Contains(ua, "canal plus box") || strings.Contains(ua, "vectra 4k box") ||
+		strings.Contains(ua, "diw377") || strings.Contains(ua, "diw380") || strings.Contains(ua, "dv8555") || strings.Contains(ua, "dctiw362") || strings.Contains(ua, "gd1 4k") ||
+		strings.Contains(ua, "tpm171e") || strings.Contains(ua, "ai pont") || strings.Contains(ua, "b-stream") || strings.Contains(ua, "tv box") ||
+		(strings.Contains(ua, "mbox") && !strings.Contains(ua, "xbox")):
 		u.DeviceType = DeviceTV
 
 	case u.OS.Platform == PlatformiPad || u.OS.Platform == PlatformiPod || strings.Contains(ua, "tablet") || strings.Contains(ua, "kindle/") || strings.Contains(ua, "playbook"):

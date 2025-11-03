@@ -287,7 +287,7 @@ var testUAVars = []struct {
 		UserAgent{
 			Browser{BrowserSilk, Version{3, 67, 0}}, OS{PlatformLinux, OSKindle, Version{4, 4, 3}}, DeviceTablet}}, // Fire tablet
 
-	{"Mozilla/5.0 (Linux; U; Android 4.2.2; en­us; KFTHWI Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.22 like Chrome/34.0.1847.137 Mobile Safari/537.36",
+	{"Mozilla/5.0 (Linux; U; Android 4.2.2; enus; KFTHWI Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.22 like Chrome/34.0.1847.137 Mobile Safari/537.36",
 		UserAgent{
 			Browser{BrowserSilk, Version{3, 22, 0}}, OS{PlatformLinux, OSKindle, Version{4, 2, 2}}, DeviceTablet}}, // Fire tablet, but with "Mobile"
 
@@ -1085,6 +1085,33 @@ var testUAVars = []struct {
 	{"Mozilla/5.0 (Linux; Android 11; TY55_1 Build/Oldsmobile-ota-1.5.4-8654-f2098ffa2a-TY55_1KM-user-25122; wv) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.6533.120 Safari/537.36 OMI/4.25.1.92.StableAVB_Telly)",
 		UserAgent{
 			Browser{BrowserChrome, Version{127, 0, 6533}}, OS{PlatformLinux, OSAndroid, Version{11, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 9; X96Max Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/83.0.4103.120 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{83, 0, 4103}}, OS{PlatformLinux, OSAndroid, Version{9, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 12; Vectra 4K Box Build/ST; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/136.0.7103.125 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{136, 0, 7103}}, OS{PlatformLinux, OSAndroid, Version{12, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 10; CANAL PLUS BOX Build/QTT8.201201.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/136.0.7103.125 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{136, 0, 7103}}, OS{PlatformLinux, OSAndroid, Version{10, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 12; Orange PL DIW377 Build/STT5.250117.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/136.0.7103.125 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{136, 0, 7103}}, OS{PlatformLinux, OSAndroid, Version{12, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 9; DCTIW362_PLAY Build/PTT1.190826.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/136.0.7103.60 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{136, 0, 7103}}, OS{PlatformLinux, OSAndroid, Version{9, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 8.0.0; TPM171E Build/OC; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/136.0.7103.125 Mobile Safari/537.36;dailymotion-player-sdk-android 0.2.13",
+		UserAgent{
+			Browser{BrowserChrome, Version{136, 0, 7103}}, OS{PlatformLinux, OSAndroid, Version{8, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 11; GD1 4K Build/RT; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/136.0.7103.127 Mobile Safari/537.36;dailymotion-player-sdk-android 0.2.13",
+		UserAgent{
+			Browser{BrowserChrome, Version{136, 0, 7103}}, OS{PlatformLinux, OSAndroid, Version{11, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 11; AI PONT Build/RTM6.230109.082; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/136.0.7103.125 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{136, 0, 7103}}, OS{PlatformLinux, OSAndroid, Version{11, 0, 0}}, DeviceTV}},
+	{"Mozilla/5.0 (Linux; Android 12; B-STREAM Build/STTC.230104.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/136.0.7103.125 Mobile Safari/537.36",
+		UserAgent{
+			Browser{BrowserChrome, Version{136, 0, 7103}}, OS{PlatformLinux, OSAndroid, Version{12, 0, 0}}, DeviceTV}},
 }
 
 func TestAgentSurfer(t *testing.T) {
